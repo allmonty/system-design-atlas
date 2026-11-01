@@ -1,6 +1,6 @@
 # System Design Atlas
 
-**35 system-design case studies with interactive diagrams, an incident casebook, primers and a practice workbook, for senior engineers preparing for interviews or an architect role. Available in English and Brazilian Portuguese (pt-BR). Every claim says how well it is sourced.**
+**42 system-design case studies with interactive diagrams, an incident casebook, primers and a practice workbook, for senior engineers preparing for interviews or an architect role. Available in English and Brazilian Portuguese (pt-BR). Every claim says how well it is sourced.**
 
 [☕ Buy me a coffee](https://buymeacoffee.com/allmonty) · [Roadmap](ROADMAP.md) · [Report an error](https://github.com/allmonty/system-design-atlas/issues/new) · [**Live site**](https://allmonty.github.io/system-design-atlas/) (or run it locally, see [publishing](#publishing-on-github-pages))
 
@@ -19,9 +19,9 @@ Each system has a deep note (`systems/NN-*.md`) and a structured diagram (`syste
 
 | Path | What it holds |
 |---|---|
-| [`systems/`](systems/) | The 35 notes, one diagram (`.diagram.json`) and one quote ledger (`.claims.json`) each |
+| [`systems/`](systems/) | The 42 notes, one diagram (`.diagram.json`) and one quote ledger (`.claims.json`) each |
 | [`toolkit/`](toolkit/README.md) | Casebook of 6 real incidents (`C`), 17 cross-cutting primers (`P`), a workbook of 6 practice pages (`W`) |
-| [`locales/`](locales/pt-BR/) | Brazilian Portuguese (`pt-BR`) translations (systems 01–30, 34, 35 and four toolkit pages mirrored, remainder in progress) |
+| [`locales/`](locales/pt-BR/) | Brazilian Portuguese (`pt-BR`) translations (systems 01–30 and 34–42 and five toolkit pages mirrored, remainder in progress) |
 | [`site/`](site/) | The React + React Flow site: home page study tracks, diagrams, search, reading settings |
 | [`.github/workflows/`](.github/workflows/pages.yml) | The workflow that builds and deploys the site |
 | [`schema/`](schema/), [`scripts/`](scripts/), [`test/`](test/) | The diagram schema, the validator, the quote verifier, the freshness and link checks, and their tests |
@@ -174,7 +174,7 @@ For interviews, practise each note's **Interview questions**, and walk the **flo
 
 The home page is a study guide: pick a goal (interview, building blocks, architect, AI, or the whole atlas in order) and follow an ordered track with a reason for each step; tick pages as you finish them (saved only in your browser); or browse by stage and search. Tracks live in `site/src/tracks.json`, and `npm run validate` checks that every step points at a real page.
 
-The top-bar gear menu sets theme, font, reading text size, and language (**English** or **Português do Brasil**). Translated notes mirror under `locales/pt-BR/` (currently systems 01 to 30, 34 and 35, and toolkit pages P02, P11, P14 and W04) and fall back to English with a notice when an individual translation is not yet ready. The UI text, study tracks and stages automatically adapt to the chosen language.
+The top-bar gear menu sets theme, font, reading text size, and language (**English** or **Português do Brasil**). Translated notes mirror under `locales/pt-BR/` (currently systems 01 to 30 and 34 to 42, and toolkit pages P02, P11, P14, P17 and W04) and fall back to English with a notice when an individual translation is not yet ready. The UI text, study tracks and stages automatically adapt to the chosen language.
 
 ```sh
 npm install && (cd site && npm install)   # once

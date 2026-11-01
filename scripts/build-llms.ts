@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 export interface Note { dir: string; file: string; title: string }
 
 const SUMMARY =
-  "A system-design study set: 35 systems and a toolkit (casebook, primers, workbook). Each note is sourced from primary material, tags claims as CONFIRMED, INDUSTRY PATTERN or SPECULATIVE, and ends with a verification log that says what was not checked. Licensed CC BY 4.0.";
+  "A system-design study set: 42 systems and a toolkit (casebook, primers, workbook). Each note is sourced from primary material, tags claims as CONFIRMED, INDUSTRY PATTERN or SPECULATIVE, and ends with a verification log that says what was not checked. Licensed CC BY 4.0.";
 
 export function listNotes(root: string): Note[] {
   return ["systems", "toolkit"].flatMap((dir) =>

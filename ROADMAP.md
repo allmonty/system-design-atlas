@@ -1,6 +1,6 @@
 # Roadmap
 
-What is left after the 35 systems, the toolkit and the site. Each item says what is missing and why it was not done. Status is as of 2026-10-29.
+What is left after the 42 systems, the toolkit and the site. Each item says what is missing and why it was not done. Status is as of 2026-11-01.
 
 | # | Item | Status |
 |---|---|---|
@@ -11,9 +11,9 @@ What is left after the 35 systems, the toolkit and the site. Each item says what
 | 5 | Confidence tags on diagram edges | Deferred. Needs a schema change and hand-tagging a few hundred edges. |
 | 6 | Per-element alias for clickable names in the note | Deferred. Names are matched by text, so an ambiguous name can occasionally link to the wrong element. |
 | 7 | One source for the learning order | Done: `site/src/stages.json` is the order; a test checks it against the atlas track and the README. |
-| 8 | Content not yet written | Partly done: primers P11 to P16 (monolith vs microservices, event sourcing and CQRS, disaster recovery, multi-tenancy, reviewing, consistency and cache failures) are written. The rest is below. |
+| 8 | Content not yet written | Done on 2026-11-01: primers P11 to P17 and systems 36 to 42 (typeahead, job scheduler, CDN, maps and ETA, video conferencing, moderation and fraud ML, authorization and identity) are written, each in English and pt-BR. See below for sources that could not be fetched. |
 | 9 | Switch Pages to GitHub Actions and delete `docs/` | Done on 2026-10-31: Pages source set to GitHub Actions, the workflow deployed green, and the stale `docs/` build was deleted. |
-| 10 | Portuguese (pt-BR) translation of notes, toolkit and diagrams | In progress: UI text, track/stage overlays and notes 01 to 30, 34 and 35 and toolkit pages P02, P11, P14 and W04 are done and verified against the glossary; notes 31 to 33, the other 24 toolkit pages (including the new P15, P16 and W06) and diagram JSON remain. |
+| 10 | Portuguese (pt-BR) translation of notes, toolkit and diagrams | In progress: UI text, track/stage overlays and notes 01 to 30 and 34 to 42 and toolkit pages P02, P11, P14, P17 and W04 are done and verified against the glossary; notes 31 to 33, the other 24 toolkit pages (including the new P15, P16 and W06) and diagram JSON remain. |
 | 11 | Agent and crawler access | Done: `llms.txt`, `llms-full.txt` and raw Markdown copies are generated at build (`scripts/build-llms.ts`), plus meta tags, `robots.txt` and the MIT / CC BY 4.0 licenses. Not done: static pre-rendering (routes are hash-based, so each page has no URL of its own), an MCP server, a `SKILL.md`, and a PR-review rules layer. They came from an external review and were judged out of scope for now. That review (2026-10-29, AI-written without access to the site) was checked claim by claim on 2026-10-31: most of its content gaps were already covered (P16, P03, P05, notes 04, 11, 22 to 28); the two real ones were fixed (tail latency under fan-out in P07, idle consumers beyond the partition count in note 04). |
 
 ## 1 and 2: what the browser sweep covers and what it cannot
@@ -26,22 +26,13 @@ It cannot replace a real phone, a screen reader or the print dialog; those stay 
 
 ## 8. Content not yet written
 
-Each of these needs primary sources read in full first (see `CLAUDE.md`, "Sourcing rules").
+Done. Systems 36 to 42 and primer P17 were written on 2026-10-31 and 2026-11-01 from primary sources, with pt-BR mirrors.
 
-- Typeahead / autocomplete
-- Distributed job scheduler (cron at scale)
-- A standalone CDN
-- Maps, routing and ETA
-- Video conferencing
-- Content moderation and fraud detection with ML
-- Authorization at scale (Zanzibar) and identity
-- Privacy by design
-
-Sources that could not be fetched so far: the Count-Min Sketch paper (note 34) and the Instagram engineering post on IDs (note 35, read from an Internet Archive copy only where noted).
+Sources that could not be fetched so far: the Count-Min Sketch paper (note 34), the Instagram engineering post on IDs (note 35, read from an Internet Archive copy only where noted), *The Akamai Network* (2010, note 38; the 2015 Akamai algorithms paper is used instead), Meta's Transparency Center pages (note 41; rendered by script) and the GDPR text on EUR-Lex (P17; Article 25 is cited through the EDPB guidelines).
 
 ## 10. Missing translations (pt-BR)
 
-The site supports English and Brazilian Portuguese (`pt-BR`). UI strings (`site/src/i18n.tsx`), study tracks and stage overlays (`site/src/locales/pt-BR/{tracks,stages}.json`), 32 of the 35 systems (`01-url-shortener.md` through `30-metrics-monitoring-alerting.md`, plus `34-top-k-leaderboard.md` and `35-unique-id-generation.md`) and 4 toolkit pages (P02, P11, P14, W04) under `locales/pt-BR/` are translated, verified against `schema/glossary.json`, and tested by `scripts/validate.ts` and `test/i18n.test.ts`.
+The site supports English and Brazilian Portuguese (`pt-BR`). UI strings (`site/src/i18n.tsx`), study tracks and stage overlays (`site/src/locales/pt-BR/{tracks,stages}.json`), 39 of the 42 systems (`01-url-shortener.md` through `30-metrics-monitoring-alerting.md`, plus `34-top-k-leaderboard.md` through `42-authorization-identity.md`) and 5 toolkit pages (P02, P11, P14, P17, W04) under `locales/pt-BR/` are translated, verified against `schema/glossary.json`, and tested by `scripts/validate.ts` and `test/i18n.test.ts`.
 
 The following items remain to be translated:
 
@@ -84,7 +75,7 @@ The following items remain to be translated:
 - `toolkit/W05-flashcards.md` (Flashcards)
 - `toolkit/W06-review-an-api.md` (Review an API)
 
-### Diagram JSON (35 diagrams)
+### Diagram JSON (42 diagrams)
 
 - Diagram nodes, labels, and flow step text in `systems/*.diagram.json` currently remain in English. Localizing diagrams will require schema support or localized JSON files so node labels, descriptions, and flow step text can be presented in Portuguese.
 

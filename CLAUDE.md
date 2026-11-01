@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A system-design study set: **35 systems** (22 to 31 cover AI systems, live streaming, observability and stream processing; 32 to 35 are building blocks: cache, coordination, top-K and ID generation), plus a `toolkit/` folder (casebook, primers, workbook, see its README), each with a deep Markdown note and a structured diagram, plus a Vite + React + React Flow site in `site/` that renders the diagrams interactively. `README.md` is the hub (index, learning path, concept matrix). The reader is a senior engineer preparing for interviews. **Correctness is the top requirement.**
+A system-design study set: **42 systems** (22 to 31 cover AI systems, live streaming, observability and stream processing; 32 to 35 are building blocks: cache, coordination, top-K and ID generation; 36 to 42 add typeahead, job scheduling, CDN, maps and ETA, video conferencing, moderation and fraud ML, and authorization and identity), plus a `toolkit/` folder (casebook, primers, workbook, see its README), each with a deep Markdown note and a structured diagram, plus a Vite + React + React Flow site in `site/` that renders the diagrams interactively. `README.md` is the hub (index, learning path, concept matrix). The reader is a senior engineer preparing for interviews. **Correctness is the top requirement.**
 
 ## Commands
 
@@ -31,7 +31,7 @@ The gear menu in the site header sets theme (System, Light, Warm, Dark), font (s
 
 ## Translations (pt-BR)
 
-The language is a setting (`lang` in the `atlas-settings` cookie). UI text lives in `site/src/i18n.tsx`: add every new string to the English object and to the pt-BR one (typed, so `tsc` fails on a gap), and use `useT()`. Track and stage prose is overlaid from `site/src/locales/pt-BR/{tracks,stages}.json` (keyed by track id, step ref and English stage title; `test/i18n.test.ts` checks the keys). Notes are translated by mirroring them at `locales/pt-BR/systems/NN-slug.md` and `locales/pt-BR/toolkit/XNN-slug.md`; a note with no mirror shows in English with a notice. Systems 01 to 30, 34 and 35 and toolkit pages P02, P11, P14 and W04 are translated; systems 31 to 33 and the rest of the toolkit remain (see `ROADMAP.md`). Diagram JSON is not translated yet.
+The language is a setting (`lang` in the `atlas-settings` cookie). UI text lives in `site/src/i18n.tsx`: add every new string to the English object and to the pt-BR one (typed, so `tsc` fails on a gap), and use `useT()`. Track and stage prose is overlaid from `site/src/locales/pt-BR/{tracks,stages}.json` (keyed by track id, step ref and English stage title; `test/i18n.test.ts` checks the keys). Notes are translated by mirroring them at `locales/pt-BR/systems/NN-slug.md` and `locales/pt-BR/toolkit/XNN-slug.md`; a note with no mirror shows in English with a notice. Systems 01 to 30 and 34 to 42 and toolkit pages P02, P11, P14, P17 and W04 are translated; systems 31 to 33 and the rest of the toolkit remain (see `ROADMAP.md`). Diagram JSON is not translated yet.
 
 Rules for a translated note, checked by `validateTranslations` in `scripts/validate.ts`: change prose only. Keep every `##` heading, link target, confidence tag, `Sources read on <date>` line and `- Not ...` bullet exactly as in the original (including the English label `**Not read:**`; translate only the text after it) (the site, trust card and validator match them), keep quotations in their source language, and keep each term of `schema/glossary.json` that the original uses in English. Run `npm run verify` on the English original only. Commit one translated note per commit.
 
@@ -92,7 +92,7 @@ Expected non-200 results that are not broken links: `403`/`406` from sites that 
 - Notes that restate an earlier note (the `neokim-post/` upgrades) re-check the key claims against primary sources and list what was **not** re-checked in the Verification log.
 - Where a popular article disagrees with the primary source, say so in a Reviewer notes section rather than silently choosing.
 
-### Extra rules for AI notes (22 to 28; the dated-source and primary-source rules also apply to 29 to 31)
+### Extra rules for AI notes (22 to 28 and 41; the dated-source and primary-source rules also apply to 29 to 31)
 
 - AI facts age fast. State the **date of each source** and quote vendor or benchmark numbers only from the primary paper or post, never from secondary coverage. Say which models, hardware and datasets a number was measured on.
 - Do not describe a vendor's internals (how a named chatbot is served, how a named company trains) unless it published them. Name the system type, cite the open papers, and label the rest a reference design.
