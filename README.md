@@ -69,6 +69,7 @@ Known limits are at the end of this file and in the [roadmap](ROADMAP.md).
 | 11 | [News feed (Twitter/Instagram)](systems/11-news-feed.md) | reference | fan-out on write vs read, ranking pipeline, sharded IDs | Twitter 2017 infra post, the-algorithm repo, Instagram 2012 |
 | 12 | [YouTube](systems/12-youtube.md) | reference | upload, transcoding DAG, adaptive bitrate, CDN | YouTube Help/API/blog, Vitess, RFC 8216 |
 | 13 | [Netflix (delivery)](systems/13-netflix.md) | real | control vs data plane, Open Connect, steering, fill | Open Connect Overview, two Netflix TechBlog posts |
+| 38 | [Content delivery network (CDN)](systems/38-cdn.md) | real + pattern | DNS cluster selection, consistent hashing in a PoP, tiered cache, cache-on-second-hit, stale-while-revalidate, purge | Akamai algorithms paper (2015), Cloudflare cache docs, RFC 9111 |
 | 14 | [Spotify](systems/14-spotify.md) | reference | audio delivery, signed URLs, 2010 P2P, loudness | P2P paper (2010), Spotify support pages |
 | 15 | [Uber (proximity + dispatch)](systems/15-uber-proximity-dispatch.md) | reference | H3 geospatial index, batched matching, sharding by cell | H3 docs, Uber H3 blog, Uber matching page |
 | 16 | [Reservation scheduler (hotel + parking)](systems/16-reservation-scheduler.md) | reference | exclusion constraints, holds, overbooking, idempotent payment | PostgreSQL docs, Stripe idempotency docs |
@@ -113,7 +114,7 @@ The answer outlines in each note are our own reasoning and are labelled as such.
 2. **Building blocks:** 35 Unique IDs → 32 Distributed cache → 33 Coordination and locks → 34 Top-K and leaderboards → 37 Job scheduler (they recur inside every large design, so read them early or alongside the others).
 3. **Storage and data infrastructure:** 05 Object storage → 04 Message queue → 07 Photo storage → 06 File sync.
 4. **Real-time communication:** 08 Chat → 09 Discord → 18 Google Docs → 21 Game matchmaking + chat.
-5. **Media delivery:** 14 Spotify → 12 YouTube → 13 Netflix → 29 Live streaming.
+5. **Media delivery:** 38 CDN → 14 Spotify → 12 YouTube → 13 Netflix → 29 Live streaming.
 6. **Feeds, notifications and ranking:** 11 News feed → 10 Notification system.
 7. **Correctness under contention:** 16 Reservations → 17 Payments → 19 Stock exchange.
 8. **Location and discovery:** 15 Uber → 20 Web crawler + search → 36 Typeahead.
@@ -126,9 +127,9 @@ For interviews, practise each note's **Interview questions**, and walk the **flo
 
 | Concept | Where to study it |
 |---|---|
-| Caching and request coalescing | 01, 09, 11, 12, 13, 14, 29, 32, 36 |
-| CDN and edge delivery | 07, 12, 13, 14, 29 |
-| Sharding / partitioning / consistent hashing | 01, 03, 04, 05, 09, 11, 13, 15, 16, 20, 24, 30, 31, 34 |
+| Caching and request coalescing | 01, 09, 11, 12, 13, 14, 29, 32, 36, 38 |
+| CDN and edge delivery | 07, 12, 13, 14, 29, 38 |
+| Sharding / partitioning / consistent hashing | 01, 03, 04, 05, 09, 11, 13, 15, 16, 20, 24, 30, 31, 34, 38 |
 | Replication, quorums, erasure coding | 03, 04, 05, 06, 07, 30, 31 |
 | Consistency models and trade-offs | 03, 04, 05, 06, 16, 18, 30, 33 |
 | Queues, logs and event-driven design | 04, 08, 10, 17, 19, 31, 37 |

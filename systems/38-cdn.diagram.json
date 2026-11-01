@@ -1,0 +1,349 @@
+{
+  "id": "38-cdn",
+  "title": "Content Delivery Network (CDN)",
+  "kind": "real-system",
+  "nodes": [
+    {
+      "id": "user",
+      "label": "End user",
+      "kind": "client",
+      "c4": "person",
+      "summary": "A browser or app requesting pages, images, video segments or API calls through a CDN hostname.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://people.cs.umass.edu/~ramesh/Site/HOME_files/CCRpaper_1.pdf"
+      ]
+    },
+    {
+      "id": "resolver",
+      "label": "Resolving name server",
+      "kind": "external",
+      "c4": "external-system",
+      "summary": "The user's DNS resolver; the CDN sees its address (or the EDNS client subnet it forwards), not the user's.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://people.cs.umass.edu/~ramesh/Site/HOME_files/CCRpaper_1.pdf"
+      ]
+    },
+    {
+      "id": "dns",
+      "label": "CDN authoritative DNS",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Picks a cluster by global load balancing (a stable-allocation algorithm over map units and cluster capacities), then servers in it by consistent hashing; returns the first k live servers, k by popularity.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://people.cs.umass.edu/~ramesh/Site/HOME_files/CCRpaper_1.pdf"
+      ],
+      "group": "Control plane"
+    },
+    {
+      "id": "mapping",
+      "label": "Load balancers (replicated)",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Global and local load balancing computed from real-time data on many servers in several data centers; a leader election picks whose output is used.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://people.cs.umass.edu/~ramesh/Site/HOME_files/CCRpaper_1.pdf"
+      ],
+      "group": "Control plane"
+    },
+    {
+      "id": "pop",
+      "label": "Edge cluster (PoP)",
+      "kind": "edge",
+      "c4": "container",
+      "summary": "A cluster of edge servers near users. Our wrapper for the components below.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://people.cs.umass.edu/~ramesh/Site/HOME_files/CCRpaper_1.pdf"
+      ],
+      "group": "Edge cluster"
+    },
+    {
+      "id": "edge",
+      "label": "Edge server",
+      "kind": "edge",
+      "c4": "component",
+      "parent": "pop",
+      "summary": "Terminates the connection, checks its cache, and on a miss asks peers in the cluster, then a parent tier, then the origin.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://people.cs.umass.edu/~ramesh/Site/HOME_files/CCRpaper_1.pdf"
+      ],
+      "group": "Edge cluster"
+    },
+    {
+      "id": "admission",
+      "label": "Cache admission filter",
+      "kind": "service",
+      "c4": "component",
+      "parent": "pop",
+      "summary": "Cache-on-second-hit: two rotating Bloom filters remember recent requests, so one-hit wonders are served but not stored.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://people.cs.umass.edu/~ramesh/Site/HOME_files/CCRpaper_1.pdf"
+      ],
+      "group": "Edge cluster"
+    },
+    {
+      "id": "cache",
+      "label": "Edge cache store",
+      "kind": "datastore",
+      "c4": "component",
+      "parent": "pop",
+      "summary": "Memory and disk cache keyed by method and URI plus Vary headers (RFC 9111); evicts with a replacement policy such as LRU.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://people.cs.umass.edu/~ramesh/Site/HOME_files/CCRpaper_1.pdf",
+        "https://www.rfc-editor.org/rfc/rfc9111.txt"
+      ],
+      "group": "Edge cluster"
+    },
+    {
+      "id": "peers",
+      "label": "Cluster peers",
+      "kind": "edge",
+      "c4": "component",
+      "parent": "pop",
+      "summary": "Other servers in the same cluster, asked first on a miss; Bloom-filter cache summaries can say who holds what.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://people.cs.umass.edu/~ramesh/Site/HOME_files/CCRpaper_1.pdf"
+      ],
+      "group": "Edge cluster"
+    },
+    {
+      "id": "upper",
+      "label": "Upper tier (parent)",
+      "kind": "edge",
+      "c4": "container",
+      "summary": "A parent cluster or upper-tier data center; only it contacts the origin, which raises hit ratios and concentrates origin connections.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://people.cs.umass.edu/~ramesh/Site/HOME_files/CCRpaper_1.pdf",
+        "https://developers.cloudflare.com/cache/how-to/tiered-cache/"
+      ]
+    },
+    {
+      "id": "overlay",
+      "label": "Overlay routing",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Relays uncacheable traffic between edge and origin over chosen paths through CDN servers, for lower latency and redundancy when a path fails.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://people.cs.umass.edu/~ramesh/Site/HOME_files/CCRpaper_1.pdf"
+      ]
+    },
+    {
+      "id": "purge",
+      "label": "Purge API",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Purge or invalidate by URL, tag, prefix, hostname or everything; rate-limited with a token bucket. A 200 means received, not evicted.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://developers.cloudflare.com/cache/how-to/purge-cache/"
+      ],
+      "group": "Control plane"
+    },
+    {
+      "id": "origin",
+      "label": "Customer origin",
+      "kind": "external",
+      "c4": "external-system",
+      "summary": "The content provider's servers; they set Cache-Control (max-age, s-maxage, stale-while-revalidate, private) and answer conditional requests.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://www.rfc-editor.org/rfc/rfc9111.txt",
+        "https://developers.cloudflare.com/cache/concepts/revalidation/"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "user-resolver",
+      "from": "user",
+      "to": "resolver",
+      "label": "resolve CDN hostname"
+    },
+    {
+      "id": "resolver-dns",
+      "from": "resolver",
+      "to": "dns",
+      "label": "CNAME → CDN name"
+    },
+    {
+      "id": "mapping-dns",
+      "from": "mapping",
+      "to": "dns",
+      "label": "cluster and server maps",
+      "mode": "async"
+    },
+    {
+      "id": "user-edge",
+      "from": "user",
+      "to": "edge",
+      "label": "HTTPS request"
+    },
+    {
+      "id": "edge-cache",
+      "from": "edge",
+      "to": "cache",
+      "label": "lookup by cache key"
+    },
+    {
+      "id": "edge-admission",
+      "from": "edge",
+      "to": "admission",
+      "label": "seen before?"
+    },
+    {
+      "id": "edge-peers",
+      "from": "edge",
+      "to": "peers",
+      "label": "miss: ask cluster"
+    },
+    {
+      "id": "edge-upper",
+      "from": "edge",
+      "to": "upper",
+      "label": "miss: ask parent tier"
+    },
+    {
+      "id": "upper-origin",
+      "from": "upper",
+      "to": "origin",
+      "label": "fetch or revalidate"
+    },
+    {
+      "id": "edge-overlay",
+      "from": "edge",
+      "to": "overlay",
+      "label": "uncacheable request"
+    },
+    {
+      "id": "overlay-origin",
+      "from": "overlay",
+      "to": "origin",
+      "label": "best overlay path"
+    },
+    {
+      "id": "origin-purge",
+      "from": "origin",
+      "to": "purge",
+      "label": "purge by URL or tag"
+    },
+    {
+      "id": "purge-edge",
+      "from": "purge",
+      "to": "edge",
+      "label": "evict or mark stale",
+      "mode": "async"
+    }
+  ],
+  "flows": [
+    {
+      "id": "hit",
+      "name": "A cached object is served",
+      "steps": [
+        {
+          "edge": "user-resolver",
+          "caption": "The browser resolves the site's hostname, which is a CNAME to the CDN."
+        },
+        {
+          "edge": "resolver-dns",
+          "caption": "The CDN's DNS picks a nearby cluster from the resolver's address and returns k servers for this content."
+        },
+        {
+          "edge": "user-edge",
+          "caption": "The browser connects to one of them and sends the request."
+        },
+        {
+          "edge": "edge-cache",
+          "caption": "The object is in cache and fresh; it is returned without contacting anyone else."
+        }
+      ]
+    },
+    {
+      "id": "miss",
+      "name": "A miss is filled through the tiers",
+      "steps": [
+        {
+          "edge": "edge-cache",
+          "caption": "The object is not in this server's cache."
+        },
+        {
+          "edge": "edge-peers",
+          "caption": "Other servers in the cluster are asked first."
+        },
+        {
+          "edge": "edge-upper",
+          "caption": "Then the parent or upper tier."
+        },
+        {
+          "edge": "upper-origin",
+          "caption": "Only the upper tier fetches from the origin."
+        },
+        {
+          "edge": "edge-admission",
+          "caption": "The edge stores the object only if it has been requested before (cache on second hit)."
+        }
+      ]
+    },
+    {
+      "id": "dynamic",
+      "name": "Uncacheable content is relayed",
+      "steps": [
+        {
+          "edge": "user-edge",
+          "caption": "A request for a personalised page or API reaches the edge."
+        },
+        {
+          "edge": "edge-overlay",
+          "caption": "The edge forwards it over the overlay network."
+        },
+        {
+          "edge": "overlay-origin",
+          "caption": "The overlay uses the best of several paths to the origin, with spares if one fails."
+        }
+      ]
+    },
+    {
+      "id": "stale",
+      "failure": true,
+      "name": "The origin is slow when content expires (failure)",
+      "steps": [
+        {
+          "edge": "edge-cache",
+          "caption": "The cached copy has expired and the origin allowed stale-while-revalidate."
+        },
+        {
+          "edge": "upper-origin",
+          "caption": "One background revalidation goes to the origin with If-Modified-Since or an ETag."
+        },
+        {
+          "edge": "user-edge",
+          "caption": "Meanwhile users keep getting the stale copy instead of waiting; without the directive they would wait."
+        }
+      ]
+    },
+    {
+      "id": "bad-content",
+      "failure": true,
+      "name": "Wrong content is cached everywhere (failure)",
+      "steps": [
+        {
+          "edge": "origin-purge",
+          "caption": "The customer purges by tag after a bad publish; the API accepts within its rate limit."
+        },
+        {
+          "edge": "purge-edge",
+          "caption": "Every edge evicts or marks the objects stale; the next requests refill from the origin through the upper tier."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "quote": "one-hit-wonders",
+    "url": "https://people.cs.umass.edu/~ramesh/Site/HOME_files/CCRpaper_1.pdf",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "reduce download time and increase availability",
+    "url": "https://people.cs.umass.edu/~ramesh/Site/HOME_files/CCRpaper_1.pdf",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "only the upper-tier can ask the origin for content",
+    "url": "https://developers.cloudflare.com/cache/how-to/tiered-cache/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  }
+]
