@@ -150,8 +150,8 @@ flowchart TB
 - Status: o KIP-405 está marcado como pronto para produção desde o Kafka 3.9 ([KIP-405](https://cwiki.apache.org/confluence/display/KAFKA/KIP-405%3A+Kafka+Tiered+Storage)).
 
 ### Consumer groups (read parallelism)
-- Um **consumer group** divide o trabalho: **cada partição é consumida por exatamente um membro** do group, o que preserva a ordem sem locks.
-- Escale as leituras **adicionando membros** (até o nº de partições) ou **adicionando groups** (aplicações independentes relendo os mesmos dados).
+- Um **consumer group** divide o trabalho: **cada partição é consumida por exatamente um membro** do group, o que preserva a ordem sem locks. Nas palavras da documentação de design, cada partição é "consumed by exactly one consumer within each subscribing consumer group at any given time" `[CONFIRMED]`.
+- Escale as leituras **adicionando membros** (até o nº de partições) ou **adicionando groups** (aplicações independentes relendo os mesmos dados). Membros além do número de partições não recebem partição e ficam ociosos, então o número de partições limita o paralelismo de leitura de um group; planeje-o desde o início, porque adicionar partições depois muda o destino das keys `[INDUSTRY PATTERN]` (decorre da regra acima). Os share groups (abaixo) são a exceção.
 
 ```mermaid
 flowchart LR

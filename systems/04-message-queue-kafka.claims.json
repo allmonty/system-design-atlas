@@ -1,5 +1,12 @@
 [
   {
+    "quote": "consumed by exactly one consumer within each subscribing consumer group at any given time",
+    "url": "https://kafka.apache.org/40/design/design/#replication",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
     "quote": "90%+ cloud cost reduction",
     "status": "ignored",
     "note": "The newsletter author's claim, not a primary source."
