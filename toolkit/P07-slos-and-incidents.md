@@ -1,6 +1,6 @@
 # P07 — Reliability for architects: SLOs, error budgets, cascading failures and postmortems
 
-*A primer on how reliability targets are set and how failures are handled. Definitions and lessons come from chapters of Google's Site Reliability Engineering book; the arithmetic and the interview guidance are our reasoning and are labelled.*
+*A primer on how reliability targets are set and how failures are handled. Definitions and lessons come from chapters of Google's Site Reliability Engineering book and, for tail latency, from Dean and Barroso's "The Tail at Scale"; the arithmetic and the interview guidance are our reasoning and are labelled.*
 
 ## At a glance
 
@@ -25,6 +25,8 @@ The chapter argues that "past a certain point, however, increasing reliability i
 - SLAs add consequences: "crafting an SLA requires business and legal teams to pick appropriate consequences and penalties for a breach"; the book advises being conservative in what you advertise and notes that people who talk about an "SLA violation" usually mean a missed SLO.
 
 **Availability arithmetic `[INDUSTRY PATTERN]` (our calculation).** In a 30-day month (43,200 minutes), 99% allows about 432 minutes of unavailability, 99.9% about 43 minutes, 99.99% about 4.3 minutes, and 99.999% about 26 seconds. Each extra nine costs disproportionately more, and a serial chain of dependencies multiplies availabilities: three components at 99.9% each give roughly 99.7% together.
+
+**Latency under fan-out `[CONFIRMED]` (Dean and Barroso, "The Tail at Scale", CACM, February 2013).** Percentiles compound the same way. The paper notes that "variability in the latency distribution of individual components is magnified at the service level": if each server usually answers in 10ms but takes one second at its 99th percentile, and a user request must collect responses from 100 such servers in parallel, "63% of user requests will take more than one second" (1 − 0.99^100 ≈ 0.63). In a measured Google service, the 99th-percentile latency was 10ms for one random leaf request to finish but 140ms for all of them. The remedies work around the tail instead of removing it. **Hedged requests** send a second copy to another replica after a short delay and use whichever answers first; deferring the copy until the 95th-percentile expected latency "limits the additional load to approximately 5% while substantially shortening the latency tail". **Tied requests** queue the request on two servers at once, and whichever starts first cancels its counterpart. Our reasoning: set the latency SLO at the fan-out root, where users feel it, and size the leaves' tail from it.
 
 ## 3. Cascading failures `[CONFIRMED]` (SRE book, "Addressing Cascading Failures")
 
@@ -70,7 +72,7 @@ Choose two systems from the atlas. For each, write three SLIs, an SLO for each, 
 
 ## Sources and provenance
 
-> **Sources read on 2026-10-27:** Google, *Site Reliability Engineering* (O'Reilly, 2016; free online): [Embracing Risk](https://sre.google/sre-book/embracing-risk/), [Service Level Objectives](https://sre.google/sre-book/service-level-objectives/), [Addressing Cascading Failures](https://sre.google/sre-book/addressing-cascading-failures/) and [Postmortem Culture](https://sre.google/sre-book/postmortem-culture/).
+> **Sources read on 2026-10-27:** Google, *Site Reliability Engineering* (O'Reilly, 2016; free online): [Embracing Risk](https://sre.google/sre-book/embracing-risk/), [Service Level Objectives](https://sre.google/sre-book/service-level-objectives/), [Addressing Cascading Failures](https://sre.google/sre-book/addressing-cascading-failures/) and [Postmortem Culture](https://sre.google/sre-book/postmortem-culture/). Jeffrey Dean and Luiz André Barroso, [The Tail at Scale](https://www.barroso.org/publications/TheTailAtScale.pdf) (Communications of the ACM 56(2), February 2013; PDF read on 2026-10-31).
 > **Dated material:** The book is from 2016 and describes Google's practice; later editions and the SRE Workbook refine alerting on burn rates.
 > **Not read:** The SRE Workbook (burn-rate alerting), Google's other SRE chapters (monitoring, release engineering, on-call), and incident-command frameworks.
 > **Tags:** `[CONFIRMED]` stated by a primary source · `[INDUSTRY PATTERN]` standard practice · `[SPECULATIVE]` plausible or illustrative. Anything not tagged `[CONFIRMED]` is our reasoning.
@@ -80,4 +82,5 @@ Choose two systems from the atlas. For each, write three SLIs, an SLO for each, 
 
 *Fact-check, 2026-10-27, by reading each source. Quotations are confirmed by `npm run verify`.*
 - Verified in the four chapters: the reliability-cost argument, error budget definition and effect, SLI/SLO/SLA guidance as quoted, the cascading-failure definition and example, load shedding, graceful degradation, retry example, rate limiting placement, and the postmortem goals and blameless principle.
-- Not sourced (our reasoning): the availability arithmetic and the serial-chain example, retry-budget advice, the architect's postmortem questions, and the design-discussion checklist.
+- Verified in "The Tail at Scale" PDF on 2026-10-31: the 10ms / one-second / 100-server / 63% example, the Table 1 figures (10ms for one leaf, 140ms for all leaves, 99th percentile), the hedged-request definition and the 95th-percentile deferral with about 5% extra load, and the tied-request mechanism.
+- Not sourced (our reasoning): the availability arithmetic and the serial-chain example, the 1 − 0.99^100 restatement, the advice to set the latency SLO at the fan-out root, retry-budget advice, the architect's postmortem questions, and the design-discussion checklist.
