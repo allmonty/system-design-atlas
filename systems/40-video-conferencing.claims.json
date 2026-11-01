@@ -1,0 +1,37 @@
+[
+  {
+    "quote": "the endpoints quickly exhaust their available upstream bandwidth",
+    "url": "https://jitsi.org/wp-content/uploads/2016/12/nossdav2015lastn.pdf",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "forward RTP packets, optionally changing their headers, but without processing the payload",
+    "url": "https://jitsi.org/wp-content/uploads/2016/12/nossdav2015lastn.pdf",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "peer-to-peer networking becomes prohibitively expensive as the number of participants increases",
+    "url": "https://discord.com/blog/how-discord-handles-two-and-half-million-concurrent-voice-users-using-webrtc",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "assigns the least utilized voice server in the given region to the guild",
+    "url": "https://discord.com/blog/how-discord-handles-two-and-half-million-concurrent-voice-users-using-webrtc",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "can be impossible for that host to communicate directly with other hosts",
+    "url": "https://www.rfc-editor.org/rfc/rfc8656.txt",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  }
+]

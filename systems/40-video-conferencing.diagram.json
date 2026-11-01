@@ -1,0 +1,307 @@
+{
+  "id": "40-video-conferencing",
+  "title": "Video Conferencing",
+  "kind": "real-system",
+  "nodes": [
+    {
+      "id": "participant",
+      "label": "Participant",
+      "kind": "client",
+      "c4": "person",
+      "summary": "Joins a call from a browser or a native app and sends and receives audio, video and screen share.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://discord.com/blog/how-discord-handles-two-and-half-million-concurrent-voice-users-using-webrtc"
+      ]
+    },
+    {
+      "id": "client",
+      "label": "Media client",
+      "kind": "client",
+      "c4": "container",
+      "summary": "Browser WebRTC, or a native C++ engine on the WebRTC library that can skip SDP and ICE, use Salsa20, and send nothing during silence (Discord).",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://discord.com/blog/how-discord-handles-two-and-half-million-concurrent-voice-users-using-webrtc"
+      ],
+      "technology": "WebRTC"
+    },
+    {
+      "id": "gateway",
+      "label": "Gateway",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Long-lived WebSocket per online client carrying events and voice state updates (Elixir at Discord).",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://discord.com/blog/how-discord-handles-two-and-half-million-concurrent-voice-users-using-webrtc"
+      ],
+      "technology": "Elixir"
+    },
+    {
+      "id": "placement",
+      "label": "Call placement",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Discord Guilds: assigns the least utilized voice server in the region to the guild, pushes voice state to it, and reassigns on failure, DDoS or region change.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://discord.com/blog/how-discord-handles-two-and-half-million-concurrent-voice-users-using-webrtc"
+      ],
+      "technology": "Elixir"
+    },
+    {
+      "id": "discovery",
+      "label": "Service discovery",
+      "kind": "datastore",
+      "c4": "container",
+      "summary": "Voice servers report health and load here; a server that fails its ping is removed.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://discord.com/blog/how-discord-handles-two-and-half-million-concurrent-voice-users-using-webrtc"
+      ],
+      "technology": "etcd"
+    },
+    {
+      "id": "voice",
+      "label": "Media server",
+      "kind": "service",
+      "c4": "container",
+      "summary": "One of hundreds of regional voice servers; each pairs a signaling component with an SFU.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://discord.com/blog/how-discord-handles-two-and-half-million-concurrent-voice-users-using-webrtc"
+      ],
+      "group": "Media server"
+    },
+    {
+      "id": "signaling",
+      "label": "Server signaling",
+      "kind": "service",
+      "c4": "component",
+      "parent": "voice",
+      "summary": "Controls the SFU: stream ids, encryption keys, speaking indication; restarts a crashed SFU and rebuilds its state without clients.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://discord.com/blog/how-discord-handles-two-and-half-million-concurrent-voice-users-using-webrtc"
+      ],
+      "group": "Media server"
+    },
+    {
+      "id": "sfu",
+      "label": "Selective forwarding unit",
+      "kind": "service",
+      "c4": "component",
+      "parent": "voice",
+      "summary": "Forwards RTP packets without decoding the payload, choosing which sources each endpoint receives; drops muted users' packets, bridges browser and native transports, handles RTCP.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://discord.com/blog/how-discord-handles-two-and-half-million-concurrent-voice-users-using-webrtc",
+        "https://www.rfc-editor.org/rfc/rfc7667.txt"
+      ],
+      "technology": "C++",
+      "group": "Media server"
+    },
+    {
+      "id": "lastn",
+      "label": "Speaker selection (Last N)",
+      "kind": "service",
+      "c4": "component",
+      "parent": "voice",
+      "summary": "Orders endpoints by audio activity and forwards video from the last N dominant speakers: 45% less CPU and 63% less bandwidth for 10 of 30 participants (Jitsi).",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://jitsi.org/wp-content/uploads/2016/12/nossdav2015lastn.pdf"
+      ],
+      "group": "Media server"
+    },
+    {
+      "id": "turn",
+      "label": "TURN relay",
+      "kind": "edge",
+      "c4": "container",
+      "summary": "Relays media for hosts that cannot communicate directly behind NATs; used by ICE as the last-resort path.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://www.rfc-editor.org/rfc/rfc8656.txt",
+        "https://www.rfc-editor.org/rfc/rfc8445.txt"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "client-gateway",
+      "from": "client",
+      "to": "gateway",
+      "label": "gateway WebSocket: join channel"
+    },
+    {
+      "id": "gateway-placement",
+      "from": "gateway",
+      "to": "placement",
+      "label": "voice state update"
+    },
+    {
+      "id": "placement-discovery",
+      "from": "placement",
+      "to": "discovery",
+      "label": "least utilized server in region"
+    },
+    {
+      "id": "placement-signaling",
+      "from": "placement",
+      "to": "signaling",
+      "label": "push voice states"
+    },
+    {
+      "id": "client-signaling",
+      "from": "client",
+      "to": "signaling",
+      "label": "voice WebSocket: media setup"
+    },
+    {
+      "id": "client-sfu",
+      "from": "client",
+      "to": "sfu",
+      "label": "RTP over UDP",
+      "protocol": "UDP"
+    },
+    {
+      "id": "signaling-sfu",
+      "from": "signaling",
+      "to": "sfu",
+      "label": "control, restart"
+    },
+    {
+      "id": "sfu-lastn",
+      "from": "sfu",
+      "to": "lastn",
+      "label": "audio levels → who to forward"
+    },
+    {
+      "id": "client-turn",
+      "from": "client",
+      "to": "turn",
+      "label": "relayed media (fallback)"
+    },
+    {
+      "id": "turn-sfu",
+      "from": "turn",
+      "to": "sfu",
+      "label": "relayed RTP"
+    },
+    {
+      "id": "voice-discovery",
+      "from": "voice",
+      "to": "discovery",
+      "label": "health and load",
+      "mode": "async"
+    }
+  ],
+  "flows": [
+    {
+      "id": "join",
+      "name": "Joining a call",
+      "steps": [
+        {
+          "edge": "client-gateway",
+          "caption": "The client asks to join a voice channel over its existing gateway WebSocket."
+        },
+        {
+          "edge": "gateway-placement",
+          "caption": "Its voice state is updated in the placement service."
+        },
+        {
+          "edge": "placement-discovery",
+          "caption": "If the call has no server yet, the least utilized voice server in the region is picked."
+        },
+        {
+          "edge": "placement-signaling",
+          "caption": "All voice states are pushed to that server so it can set up forwarding."
+        },
+        {
+          "edge": "client-signaling",
+          "caption": "The client opens a voice WebSocket to the server and exchanges keys and stream ids."
+        },
+        {
+          "edge": "client-sfu",
+          "caption": "Media flows over UDP to and from the SFU."
+        }
+      ]
+    },
+    {
+      "id": "forward",
+      "name": "Forwarding in a large meeting",
+      "steps": [
+        {
+          "edge": "client-sfu",
+          "caption": "Each sender sends its streams once to the SFU."
+        },
+        {
+          "edge": "sfu-lastn",
+          "caption": "Audio levels rank the speakers; only the last N speakers' video is selected."
+        },
+        {
+          "edge": "client-sfu",
+          "caption": "Each receiver gets those streams, without the SFU decoding or re-encoding them."
+        }
+      ]
+    },
+    {
+      "id": "nat",
+      "name": "A client behind a strict NAT",
+      "steps": [
+        {
+          "edge": "client-turn",
+          "caption": "Direct UDP to the SFU fails, so ICE selects the relayed candidate."
+        },
+        {
+          "edge": "turn-sfu",
+          "caption": "The TURN server relays the media, at the cost of an extra hop."
+        }
+      ]
+    },
+    {
+      "id": "sfu-crash",
+      "failure": true,
+      "name": "The SFU process crashes (failure)",
+      "steps": [
+        {
+          "edge": "signaling-sfu",
+          "caption": "Signaling sees the SFU is gone and restarts it right away."
+        },
+        {
+          "edge": "signaling-sfu",
+          "caption": "It rebuilds the SFU's state itself; clients see only a few dropped packets."
+        }
+      ]
+    },
+    {
+      "id": "server-dies",
+      "failure": true,
+      "name": "The media server dies or is attacked (failure)",
+      "steps": [
+        {
+          "edge": "voice-discovery",
+          "caption": "The server fails its ping (or is pulled for a DDoS) and leaves service discovery."
+        },
+        {
+          "edge": "client-gateway",
+          "caption": "Clients notice the dropped voice WebSocket and report it over the gateway."
+        },
+        {
+          "edge": "placement-discovery",
+          "caption": "Placement confirms and picks a new server in the region."
+        },
+        {
+          "edge": "placement-signaling",
+          "caption": "It pushes the voice states to the new server."
+        },
+        {
+          "edge": "client-signaling",
+          "caption": "Clients reconnect to the new server and media resumes."
+        }
+      ]
+    }
+  ]
+}

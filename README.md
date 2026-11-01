@@ -65,6 +65,7 @@ Known limits are at the end of this file and in the [roadmap](ROADMAP.md).
 | 07 | [Photo upload & storage](systems/07-photo-upload-storage.md) | real + pattern | direct upload, Haystack, f4 warm storage, cooling | Haystack (2010) and f4 (2014) papers, AWS presigned URLs |
 | 08 | [Chat (WhatsApp)](systems/08-chat-whatsapp.md) | reference | store-and-forward, ACKs, E2EE, multi-device | WhatsApp whitepaper v9, Meta Engineering |
 | 09 | [Discord](systems/09-discord.md) | real | Elixir fan-out, Rust hot spots, Cassandra→ScyllaDB, voice | Five Discord engineering posts |
+| 40 | [Video conferencing](systems/40-video-conferencing.md) | real + pattern | mesh vs MCU vs SFU, last-N forwarding, load-aware call placement, SFU failover, ICE and TURN | Discord voice (2018), Jitsi Last N (2015), RFC 7667, RFC 8445, RFC 8656 |
 | 10 | [Notification system](systems/10-notification-system.md) | reference | priority queues, dedup, APNs/FCM behaviour, retries | Apple, Firebase and SQS docs |
 | 11 | [News feed (Twitter/Instagram)](systems/11-news-feed.md) | reference | fan-out on write vs read, ranking pipeline, sharded IDs | Twitter 2017 infra post, the-algorithm repo, Instagram 2012 |
 | 12 | [YouTube](systems/12-youtube.md) | reference | upload, transcoding DAG, adaptive bitrate, CDN | YouTube Help/API/blog, Vitess, RFC 8216 |
@@ -114,7 +115,7 @@ The answer outlines in each note are our own reasoning and are labelled as such.
 1. **Foundations:** 01 URL shortener → 02 Rate limiter → 03 Key-value store.
 2. **Building blocks:** 35 Unique IDs → 32 Distributed cache → 33 Coordination and locks → 34 Top-K and leaderboards → 37 Job scheduler (they recur inside every large design, so read them early or alongside the others).
 3. **Storage and data infrastructure:** 05 Object storage → 04 Message queue → 07 Photo storage → 06 File sync.
-4. **Real-time communication:** 08 Chat → 09 Discord → 18 Google Docs → 21 Game matchmaking + chat.
+4. **Real-time communication:** 08 Chat → 09 Discord → 40 Video conferencing → 18 Google Docs → 21 Game matchmaking + chat.
 5. **Media delivery:** 38 CDN → 14 Spotify → 12 YouTube → 13 Netflix → 29 Live streaming.
 6. **Feeds, notifications and ranking:** 11 News feed → 10 Notification system.
 7. **Correctness under contention:** 16 Reservations → 17 Payments → 19 Stock exchange.
@@ -140,7 +141,7 @@ For interviews, practise each note's **Interview questions**, and walk the **flo
 | Idempotency and retries | 01, 04, 10, 16, 17, 25, 31, 32, 37 |
 | Event sourcing and immutable logs | 04, 17, 19 |
 | Concurrency control (constraints, locks, OT, single writer) | 16, 18, 19, 33 |
-| Real-time push and WebSockets | 08, 09, 18, 21, 29 |
+| Real-time push and WebSockets | 08, 09, 18, 21, 29, 40 |
 | Rate limiting and back-pressure | 02, 10, 17, 20, 22, 25, 29, 30 |
 | Failure handling (fail open, failover, recovery) | 02, 10, 17, 19, 27, 30 |
 | Pre-signed URLs and blob storage | 05, 07, 08, 12, 14 |
@@ -163,6 +164,7 @@ For interviews, practise each note's **Interview questions**, and walk the **flo
 | Stream processing, event time, exactly-once | 31, 04 |
 | Evaluation, safety and cost control for AI systems | 22, 23, 25, 28 |
 | Road-graph routing and travel-time prediction | 39 |
+| Media forwarding (SFU, MCU) and NAT traversal | 40 |
 
 ## The site
 
