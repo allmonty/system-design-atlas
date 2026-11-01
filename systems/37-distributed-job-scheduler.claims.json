@@ -1,0 +1,44 @@
+[
+  {
+    "quote": "should be idempotent",
+    "url": "https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Cron's failure domain is essentially just one machine",
+    "url": "https://sre.google/sre-book/distributed-periodic-scheduling/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "we favor skipping launches rather than risking double launches",
+    "url": "https://sre.google/sre-book/distributed-periodic-scheduling/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "it must immediately stop interacting with the datacenter scheduler",
+    "url": "https://sre.google/sre-book/distributed-periodic-scheduling/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "at most one instance of a task will be actively executing",
+    "url": "https://dropbox.tech/infrastructure/asynchronous-task-scheduling-at-dropbox",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "approximately once per execution time of its schedule",
+    "url": "https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  }
+]

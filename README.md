@@ -91,6 +91,7 @@ Known limits are at the end of this file and in the [roadmap](ROADMAP.md).
 | 32 | [Distributed cache (Memcache at Facebook)](systems/32-distributed-cache.md) | real + pattern | look-aside cache, leases, thundering herds, gutter pool, invalidation pipeline | Scaling Memcache at Facebook (NSDI 2013) |
 | 33 | [Coordination, locks and leader election](systems/33-distributed-coordination-locks.md) | real + pattern | consensus-backed lock service, sessions and leases, fencing tokens, herd-free locks | Chubby (OSDI 2006), ZooKeeper (ATC 2010), Raft (2014) |
 | 34 | [Top-K, heavy hitters and leaderboards](systems/34-top-k-leaderboard.md) | reference | sorted sets, Space-Saving counters, windows, merge correctness, sharded ranks | Redis docs, Space-Saving (ICDT 2005) |
+| 37 | [Distributed job scheduler](systems/37-distributed-job-scheduler.md) | real + pattern | replicated cron with one launching leader, skip vs double launch, delayed task queues, claims and heartbeats | Google SRE book (cron chapter), Dropbox ATF (2020), Kubernetes CronJob docs |
 | 35 | [Unique ID generation](systems/35-unique-id-generation.md) | real + pattern | Snowflake bit layout, ticket servers, UUIDv7, clock safety, machine ids | Snowflake post and README, Flickr ticket servers, RFC 9562 |
 
 ## How to answer a system-design question
@@ -109,7 +110,7 @@ The answer outlines in each note are our own reasoning and are labelled as such.
 ## Suggested learning path
 
 1. **Foundations:** 01 URL shortener → 02 Rate limiter → 03 Key-value store.
-2. **Building blocks:** 35 Unique IDs → 32 Distributed cache → 33 Coordination and locks → 34 Top-K and leaderboards (they recur inside every large design, so read them early or alongside the others).
+2. **Building blocks:** 35 Unique IDs → 32 Distributed cache → 33 Coordination and locks → 34 Top-K and leaderboards → 37 Job scheduler (they recur inside every large design, so read them early or alongside the others).
 3. **Storage and data infrastructure:** 05 Object storage → 04 Message queue → 07 Photo storage → 06 File sync.
 4. **Real-time communication:** 08 Chat → 09 Discord → 18 Google Docs → 21 Game matchmaking + chat.
 5. **Media delivery:** 14 Spotify → 12 YouTube → 13 Netflix → 29 Live streaming.
@@ -130,11 +131,11 @@ For interviews, practise each note's **Interview questions**, and walk the **flo
 | Sharding / partitioning / consistent hashing | 01, 03, 04, 05, 09, 11, 13, 15, 16, 20, 24, 30, 31, 34 |
 | Replication, quorums, erasure coding | 03, 04, 05, 06, 07, 30, 31 |
 | Consistency models and trade-offs | 03, 04, 05, 06, 16, 18, 30, 33 |
-| Queues, logs and event-driven design | 04, 08, 10, 17, 19, 31 |
-| Consensus, leader election and fencing | 33, 04, 19, 31 |
+| Queues, logs and event-driven design | 04, 08, 10, 17, 19, 31, 37 |
+| Consensus, leader election and fencing | 33, 04, 19, 31, 37 |
 | Approximate counting and top-K | 34 |
 | Cache consistency, stampede protection | 32 |
-| Idempotency and retries | 01, 04, 10, 16, 17, 25, 31, 32 |
+| Idempotency and retries | 01, 04, 10, 16, 17, 25, 31, 32, 37 |
 | Event sourcing and immutable logs | 04, 17, 19 |
 | Concurrency control (constraints, locks, OT, single writer) | 16, 18, 19, 33 |
 | Real-time push and WebSockets | 08, 09, 18, 21, 29 |
@@ -147,7 +148,7 @@ For interviews, practise each note's **Interview questions**, and walk the **flo
 | Search and inverted indexes | 20, 23, 24, 36 |
 | Ranking and recommendation pipelines | 11, 20, 23, 26 |
 | End-to-end encryption and privacy | 08 |
-| Matching and scheduling | 15, 16, 19, 21, 27 |
+| Matching and scheduling | 15, 16, 19, 21, 27, 37 |
 | LLM serving: KV cache, continuous batching, prefill/decode | 22, 28 |
 | Retrieval and reranking, hybrid search | 23, 24, 26 |
 | Approximate nearest-neighbour indexes | 24, 23, 26 |

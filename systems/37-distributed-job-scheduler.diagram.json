@@ -1,0 +1,361 @@
+{
+  "id": "37-distributed-job-scheduler",
+  "title": "Distributed Job Scheduler",
+  "kind": "real-system",
+  "nodes": [
+    {
+      "id": "owner",
+      "label": "Job owner",
+      "kind": "client",
+      "c4": "person",
+      "summary": "Registers periodic jobs or schedules one-off tasks, and monitors their runs.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://sre.google/sre-book/distributed-periodic-scheduling/"
+      ]
+    },
+    {
+      "id": "cron",
+      "label": "Cron service",
+      "kind": "service",
+      "c4": "container",
+      "summary": "A few replicas (three by default) sharing state through Paxos; spread across power domains in one datacenter (Google).",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://sre.google/sre-book/distributed-periodic-scheduling/"
+      ],
+      "technology": "Paxos",
+      "group": "Cron service (Google)"
+    },
+    {
+      "id": "leader",
+      "label": "Cron leader",
+      "kind": "service",
+      "c4": "component",
+      "parent": "cron",
+      "summary": "The only replica that changes state or launches jobs. Records the start of a launch through Paxos before launching and its end after; stops talking to the datacenter scheduler as soon as it loses leadership.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://sre.google/sre-book/distributed-periodic-scheduling/"
+      ],
+      "group": "Cron service (Google)"
+    },
+    {
+      "id": "followers",
+      "label": "Follower replicas",
+      "kind": "service",
+      "c4": "component",
+      "parent": "cron",
+      "summary": "Track every job's next launch time and all open launches, so one can take over within the one-minute failover target.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://sre.google/sre-book/distributed-periodic-scheduling/"
+      ],
+      "group": "Cron service (Google)"
+    },
+    {
+      "id": "state",
+      "label": "Paxos log and snapshots",
+      "kind": "datastore",
+      "c4": "component",
+      "parent": "cron",
+      "summary": "Logs and snapshots on each replica's local disk; snapshots also backed up to the distributed filesystem; logs are not.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://sre.google/sre-book/distributed-periodic-scheduling/"
+      ],
+      "group": "Cron service (Google)"
+    },
+    {
+      "id": "dcsched",
+      "label": "Datacenter scheduler",
+      "kind": "external",
+      "c4": "external-system",
+      "summary": "Runs the launched jobs on machines (Borg at Google). Job names include the scheduled launch time, so a new leader can look up whether a launch happened.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://sre.google/sre-book/distributed-periodic-scheduling/"
+      ],
+      "technology": "Borg"
+    },
+    {
+      "id": "frontend",
+      "label": "Task frontend",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Accepts Schedule RPCs for immediate or delayed tasks and writes them to the task store (Dropbox ATF).",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://dropbox.tech/infrastructure/asynchronous-task-scheduling-at-dropbox"
+      ],
+      "technology": "gRPC"
+    },
+    {
+      "id": "store",
+      "label": "Task store",
+      "kind": "datastore",
+      "c4": "container",
+      "summary": "Holds task state and payload, indexed by the next trigger timestamp; every state change also moves that timestamp so stalled tasks are polled again.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://dropbox.tech/infrastructure/asynchronous-task-scheduling-at-dropbox"
+      ],
+      "technology": "Edgestore"
+    },
+    {
+      "id": "consumer",
+      "label": "Store Consumer",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Polls the store (every two seconds at the time) for due and retrying tasks and pushes them onto the right queue.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://dropbox.tech/infrastructure/asynchronous-task-scheduling-at-dropbox"
+      ]
+    },
+    {
+      "id": "queues",
+      "label": "Per-type priority queues",
+      "kind": "queue",
+      "c4": "container",
+      "summary": "One SQS queue per (lambda, priority) pair, buffering between the poller and the workers and isolating task types.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://dropbox.tech/infrastructure/asynchronous-task-scheduling-at-dropbox"
+      ],
+      "technology": "Amazon SQS"
+    },
+    {
+      "id": "workers",
+      "label": "Worker hosts",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Each host runs one Controller that pulls from queues and serves tasks, and Executors that run the callback, heartbeat, and stop themselves after three failed heartbeats.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://dropbox.tech/infrastructure/asynchronous-task-scheduling-at-dropbox"
+      ],
+      "group": "Worker host"
+    },
+    {
+      "id": "hsc",
+      "label": "Heartbeat and Status Controller",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Serves ClaimTask, Heartbeat and SetResults; a task can be claimed only from the Enqueued state, which prevents concurrent execution.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://dropbox.tech/infrastructure/asynchronous-task-scheduling-at-dropbox"
+      ]
+    },
+    {
+      "id": "dlq",
+      "label": "Dead letter queue",
+      "kind": "queue",
+      "c4": "container",
+      "summary": "Proposed by Dropbox for tasks stuck in retry loops: cap retries, park the task, reschedule after the fix. A proposal in the post, not a described component.",
+      "confidence": "INDUSTRY PATTERN",
+      "sources": [
+        "https://dropbox.tech/infrastructure/asynchronous-task-scheduling-at-dropbox"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "owner-leader",
+      "from": "owner",
+      "to": "leader",
+      "label": "register periodic job"
+    },
+    {
+      "id": "leader-followers",
+      "from": "leader",
+      "to": "followers",
+      "label": "launch start / end via Paxos quorum"
+    },
+    {
+      "id": "leader-state",
+      "from": "leader",
+      "to": "state",
+      "label": "append log, snapshot"
+    },
+    {
+      "id": "leader-dcsched",
+      "from": "leader",
+      "to": "dcsched",
+      "label": "launch job named by scheduled time"
+    },
+    {
+      "id": "followers-dcsched",
+      "from": "followers",
+      "to": "dcsched",
+      "label": "new leader: look up open launches"
+    },
+    {
+      "id": "owner-frontend",
+      "from": "owner",
+      "to": "frontend",
+      "label": "Schedule(task, run_at)"
+    },
+    {
+      "id": "frontend-store",
+      "from": "frontend",
+      "to": "store",
+      "label": "write task + trigger time"
+    },
+    {
+      "id": "consumer-store",
+      "from": "consumer",
+      "to": "store",
+      "label": "poll due tasks",
+      "mode": "async"
+    },
+    {
+      "id": "consumer-queues",
+      "from": "consumer",
+      "to": "queues",
+      "label": "enqueue",
+      "mode": "async"
+    },
+    {
+      "id": "workers-queues",
+      "from": "workers",
+      "to": "queues",
+      "label": "pull"
+    },
+    {
+      "id": "workers-hsc",
+      "from": "workers",
+      "to": "hsc",
+      "label": "ClaimTask / Heartbeat / SetResults"
+    },
+    {
+      "id": "hsc-store",
+      "from": "hsc",
+      "to": "store",
+      "label": "update state + next trigger"
+    },
+    {
+      "id": "consumer-dlq",
+      "from": "consumer",
+      "to": "dlq",
+      "label": "retries exhausted",
+      "mode": "async"
+    }
+  ],
+  "flows": [
+    {
+      "id": "periodic",
+      "name": "A periodic launch (Google cron)",
+      "steps": [
+        {
+          "edge": "owner-leader",
+          "caption": "The owner registers a job; the schedule may use ? so the system picks a start minute by hashing."
+        },
+        {
+          "edge": "leader-followers",
+          "caption": "At the scheduled time the leader records the launch start in Paxos and waits for the quorum."
+        },
+        {
+          "edge": "leader-dcsched",
+          "caption": "Only then it asks the datacenter scheduler to run the job, named with its scheduled time."
+        },
+        {
+          "edge": "leader-followers",
+          "caption": "The leader records the launch end; followers update the next launch time."
+        },
+        {
+          "edge": "leader-state",
+          "caption": "State changes go to the log; periodic snapshots bound its size."
+        }
+      ]
+    },
+    {
+      "id": "delayed",
+      "name": "A delayed task runs (Dropbox ATF)",
+      "steps": [
+        {
+          "edge": "owner-frontend",
+          "caption": "A client schedules a task for a future time."
+        },
+        {
+          "edge": "frontend-store",
+          "caption": "The task is stored with its next trigger timestamp."
+        },
+        {
+          "edge": "consumer-store",
+          "caption": "When it is due, the Store Consumer's poll picks it up."
+        },
+        {
+          "edge": "consumer-queues",
+          "caption": "It is pushed onto the queue for its type and priority."
+        },
+        {
+          "edge": "workers-queues",
+          "caption": "A Controller pulls it for an Executor."
+        },
+        {
+          "edge": "workers-hsc",
+          "caption": "The task is claimed, heartbeats while running, and reports its result."
+        },
+        {
+          "edge": "hsc-store",
+          "caption": "The store records the final state; retriable failures get a new trigger time."
+        }
+      ]
+    },
+    {
+      "id": "leader-dies",
+      "failure": true,
+      "name": "The cron leader dies mid-launch (failure)",
+      "steps": [
+        {
+          "edge": "leader-followers",
+          "caption": "The start of the launch is recorded but no end arrives; the launch is open."
+        },
+        {
+          "edge": "followers-dcsched",
+          "caption": "A follower becomes leader within seconds and looks up the precomputed job name, which includes the scheduled time."
+        },
+        {
+          "edge": "followers-dcsched",
+          "caption": "It launches only if the job is missing; if lookup were impossible, the policy prefers skipping over a double launch."
+        }
+      ]
+    },
+    {
+      "id": "stuck-worker",
+      "failure": true,
+      "name": "A worker stops heartbeating (failure)",
+      "steps": [
+        {
+          "edge": "workers-hsc",
+          "caption": "Three heartbeats in a row fail; the Executor terminates itself."
+        },
+        {
+          "edge": "consumer-store",
+          "caption": "After the longer heartbeat timeout the task's trigger time has passed, so the poller finds it again."
+        },
+        {
+          "edge": "consumer-queues",
+          "caption": "It is re-enqueued and claimed by another worker, with no overlap with the dead one."
+        }
+      ]
+    },
+    {
+      "id": "retry-loop",
+      "failure": true,
+      "name": "A buggy task retries forever (failure)",
+      "steps": [
+        {
+          "edge": "hsc-store",
+          "caption": "The handler keeps returning a retriable failure and the task is rescheduled again and again."
+        },
+        {
+          "edge": "consumer-dlq",
+          "caption": "With a retry cap, it moves to a dead letter queue instead of eating scheduling capacity (Dropbox's proposal)."
+        }
+      ]
+    }
+  ]
+}
