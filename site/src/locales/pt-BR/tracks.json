@@ -73,7 +73,8 @@
       "W04": "Seis cenários abertos: escreva o registro de decisão, depois compare com o que uma resposta forte cobre.",
       "W02": "Revise designs com falhas como uma design review faria.",
       "P15": "Como revisar uma mudança ou um design: a ordem de leitura, os rótulos dos comentários e uma rotina à parte para código gerado por IA.",
-      "W06": "Revise a spec de uma API com falhas e depois confira com o gabarito: autorização primeiro, compatibilidade por último."
+      "W06": "Revise a spec de uma API com falhas e depois confira com o gabarito: autorização primeiro, compatibilidade por último.",
+      "P17": "Privacidade como arquitetura: minimização, limitação de finalidade imposta pela infraestrutura e exclusão que alcança todas as cópias."
     }
   },
   "ai": {

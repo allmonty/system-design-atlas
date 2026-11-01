@@ -199,6 +199,10 @@
           "why": "Multi-tenancy: isolation is not authentication, silo versus pool, and the noisy-neighbour mitigations. Cost and limits per tenant follow from the cost primer."
         },
         {
+          "ref": "P17",
+          "why": "Privacy as architecture: minimisation, purpose limitation enforced in infrastructure, and deletion that reaches every copy."
+        },
+        {
           "ref": "13",
           "why": "A control plane and data plane at scale, with steering."
         },
