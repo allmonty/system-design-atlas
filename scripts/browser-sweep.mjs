@@ -1,5 +1,6 @@
-// Browser sweep: opens every page of the built site at 1280px and 500px in three themes and reports console errors,
+// Browser sweep: opens every page of the built site at 1280px and 500px in three themes, then once more in pt-BR, and reports console errors,
 // sideways scroll, clipped cards, text overflowing a diagram node, a missing or non-sticky top bar, empty pages, a missing trust card or diagram, and text below WCAG AA contrast.
+// The pt-BR pass also checks that <html lang> switched and that a note shows the not-translated notice exactly when it has no mirror in locales/pt-BR.
 //
 //   cd site && npm run build && npx vite preview --port 5188 &
 //   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --remote-debugging-port=9333 about:blank &
@@ -14,6 +15,8 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SP = resolve(ROOT, ".cache"); mkdirSync(SP, { recursive: true });
 const systems = readdirSync(`${ROOT}/systems`).filter((f) => f.endsWith(".md")).map((f) => f.replace(/\.md$/, ""));
 const toolkit = readdirSync(`${ROOT}/toolkit`).filter((f) => f.endsWith(".md")).map((f) => f.replace(/\.md$/, ""));
+// route names of the notes that have a pt-BR mirror, e.g. "sys-08" and "toolkit-P02"
+const mirrored = new Set([...readdirSync(`${ROOT}/locales/pt-BR/systems`).map((f) => `sys-${f.slice(0, 2)}`), ...readdirSync(`${ROOT}/locales/pt-BR/toolkit`).map((f) => `toolkit-${f.slice(0, 3)}`)]);
 const routes = [
   ["home", ""], ["concepts", "concepts"], ...["interview", "foundations", "architect", "ai", "atlas"].map((t) => [`track-${t}`, `track/${t}`]),
   ...toolkit.map((t) => [`toolkit-${t.slice(0, 3)}`, `toolkit/${t}`]),
@@ -45,6 +48,8 @@ const CHECK = `(() => {
   out.nodes = document.querySelectorAll('.react-flow__node').length;
   out.nodeOverflow = [...document.querySelectorAll('.c4-body')].filter((b) => b.scrollHeight > b.clientHeight + 1 || b.scrollWidth > b.clientWidth + 1).length;
   out.emptyMain = (document.querySelector('main')?.innerText.trim().length ?? 0) < 200;
+  out.lang = document.documentElement.lang;
+  out.notice = [...document.querySelectorAll('p.muted.small')].some((p) => p.textContent.startsWith('Esta página ainda não foi traduzida'));
   // text contrast: composite translucent backgrounds, skip diagram nodes, decorative art and disabled controls
   const parse = (c) => { const m = c.match(/-?[\\d.]+(?:e-?\\d+)?/g)?.map(Number) ?? [0,0,0,0]; const k = c.startsWith('color(') ? 255 : 1; return { r: m[0] * k, g: m[1] * k, b: m[2] * k, a: m[3] ?? 1 }; };
   const lum = ({ r, g, b }) => { const f = (v) => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }; return .2126 * f(r) + .7152 * f(g) + .0722 * f(b); };
@@ -85,10 +90,27 @@ for (const w of widths) {
     }
   }
 }
+// pt-BR pass: one theme is enough (colours do not depend on language); longer strings are what can break layout
+await send("Page.navigate", { url: "http://localhost:5188/" }); await sleep(500);
+await ev(`document.cookie = 'atlas-settings=' + encodeURIComponent(JSON.stringify({ theme: 'light', font: 'system', size: 16, lang: 'pt-BR' })) + '; Path=/'`);
+for (const w of widths) {
+  await send("Emulation.setDeviceMetricsOverride", { width: w, height: 900, deviceScaleFactor: 1, mobile: false });
+  await send("Page.navigate", { url: "about:blank" }); await sleep(150);
+  await send("Page.navigate", { url: "http://localhost:5188/" }); await sleep(700);
+  for (const [name, hash] of routes) {
+    if ((name.endsWith("-text") || name.endsWith("-graph")) && w !== 1280) continue;
+    current = `${name} ${w}px pt-BR`;
+    await ev(`location.hash = '#${hash}'`); await sleep(name.startsWith("sys-") ? 450 : 250);
+    const note = name.startsWith("sys-") ? name.slice(0, 6) : name.startsWith("toolkit-") ? name : null;
+    try { const r = await ev(CHECK); results.push({ route: name, width: w, theme: "light", pt: true, wrongNotice: note ? r.notice === mirrored.has(note) : false, ...r }); }
+    catch (e) { results.push({ route: name, width: w, theme: "light", pt: true, crash: String(e).slice(0, 200) }); }
+  }
+}
+await ev(`document.cookie = 'atlas-settings=; Max-Age=0; Path=/'`);
 writeFileSync(`${SP}/sweep.json`, JSON.stringify({ results, errors }, null, 1));
-const bad = results.filter((r) => r.crash || r.overflowX || r.cardOverflow || r.nodeOverflow || !r.topBar || r.emptyMain || (r.route.startsWith("sys-") && !r.route.endsWith("-text") && !r.nodes) || (r.route.startsWith("sys-") && !r.trust) || r.h1 !== 1 || r.lowCount);
+const bad = results.filter((r) => r.crash || r.overflowX || r.cardOverflow || r.nodeOverflow || !r.topBar || r.emptyMain || (r.route.startsWith("sys-") && !r.route.endsWith("-text") && !r.nodes) || (r.route.startsWith("sys-") && !r.trust) || r.h1 !== 1 || r.lowCount || (r.pt && (r.lang !== "pt-BR" || r.wrongNotice)));
 const fails = bad.filter((r) => !(r.theme === "dark" && r.lowContrast?.every((l) => l.startsWith("span.chip tint")) && !r.crash && !r.overflowX && !r.cardOverflow && !r.nodeOverflow && r.topBar && !r.emptyMain && r.h1 === 1));
 console.log(`${results.length} checks, ${errors.length} console errors, ${fails.length} failing, ${Math.round((Date.now() - t0) / 1000)} s`);
-for (const r of fails.slice(0, 20)) console.log(" ", r.route, r.width, r.theme, JSON.stringify(r).slice(0, 200));
+for (const r of fails.slice(0, 20)) console.log(" ", r.route, r.width, r.pt ? "pt-BR" : r.theme, JSON.stringify(r).slice(0, 200));
 for (const e of errors.slice(0, 10)) console.log("  error:", e.join(" | "));
 ws.close(); process.exit(fails.length || errors.length ? 1 : 0);

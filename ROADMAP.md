@@ -5,7 +5,7 @@ What is left after the 42 systems, the toolkit and the site. Each item says what
 | # | Item | Status |
 |---|---|---|
 | 1 | Browser testing beyond headless Chrome | Partly done: `npm run sweep` (see below), plus hand checks of the study checkboxes, progress, PNG export and print styles. A real phone, a screen reader and a real print dialog are still untested. |
-| 2 | Check the whole site in the new design | Done: `npm run sweep` opens every page (478 checks: every page in 3 themes at 2 widths, with the text and graph views in light at 1280px) with 0 console errors and 0 failures; it also checks the sticky top bar (brand, coffee link, settings) on every page. |
+| 2 | Check the whole site in the new design | Done: `npm run sweep` opens every page (800 checks on 2026-11-01: every page in 3 themes at 2 widths, then again in pt-BR at 2 widths, with the text and graph views at 1280px only) with 0 console errors and 0 failures; it also checks the sticky top bar (brand, coffee link, settings) on every page. |
 | 3 | Fresh independent source review of all the content | Done on 2026-10-27 by four fresh read-only reviewers (notes 01-12, 13-23, 24-35, and the toolkit with the workbook and site data). About 25 findings were verified and fixed; the rest are listed under "Review follow-ups" below. |
 | 4 | Find a primary source for "dispatch optimization" in note 15 | Resolved: no primary source gives the expansion (Uber's InfoQ page and slides use the name DISCO only), so note 15 attributes it to HighScalability's summary. |
 | 5 | Confidence tags on diagram edges | Deferred. Needs a schema change and hand-tagging a few hundred edges. |
@@ -18,7 +18,7 @@ What is left after the 42 systems, the toolkit and the site. Each item says what
 
 ## 1 and 2: what the browser sweep covers and what it cannot
 
-`npm run sweep` (`scripts/browser-sweep.mjs`, start instructions in its header) drives headless Chrome over its DevTools protocol. For every system, toolkit page, track, the concept index and the home page it checks console errors, sideways scroll, clipped cards, empty pages, a missing trust card or diagram, one h1 per page, and text contrast (WCAG AA) across light, warm and dark at 1280px and 500px.
+`npm run sweep` (`scripts/browser-sweep.mjs`, start instructions in its header) drives headless Chrome over its DevTools protocol. For every system, toolkit page, track, the concept index and the home page it checks console errors, sideways scroll, clipped cards, empty pages, a missing trust card or diagram, one h1 per page, and text contrast (WCAG AA) across light, warm and dark at 1280px and 500px. A pt-BR pass repeats the layout checks in Portuguese and checks that `<html lang>` switched and that a note shows the not-translated notice exactly when it has no mirror.
 
 It found, and the commits fixed: two h1 headings on every system page (the note's own title is now a second-level heading) and a favicon 404 on every load. The dark-theme "lighter = component" legend chip is flagged by the contrast check but is a false positive (gradient background), and is excluded.
 

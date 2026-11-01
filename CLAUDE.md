@@ -16,7 +16,7 @@ npm run validate   # schema, references, required sections, relative links, sour
 npm test           # unit tests (node:test via tsx): validator, trust helpers, text search, settings, design tokens, learning order, translation overlays and glossary rules; single file: npx tsx --test test/validate.test.ts
 cd site && npm install && npm run dev      # http://localhost:5173
 npm run build      # writes llms.txt, llms-full.txt and md/ note copies (scripts/build-llms.ts, gitignored in site/public), then tsc --noEmit + vite build, output in site/dist (not committed; the Pages workflow builds and deploys it)
-npm run sweep      # needs `vite preview` on :5188 and headless Chrome on :9333 (see scripts/browser-sweep.mjs); checks every page
+npm run sweep      # needs `vite preview` on :5188 and headless Chrome on :9333 (see scripts/browser-sweep.mjs); checks every page in English (3 themes) and in pt-BR
 ```
 
 Deep links: `site/#07-photo-upload-storage?flow=upload&step=2` opens a flow at a step.
