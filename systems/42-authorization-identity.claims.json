@@ -1,0 +1,37 @@
+[
+  {
+    "quote": "enables a third-party application to obtain limited access to an HTTP service",
+    "url": "https://www.rfc-editor.org/rfc/rfc6749.txt",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "a simple identity layer on top of the OAuth 2.0",
+    "url": "https://openid.net/specs/openid-connect-core-1_0.html",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "a security token that contains Claims about the Authentication of an End-User",
+    "url": "https://openid.net/specs/openid-connect-core-1_0.html",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "a global system for storing and evaluating access control lists",
+    "url": "https://www.usenix.org/system/files/atc19-pang.pdf",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "the most critical frontier",
+    "url": "https://www.usenix.org/system/files/atc19-pang.pdf",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  }
+]

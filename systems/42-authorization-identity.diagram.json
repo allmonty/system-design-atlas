@@ -1,0 +1,314 @@
+{
+  "id": "42-authorization-identity",
+  "title": "Authorization at Scale (Zanzibar) and Identity",
+  "kind": "real-system",
+  "nodes": [
+    {
+      "id": "user",
+      "label": "End user",
+      "kind": "client",
+      "c4": "person",
+      "summary": "Signs in, opens and shares documents, photos or projects.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://openid.net/specs/openid-connect-core-1_0.html"
+      ]
+    },
+    {
+      "id": "idp",
+      "label": "Identity provider",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Authenticates the user and issues an OpenID Connect ID Token (a JWT with claims about the authentication) plus OAuth 2.0 access and refresh tokens.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://openid.net/specs/openid-connect-core-1_0.html",
+        "https://www.rfc-editor.org/rfc/rfc6749.txt",
+        "https://www.rfc-editor.org/rfc/rfc7519.txt"
+      ]
+    },
+    {
+      "id": "gateway",
+      "label": "API gateway",
+      "kind": "edge",
+      "c4": "container",
+      "summary": "Verifies token signature, audience and expiry locally with the issuer's public key and passes the user id on. Our reference design.",
+      "confidence": "INDUSTRY PATTERN",
+      "sources": [
+        "https://www.rfc-editor.org/rfc/rfc7519.txt"
+      ]
+    },
+    {
+      "id": "app",
+      "label": "Client application",
+      "kind": "service",
+      "c4": "external-system",
+      "summary": "A product service (Drive, Photos, YouTube at Google) that stores content and asks the permissions service before acting.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://www.usenix.org/system/files/atc19-pang.pdf"
+      ]
+    },
+    {
+      "id": "contentdb",
+      "label": "Content store",
+      "kind": "datastore",
+      "c4": "external-system",
+      "summary": "The client's own storage; it saves each content version together with its zookie in one atomic write.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://www.usenix.org/system/files/atc19-pang.pdf"
+      ]
+    },
+    {
+      "id": "zanzibar",
+      "label": "Zanzibar",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Global authorization service: trillions of ACLs, millions of checks per second, p95 under 10 ms, above 99.999% availability (2019).",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://www.usenix.org/system/files/atc19-pang.pdf"
+      ],
+      "group": "Zanzibar"
+    },
+    {
+      "id": "aclserver",
+      "label": "aclservers",
+      "kind": "service",
+      "c4": "component",
+      "parent": "zanzibar",
+      "summary": "Answer Check, Read, Expand and Write; fan out within the cluster to walk userset rewrites and nested groups; evaluate at a snapshot at least as fresh as the zookie.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://www.usenix.org/system/files/atc19-pang.pdf"
+      ],
+      "group": "Zanzibar"
+    },
+    {
+      "id": "cache",
+      "label": "Check cache",
+      "kind": "datastore",
+      "c4": "component",
+      "parent": "zanzibar",
+      "summary": "Distributed cache of reads and (intermediate) check results across the cluster, placed by consistent hashing; deduplicates simultaneous requests.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://www.usenix.org/system/files/atc19-pang.pdf"
+      ],
+      "group": "Zanzibar"
+    },
+    {
+      "id": "watchserver",
+      "label": "watchservers",
+      "kind": "service",
+      "c4": "component",
+      "parent": "zanzibar",
+      "summary": "Tail the changelog and stream namespace changes to clients in near real time.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://www.usenix.org/system/files/atc19-pang.pdf"
+      ],
+      "group": "Zanzibar"
+    },
+    {
+      "id": "spanner",
+      "label": "Tuple store (Spanner)",
+      "kind": "datastore",
+      "c4": "container",
+      "summary": "One database of relation tuples per namespace, one of namespace configs, one shared changelog; TrueTime timestamps give external consistency and bounded-staleness snapshot reads.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://www.usenix.org/system/files/atc19-pang.pdf"
+      ],
+      "technology": "Spanner"
+    },
+    {
+      "id": "leopard",
+      "label": "Leopard index",
+      "kind": "datastore",
+      "c4": "container",
+      "summary": "Indexing system for large, deeply nested sets: reads snapshots, watches changes, denormalises group membership.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://www.usenix.org/system/files/atc19-pang.pdf"
+      ]
+    },
+    {
+      "id": "searchidx",
+      "label": "Access-aware index",
+      "kind": "datastore",
+      "c4": "external-system",
+      "summary": "A client's secondary index (for example search) kept in sync through the Watch API.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://www.usenix.org/system/files/atc19-pang.pdf"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "user-idp",
+      "from": "user",
+      "to": "idp",
+      "label": "sign in"
+    },
+    {
+      "id": "user-gateway",
+      "from": "user",
+      "to": "gateway",
+      "label": "request + access token"
+    },
+    {
+      "id": "gateway-app",
+      "from": "gateway",
+      "to": "app",
+      "label": "verified user id"
+    },
+    {
+      "id": "app-aclserver",
+      "from": "app",
+      "to": "aclserver",
+      "label": "Check(object, relation, user, zookie)"
+    },
+    {
+      "id": "aclserver-cache",
+      "from": "aclserver",
+      "to": "cache",
+      "label": "cached sub-results"
+    },
+    {
+      "id": "aclserver-spanner",
+      "from": "aclserver",
+      "to": "spanner",
+      "label": "snapshot read (hedged)"
+    },
+    {
+      "id": "aclserver-leopard",
+      "from": "aclserver",
+      "to": "leopard",
+      "label": "nested-set lookup (hedged)"
+    },
+    {
+      "id": "app-contentdb",
+      "from": "app",
+      "to": "contentdb",
+      "label": "save content + zookie"
+    },
+    {
+      "id": "spanner-watchserver",
+      "from": "spanner",
+      "to": "watchserver",
+      "label": "tail changelog",
+      "mode": "async"
+    },
+    {
+      "id": "watchserver-searchidx",
+      "from": "watchserver",
+      "to": "searchidx",
+      "label": "Watch stream",
+      "mode": "async"
+    },
+    {
+      "id": "spanner-leopard",
+      "from": "spanner",
+      "to": "leopard",
+      "label": "snapshots + changes",
+      "mode": "async"
+    }
+  ],
+  "flows": [
+    {
+      "id": "check",
+      "name": "Opening a shared document",
+      "steps": [
+        {
+          "edge": "user-idp",
+          "caption": "The user signs in and receives an ID Token and a short-lived access token."
+        },
+        {
+          "edge": "user-gateway",
+          "caption": "The request carries the access token."
+        },
+        {
+          "edge": "gateway-app",
+          "caption": "The gateway verifies it locally and passes the user id to the app."
+        },
+        {
+          "edge": "app-aclserver",
+          "caption": "The app asks whether the user is a viewer of the doc, passing the zookie stored with the content."
+        },
+        {
+          "edge": "aclserver-cache",
+          "caption": "Rewrite rules expand viewer to editors, owners and parent-folder viewers; cached sub-results answer most of it."
+        },
+        {
+          "edge": "aclserver-spanner",
+          "caption": "Anything missing is read at a snapshot at least as fresh as the zookie, usually from a local replica."
+        }
+      ]
+    },
+    {
+      "id": "save",
+      "name": "Saving content with a consistency token",
+      "steps": [
+        {
+          "edge": "app-aclserver",
+          "caption": "Before saving, the app makes a content-change check and gets a zookie newer than all prior ACL writes."
+        },
+        {
+          "edge": "app-contentdb",
+          "caption": "It stores the new content and the zookie in one atomic write."
+        }
+      ]
+    },
+    {
+      "id": "index",
+      "name": "Keeping a search index access-aware",
+      "steps": [
+        {
+          "edge": "spanner-watchserver",
+          "caption": "Tuple changes are appended to the changelog."
+        },
+        {
+          "edge": "watchserver-searchidx",
+          "caption": "The client's index receives them through Watch and updates who can see what."
+        }
+      ]
+    },
+    {
+      "id": "new-enemy",
+      "failure": true,
+      "name": "The new enemy problem (failure avoided)",
+      "steps": [
+        {
+          "edge": "app-aclserver",
+          "caption": "Alice removes Bob from a doc, then Charlie adds new content, saved with a fresh zookie."
+        },
+        {
+          "edge": "aclserver-spanner",
+          "caption": "Bob's check carries that zookie, so it must use a snapshot that already includes his removal; a stale replica is not allowed."
+        }
+      ]
+    },
+    {
+      "id": "hot-spot",
+      "failure": true,
+      "name": "A hot group overloads storage (failure)",
+      "steps": [
+        {
+          "edge": "app-aclserver",
+          "caption": "Many checks hit objects shared with one popular group at once."
+        },
+        {
+          "edge": "aclserver-cache",
+          "caption": "Identical requests are deduplicated and timestamps quantised so they share cache entries."
+        },
+        {
+          "edge": "aclserver-leopard",
+          "caption": "Deep group membership comes from the denormalised Leopard index; slow backend calls are hedged."
+        }
+      ]
+    }
+  ]
+}
