@@ -72,6 +72,7 @@ Known limits are at the end of this file and in the [roadmap](ROADMAP.md).
 | 38 | [Content delivery network (CDN)](systems/38-cdn.md) | real + pattern | DNS cluster selection, consistent hashing in a PoP, tiered cache, cache-on-second-hit, stale-while-revalidate, purge | Akamai algorithms paper (2015), Cloudflare cache docs, RFC 9111 |
 | 14 | [Spotify](systems/14-spotify.md) | reference | audio delivery, signed URLs, 2010 P2P, loudness | P2P paper (2010), Spotify support pages |
 | 15 | [Uber (proximity + dispatch)](systems/15-uber-proximity-dispatch.md) | reference | H3 geospatial index, batched matching, sharding by cell | H3 docs, Uber H3 blog, Uber matching page |
+| 39 | [Maps, routing and ETA](systems/39-maps-routing-eta.md) | reference + real parts | z/x/y tiles, contraction hierarchies, multi-level partitions for live weights, learned ETA over supersegments | Contraction Hierarchies (2008), Google Maps ETA GNN (CIKM 2021), OSM tile scheme, OSRM |
 | 16 | [Reservation scheduler (hotel + parking)](systems/16-reservation-scheduler.md) | reference | exclusion constraints, holds, overbooking, idempotent payment | PostgreSQL docs, Stripe idempotency docs |
 | 17 | [Payment system](systems/17-payment-system.md) | reference | idempotency, payment state machine, webhooks, double-entry ledger | Stripe docs, Square Books post |
 | 18 | [Google Docs](systems/18-google-docs.md) | reference | operational transformation, OT vs CRDT, differential sync | Fraser, Figma, Kleppmann et al.; earlier pass for Google 2010 |
@@ -117,7 +118,7 @@ The answer outlines in each note are our own reasoning and are labelled as such.
 5. **Media delivery:** 38 CDN → 14 Spotify → 12 YouTube → 13 Netflix → 29 Live streaming.
 6. **Feeds, notifications and ranking:** 11 News feed → 10 Notification system.
 7. **Correctness under contention:** 16 Reservations → 17 Payments → 19 Stock exchange.
-8. **Location and discovery:** 15 Uber → 20 Web crawler + search → 36 Typeahead.
+8. **Location and discovery:** 15 Uber → 39 Maps and ETA → 20 Web crawler + search → 36 Typeahead.
 9. **Data pipelines and observability:** 30 Metrics monitoring → 31 Ad click aggregation.
 10. **AI systems:** 22 LLM inference serving → 24 Vector search → 23 RAG assistant → 25 AI agents → 28 Fine-tuning and evaluation → 26 Recommendations → 27 Training infrastructure.
 
@@ -145,7 +146,7 @@ For interviews, practise each note's **Interview questions**, and walk the **flo
 | Pre-signed URLs and blob storage | 05, 07, 08, 12, 14 |
 | Control plane vs data plane, steering | 13, 29 |
 | ID generation | 01, 09, 11, 35 |
-| Geospatial and time-range indexing | 15, 16 |
+| Geospatial and time-range indexing | 15, 16, 39 |
 | Search and inverted indexes | 20, 23, 24, 36 |
 | Ranking and recommendation pipelines | 11, 20, 23, 26 |
 | End-to-end encryption and privacy | 08 |
@@ -161,6 +162,7 @@ For interviews, practise each note's **Interview questions**, and walk the **flo
 | Time series storage, compression and alerting | 30 |
 | Stream processing, event time, exactly-once | 31, 04 |
 | Evaluation, safety and cost control for AI systems | 22, 23, 25, 28 |
+| Road-graph routing and travel-time prediction | 39 |
 
 ## The site
 

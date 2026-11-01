@@ -1,0 +1,306 @@
+{
+  "id": "39-maps-routing-eta",
+  "title": "Maps, Routing and ETA",
+  "kind": "reference-design",
+  "nodes": [
+    {
+      "id": "app",
+      "label": "Maps app",
+      "kind": "client",
+      "c4": "person",
+      "summary": "A user panning the map, asking for a route, and navigating with live ETA updates.",
+      "confidence": "INDUSTRY PATTERN",
+      "sources": [
+        "https://arxiv.org/pdf/2108.11482"
+      ]
+    },
+    {
+      "id": "cdn",
+      "label": "Tile CDN",
+      "kind": "edge",
+      "c4": "container",
+      "summary": "Caches tiles addressed by zoom, x and y; they change rarely, so they cache like static files.",
+      "confidence": "INDUSTRY PATTERN",
+      "sources": [
+        "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames"
+      ]
+    },
+    {
+      "id": "tiles",
+      "label": "Tile service",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Serves 256 x 256 pixel Web Mercator tiles at /zoom/x/y (or vector tiles); zoom n has 2^n x 2^n tiles, so most are rendered on demand.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames"
+      ]
+    },
+    {
+      "id": "mapdata",
+      "label": "Map data pipeline",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Builds the routable road graph and the tile sources from map data and publishes versioned artefacts. Our reference design.",
+      "confidence": "INDUSTRY PATTERN",
+      "sources": [
+        "https://raw.githubusercontent.com/Project-OSRM/osrm-backend/master/README.md"
+      ]
+    },
+    {
+      "id": "router",
+      "label": "Routing service",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Holds a preprocessed road graph in memory and answers route and distance-table queries (OSRM offers Route, Table, Match, Nearest, Trip and Tile).",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://raw.githubusercontent.com/Project-OSRM/osrm-backend/master/README.md"
+      ],
+      "group": "Routing service"
+    },
+    {
+      "id": "ch",
+      "label": "Contraction hierarchy",
+      "kind": "datastore",
+      "c4": "component",
+      "parent": "router",
+      "summary": "Nodes contracted in order of importance with shortcut edges; a query searches upward from both ends. About 0.2 ms per query on Western Europe in 2008, with negative space overhead.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://ae.iti.kit.edu/download/contract.pdf"
+      ],
+      "group": "Routing service"
+    },
+    {
+      "id": "mld",
+      "label": "Multi-level partition (MLD)",
+      "kind": "datastore",
+      "c4": "component",
+      "parent": "router",
+      "summary": "OSRM's default: partition once, then a customise step applies new weights, which makes traffic updates cheaper than re-contracting.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://raw.githubusercontent.com/Project-OSRM/osrm-backend/master/README.md"
+      ],
+      "group": "Routing service"
+    },
+    {
+      "id": "probes",
+      "label": "GPS probes",
+      "kind": "external",
+      "c4": "external-system",
+      "summary": "Anonymised location traces from phones and fleets. Their use as a traffic source here is our reference design.",
+      "confidence": "INDUSTRY PATTERN",
+      "sources": [
+        "https://raw.githubusercontent.com/Project-OSRM/osrm-backend/master/README.md"
+      ]
+    },
+    {
+      "id": "traffic",
+      "label": "Traffic pipeline",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Map-matches probes to road segments (OSRM's Match snaps noisy traces), aggregates current speeds per segment and keeps historical profiles. Pipeline shape is ours.",
+      "confidence": "INDUSTRY PATTERN",
+      "sources": [
+        "https://raw.githubusercontent.com/Project-OSRM/osrm-backend/master/README.md"
+      ]
+    },
+    {
+      "id": "speeds",
+      "label": "Segment speed store",
+      "kind": "datastore",
+      "c4": "container",
+      "summary": "Real-time and historical speeds and travel times per segment; Google's ETA features use 17 two-minute live windows and 17-week time-of-day averages.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://arxiv.org/pdf/2108.11482"
+      ]
+    },
+    {
+      "id": "eta",
+      "label": "ETA model service",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Predicts travel time for a given route: a GNN per region over supersegments at fixed horizons, queried along the route with interpolation (Google Maps).",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://arxiv.org/pdf/2108.11482"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "app-cdn",
+      "from": "app",
+      "to": "cdn",
+      "label": "GET /z/x/y"
+    },
+    {
+      "id": "cdn-tiles",
+      "from": "cdn",
+      "to": "tiles",
+      "label": "cache miss"
+    },
+    {
+      "id": "mapdata-tiles",
+      "from": "mapdata",
+      "to": "tiles",
+      "label": "tile sources",
+      "mode": "async"
+    },
+    {
+      "id": "mapdata-router",
+      "from": "mapdata",
+      "to": "router",
+      "label": "versioned graph",
+      "mode": "async"
+    },
+    {
+      "id": "app-router",
+      "from": "app",
+      "to": "router",
+      "label": "route request"
+    },
+    {
+      "id": "router-ch",
+      "from": "router",
+      "to": "ch",
+      "label": "upward bidirectional search"
+    },
+    {
+      "id": "router-mld",
+      "from": "router",
+      "to": "mld",
+      "label": "multi-level query"
+    },
+    {
+      "id": "router-eta",
+      "from": "router",
+      "to": "eta",
+      "label": "ETA for chosen route"
+    },
+    {
+      "id": "eta-speeds",
+      "from": "eta",
+      "to": "speeds",
+      "label": "live + historical features"
+    },
+    {
+      "id": "probes-traffic",
+      "from": "probes",
+      "to": "traffic",
+      "label": "location pings",
+      "mode": "async"
+    },
+    {
+      "id": "traffic-speeds",
+      "from": "traffic",
+      "to": "speeds",
+      "label": "segment speeds",
+      "mode": "async"
+    },
+    {
+      "id": "speeds-mld",
+      "from": "speeds",
+      "to": "mld",
+      "label": "customise weights",
+      "mode": "async"
+    }
+  ],
+  "flows": [
+    {
+      "id": "pan",
+      "name": "Panning the map",
+      "steps": [
+        {
+          "edge": "app-cdn",
+          "caption": "The app requests the tiles in view by zoom, x and y."
+        },
+        {
+          "edge": "cdn-tiles",
+          "caption": "Tiles not in the CDN are rendered or read from the tile service and cached."
+        }
+      ]
+    },
+    {
+      "id": "route",
+      "name": "Getting a route and its ETA",
+      "steps": [
+        {
+          "edge": "app-router",
+          "caption": "The app sends origin and destination."
+        },
+        {
+          "edge": "router-mld",
+          "caption": "The router searches the preprocessed graph with current weights and unpacks the path."
+        },
+        {
+          "edge": "router-eta",
+          "caption": "The chosen route is sent for an arrival-time estimate."
+        },
+        {
+          "edge": "eta-speeds",
+          "caption": "The model reads live and historical speeds and predicts each supersegment at the horizon when the driver will reach it."
+        }
+      ]
+    },
+    {
+      "id": "traffic-update",
+      "name": "Live traffic reaches the router",
+      "steps": [
+        {
+          "edge": "probes-traffic",
+          "caption": "Phones and fleets send anonymised location pings."
+        },
+        {
+          "edge": "traffic-speeds",
+          "caption": "Pings are matched to segments and aggregated into current speeds."
+        },
+        {
+          "edge": "speeds-mld",
+          "caption": "The router's customise step applies the new weights and swaps them in."
+        }
+      ]
+    },
+    {
+      "id": "feed-down",
+      "failure": true,
+      "name": "The traffic feed stops (failure)",
+      "steps": [
+        {
+          "edge": "probes-traffic",
+          "caption": "Probe ingestion fails and current speeds go stale."
+        },
+        {
+          "edge": "eta-speeds",
+          "caption": "ETA falls back to historical speeds for this time of day and day of week, which the model already uses."
+        },
+        {
+          "edge": "speeds-mld",
+          "caption": "Routing weights stay at the last good values until the feed recovers; alert on staleness."
+        }
+      ]
+    },
+    {
+      "id": "closure",
+      "failure": true,
+      "name": "A road closes before the map knows (failure)",
+      "steps": [
+        {
+          "edge": "traffic-speeds",
+          "caption": "Probes on the segment drop to zero flow."
+        },
+        {
+          "edge": "speeds-mld",
+          "caption": "The segment is given a closed weight in the next customise run."
+        },
+        {
+          "edge": "app-router",
+          "caption": "Until then routes may still use it; navigating clients reroute when the next ETA update shows the delay."
+        }
+      ]
+    }
+  ]
+}
