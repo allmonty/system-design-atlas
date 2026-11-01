@@ -1,0 +1,37 @@
+[
+  {
+    "quote": "the attacker creating the pattern does not want the pattern to be learned",
+    "url": "https://css.csail.mit.edu/6.858/2012/readings/facebook-immune.pdf",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "response and detection latencies can be more important than precision and recall",
+    "url": "https://css.csail.mit.edu/6.858/2012/readings/facebook-immune.pdf",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Done is often better than perfect.",
+    "url": "https://css.csail.mit.edu/6.858/2012/readings/facebook-immune.pdf",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "designed never to be restarted",
+    "url": "https://css.csail.mit.edu/6.858/2012/readings/facebook-immune.pdf",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "typically takes several months to collect and label thousands, if not millions, of examples",
+    "url": "https://ai.meta.com/blog/harmful-content-can-evolve-quickly-our-new-ai-system-adapts-to-tackle-it/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  }
+]

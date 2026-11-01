@@ -87,6 +87,7 @@ Known limits are at the end of this file and in the [roadmap](ROADMAP.md).
 | 25 | [AI agent platform](systems/25-ai-agent-platform.md) | reference + real parts | workflows vs agents, tool use, MCP, sandboxing, budgets, approvals | Anthropic "Building effective agents", MCP spec (2025-06-18), ReAct (ICLR 2023) |
 | 26 | [Recommendation system](systems/26-recommendation-system.md) | real + pattern | two-stage retrieval and ranking, watch-time objective, online learning, cold start | YouTube DNN (RecSys 2016), ByteDance Monolith (2022) |
 | 27 | [LLM training infrastructure](systems/27-llm-training-infrastructure.md) | real | 4D parallelism, ZeRO, topology, checkpointing, failures at 16K GPUs | Llama 3 report (2024), MegaScale (2024), ZeRO (2020) |
+| 41 | [Content moderation and fraud detection with ML](systems/41-moderation-fraud-ml.md) | real + pattern | adversarial learning, online rules and models, policy layer with holdouts, human review and labels, cascades for cost | Facebook Immune System (2011), Stripe Radar (2023), Meta Few-Shot Learner |
 | 28 | [LLM fine-tuning, evaluation and deployment](systems/28-llm-finetuning-evaluation.md) | reference + real parts | LoRA, preference tuning, data quality, eval gates, canary, adapter serving | LoRA, InstructGPT, DPO, S-LoRA, MT-Bench, Llama 3 post-training |
 | 29 | [Live streaming (Twitch)](systems/29-live-streaming-twitch.md) | real + pattern | ingest and origin routing, transcoding cost, HLS and low-latency HLS, chat fan-out | Four Twitch engineering posts, chat docs, RFC 8216, HLS 2nd-edition draft |
 | 30 | [Metrics monitoring and alerting](systems/30-metrics-monitoring-alerting.md) | reference + real parts | time series compression, availability over consistency, cardinality, alert pipeline | Gorilla (2015), Monarch (2020), Prometheus docs |
@@ -121,7 +122,7 @@ The answer outlines in each note are our own reasoning and are labelled as such.
 7. **Correctness under contention:** 16 Reservations → 17 Payments → 19 Stock exchange.
 8. **Location and discovery:** 15 Uber → 39 Maps and ETA → 20 Web crawler + search → 36 Typeahead.
 9. **Data pipelines and observability:** 30 Metrics monitoring → 31 Ad click aggregation.
-10. **AI systems:** 22 LLM inference serving → 24 Vector search → 23 RAG assistant → 25 AI agents → 28 Fine-tuning and evaluation → 26 Recommendations → 27 Training infrastructure.
+10. **AI systems:** 22 LLM inference serving → 24 Vector search → 23 RAG assistant → 25 AI agents → 28 Fine-tuning and evaluation → 26 Recommendations → 27 Training infrastructure → 41 Moderation and fraud.
 
 For interviews, practise each note's **Interview questions**, and walk the **flows** in the diagram out loud.
 
@@ -162,9 +163,10 @@ For interviews, practise each note's **Interview questions**, and walk the **flo
 | Low-latency live delivery (HLS, LL-HLS) | 29 |
 | Time series storage, compression and alerting | 30 |
 | Stream processing, event time, exactly-once | 31, 04 |
-| Evaluation, safety and cost control for AI systems | 22, 23, 25, 28 |
+| Evaluation, safety and cost control for AI systems | 22, 23, 25, 28, 41 |
 | Road-graph routing and travel-time prediction | 39 |
 | Media forwarding (SFU, MCU) and NAT traversal | 40 |
+| Abuse, fraud and adversarial ML | 41 |
 
 ## The site
 

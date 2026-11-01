@@ -1,0 +1,321 @@
+{
+  "id": "41-moderation-fraud-ml",
+  "title": "Content Moderation and Fraud Detection with ML",
+  "kind": "reference-design",
+  "nodes": [
+    {
+      "id": "user",
+      "label": "User or attacker",
+      "kind": "client",
+      "c4": "person",
+      "summary": "Posts, messages, signs up or pays; attackers adapt to whatever the system keys on.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://css.csail.mit.edu/6.858/2012/readings/facebook-immune.pdf"
+      ]
+    },
+    {
+      "id": "product",
+      "label": "Product service",
+      "kind": "service",
+      "c4": "external-system",
+      "summary": "The surface being protected (feed, messaging, checkout); calls the risk service before committing the action.",
+      "confidence": "INDUSTRY PATTERN",
+      "sources": [
+        "https://stripe.com/blog/how-we-built-it-stripe-radar"
+      ]
+    },
+    {
+      "id": "risk",
+      "label": "Risk service",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Synchronous scoring on the request path: under 50 ms at Facebook in 2011, under 100 ms for Stripe Radar.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://css.csail.mit.edu/6.858/2012/readings/facebook-immune.pdf",
+        "https://stripe.com/blog/how-we-built-it-stripe-radar"
+      ],
+      "group": "Risk service"
+    },
+    {
+      "id": "classifiers",
+      "label": "Classifier services",
+      "kind": "service",
+      "c4": "component",
+      "parent": "risk",
+      "summary": "Models behind one interface, loaded online and never restarted (Facebook); a network-wide DNN over 1,000+ characteristics (Stripe).",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://css.csail.mit.edu/6.858/2012/readings/facebook-immune.pdf",
+        "https://stripe.com/blog/how-we-built-it-stripe-radar"
+      ],
+      "group": "Risk service"
+    },
+    {
+      "id": "policy",
+      "label": "Policy and rules engine",
+      "kind": "service",
+      "c4": "component",
+      "parent": "risk",
+      "summary": "Boolean rules over scores and features trigger responses (block, challenge, review, disable) and define holdouts; users can add allow, block, review and 3DS rules (Stripe).",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://css.csail.mit.edu/6.858/2012/readings/facebook-immune.pdf",
+        "https://docs.stripe.com/radar/rules"
+      ],
+      "group": "Risk service"
+    },
+    {
+      "id": "features",
+      "label": "Feature store and counters",
+      "kind": "datastore",
+      "c4": "container",
+      "summary": "Precomputed features and velocity counters fed by feature loops that aggregate classification data and user feedback.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://css.csail.mit.edu/6.858/2012/readings/facebook-immune.pdf"
+      ]
+    },
+    {
+      "id": "stream",
+      "label": "Action log stream",
+      "kind": "queue",
+      "c4": "container",
+      "summary": "Every action is logged; stream processors (tailers at Facebook) aggregate it into features. Our reference design uses it for asynchronous analysis.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://css.csail.mit.edu/6.858/2012/readings/facebook-immune.pdf"
+      ]
+    },
+    {
+      "id": "async",
+      "label": "Asynchronous analysis",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Heavier models after the fact, such as a few-shot multimodal model that takes policy text and few examples (Meta's Few-Shot Learner).",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://ai.meta.com/blog/harmful-content-can-evolve-quickly-our-new-ai-system-adapts-to-tackle-it/"
+      ]
+    },
+    {
+      "id": "review",
+      "label": "Human review queue",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Uncertain or severe cases go to reviewers; decisions and appeals become labels. Queue design is our reference design; Stripe and Facebook both route some cases to review or challenge.",
+      "confidence": "INDUSTRY PATTERN",
+      "sources": [
+        "https://docs.stripe.com/radar/rules",
+        "https://css.csail.mit.edu/6.858/2012/readings/facebook-immune.pdf"
+      ]
+    },
+    {
+      "id": "labels",
+      "label": "Labels and training",
+      "kind": "datastore",
+      "c4": "container",
+      "summary": "Reports, chargebacks, appeals and reviewer decisions; models retrain on them (Stripe found 10x more data still helped).",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://stripe.com/blog/how-we-built-it-stripe-radar"
+      ]
+    },
+    {
+      "id": "analyst",
+      "label": "Analysts",
+      "kind": "client",
+      "c4": "person",
+      "summary": "Investigate attacks, write rules and features, and ship them online without restarts.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://css.csail.mit.edu/6.858/2012/readings/facebook-immune.pdf",
+        "https://stripe.com/blog/how-we-built-it-stripe-radar"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "user-product",
+      "from": "user",
+      "to": "product",
+      "label": "post / pay / sign up"
+    },
+    {
+      "id": "product-classifiers",
+      "from": "product",
+      "to": "classifiers",
+      "label": "assess(action)"
+    },
+    {
+      "id": "classifiers-features",
+      "from": "classifiers",
+      "to": "features",
+      "label": "fetch features"
+    },
+    {
+      "id": "classifiers-policy",
+      "from": "classifiers",
+      "to": "policy",
+      "label": "scores"
+    },
+    {
+      "id": "policy-product",
+      "from": "policy",
+      "to": "product",
+      "label": "allow / block / challenge"
+    },
+    {
+      "id": "product-stream",
+      "from": "product",
+      "to": "stream",
+      "label": "log action",
+      "mode": "async"
+    },
+    {
+      "id": "stream-features",
+      "from": "stream",
+      "to": "features",
+      "label": "feature loops",
+      "mode": "async"
+    },
+    {
+      "id": "stream-async",
+      "from": "stream",
+      "to": "async",
+      "label": "deep analysis",
+      "mode": "async"
+    },
+    {
+      "id": "async-review",
+      "from": "async",
+      "to": "review",
+      "label": "uncertain or severe",
+      "mode": "async"
+    },
+    {
+      "id": "policy-review",
+      "from": "policy",
+      "to": "review",
+      "label": "send to review",
+      "mode": "async"
+    },
+    {
+      "id": "review-labels",
+      "from": "review",
+      "to": "labels",
+      "label": "decisions, appeals",
+      "mode": "async"
+    },
+    {
+      "id": "labels-classifiers",
+      "from": "labels",
+      "to": "classifiers",
+      "label": "retrain, load online",
+      "mode": "async"
+    },
+    {
+      "id": "analyst-policy",
+      "from": "analyst",
+      "to": "policy",
+      "label": "new rule (shadow, then enforce)"
+    }
+  ],
+  "flows": [
+    {
+      "id": "score",
+      "name": "Scoring an action on the request path",
+      "steps": [
+        {
+          "edge": "user-product",
+          "caption": "A user submits a payment or a post."
+        },
+        {
+          "edge": "product-classifiers",
+          "caption": "The product asks the risk service before committing it."
+        },
+        {
+          "edge": "classifiers-features",
+          "caption": "Precomputed features and velocity counters are fetched."
+        },
+        {
+          "edge": "classifiers-policy",
+          "caption": "Models score the action; rules turn scores into a decision."
+        },
+        {
+          "edge": "policy-product",
+          "caption": "The answer comes back within the latency budget: allow, block or challenge."
+        }
+      ]
+    },
+    {
+      "id": "learn",
+      "name": "The feedback loop",
+      "steps": [
+        {
+          "edge": "product-stream",
+          "caption": "Every action and its outcome is logged."
+        },
+        {
+          "edge": "stream-features",
+          "caption": "Feature loops aggregate it, with user reports, into new features."
+        },
+        {
+          "edge": "stream-async",
+          "caption": "Heavier models review content after the fact."
+        },
+        {
+          "edge": "async-review",
+          "caption": "Uncertain cases go to people."
+        },
+        {
+          "edge": "review-labels",
+          "caption": "Their decisions, appeals and chargebacks become labels."
+        },
+        {
+          "edge": "labels-classifiers",
+          "caption": "Models are retrained and loaded online without restarts."
+        }
+      ]
+    },
+    {
+      "id": "new-attack",
+      "failure": true,
+      "name": "A new attack appears (failure)",
+      "steps": [
+        {
+          "edge": "user-product",
+          "caption": "Attackers find a pattern the models miss and abuse spreads."
+        },
+        {
+          "edge": "analyst-policy",
+          "caption": "Analysts pick a feature expensive for the attacker to change and ship a rule online, first in shadow mode."
+        },
+        {
+          "edge": "policy-product",
+          "caption": "Once its hit rate on good users is acceptable it enforces, while new labels retrain the model."
+        }
+      ]
+    },
+    {
+      "id": "bad-rule",
+      "failure": true,
+      "name": "A rule blocks good users (failure)",
+      "steps": [
+        {
+          "edge": "analyst-policy",
+          "caption": "A rule is too broad; Stripe's docs warn a bad rule can block many legitimate payments."
+        },
+        {
+          "edge": "policy-product",
+          "caption": "Block rate jumps above its baseline; the alert fires and the rule is rolled back."
+        },
+        {
+          "edge": "review-labels",
+          "caption": "Wrongly blocked cases from appeals are labelled so the next model does not learn the mistake."
+        }
+      ]
+    }
+  ]
+}
