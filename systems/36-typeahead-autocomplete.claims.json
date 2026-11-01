@@ -1,0 +1,72 @@
+[
+  {
+    "quote": "without sending another request",
+    "url": "https://engineering.fb.com/2010/05/17/web/the-life-of-a-typeahead-query/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "stateless and have no index of their own",
+    "url": "https://engineering.fb.com/2010/05/17/web/the-life-of-a-typeahead-query/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "we can save latency by storing recent results in a memcached-based query cache",
+    "url": "https://engineering.fb.com/2010/05/17/web/the-life-of-a-typeahead-query/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "to make sure that the searcher is allowed to see each result",
+    "url": "https://engineering.fb.com/2010/05/17/web/the-life-of-a-typeahead-query/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "late answers are wrong answers",
+    "url": "https://engineering.fb.com/2010/05/17/web/the-life-of-a-typeahead-query/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "out-of-order prefix matching over a very large number of elements by means of in-memory scanning",
+    "url": "https://web.archive.org/web/20150227001852/https://engineering.linkedin.com/open-source/cleo-open-source-technology-behind-linkedins-typeahead-search",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "predictions reflect searches that have been done on Google",
+    "url": "https://blog.google/products/search/how-google-autocomplete-predictions-work/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "does not impact the ability for someone to finish typing a query",
+    "url": "https://blog.google/products/search/how-google-autocomplete-predictions-work/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "is optimized for speed",
+    "url": "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters.html",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "that enable fast lookups, but are costly to build and are stored in-memory",
+    "url": "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters.html",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  }
+]

@@ -76,6 +76,7 @@ Known limits are at the end of this file and in the [roadmap](ROADMAP.md).
 | 18 | [Google Docs](systems/18-google-docs.md) | reference | operational transformation, OT vs CRDT, differential sync | Fraser, Figma, Kleppmann et al.; earlier pass for Google 2010 |
 | 19 | [Stock exchange](systems/19-stock-exchange.md) | reference | sequencer, deterministic matching, event sourcing, multicast | LMAX (Fowler, Disruptor paper), MoldUDP64 |
 | 20 | [Web crawler + search](systems/20-web-crawler-search.md) | real (dated) | frontier, politeness, dedup, inverted index, PageRank | Brin & Page (1998), Mercator (2001), RFC 9309 |
+| 36 | [Typeahead and autocomplete](systems/36-typeahead-autocomplete.md) | reference + real parts | in-memory prefix indexes, aggregator and leaves, browser preload, freshness, prediction policy | Facebook typeahead (2010), LinkedIn Cleo (2012), Google Autocomplete (2020), Elasticsearch docs |
 | 21 | [Online game matchmaking + lobby chat](systems/21-game-matchmaking-lobby-chat.md) | reference | tickets and match functions, server fleets, rating, chat shards | Open Match, Agones, TrueSkill abstract, Riot posts |
 | 22 | [LLM inference serving](systems/22-llm-inference-serving.md) | reference + real parts | KV cache paging, continuous batching, prefill/decode split, token-based limits | vLLM/PagedAttention (SOSP 2023), Orca (OSDI 2022), DistServe (OSDI 2024) |
 | 23 | [RAG knowledge assistant](systems/23-rag-knowledge-assistant.md) | reference | chunking, hybrid search, reranking, permissions, evaluation | RAG paper (2020), Anthropic Contextual Retrieval (2024) |
@@ -114,7 +115,7 @@ The answer outlines in each note are our own reasoning and are labelled as such.
 5. **Media delivery:** 14 Spotify → 12 YouTube → 13 Netflix → 29 Live streaming.
 6. **Feeds, notifications and ranking:** 11 News feed → 10 Notification system.
 7. **Correctness under contention:** 16 Reservations → 17 Payments → 19 Stock exchange.
-8. **Location and discovery:** 15 Uber → 20 Web crawler + search.
+8. **Location and discovery:** 15 Uber → 20 Web crawler + search → 36 Typeahead.
 9. **Data pipelines and observability:** 30 Metrics monitoring → 31 Ad click aggregation.
 10. **AI systems:** 22 LLM inference serving → 24 Vector search → 23 RAG assistant → 25 AI agents → 28 Fine-tuning and evaluation → 26 Recommendations → 27 Training infrastructure.
 
@@ -124,7 +125,7 @@ For interviews, practise each note's **Interview questions**, and walk the **flo
 
 | Concept | Where to study it |
 |---|---|
-| Caching and request coalescing | 01, 09, 11, 12, 13, 14, 29, 32 |
+| Caching and request coalescing | 01, 09, 11, 12, 13, 14, 29, 32, 36 |
 | CDN and edge delivery | 07, 12, 13, 14, 29 |
 | Sharding / partitioning / consistent hashing | 01, 03, 04, 05, 09, 11, 13, 15, 16, 20, 24, 30, 31, 34 |
 | Replication, quorums, erasure coding | 03, 04, 05, 06, 07, 30, 31 |
@@ -143,7 +144,7 @@ For interviews, practise each note's **Interview questions**, and walk the **flo
 | Control plane vs data plane, steering | 13, 29 |
 | ID generation | 01, 09, 11, 35 |
 | Geospatial and time-range indexing | 15, 16 |
-| Search and inverted indexes | 20, 23, 24 |
+| Search and inverted indexes | 20, 23, 24, 36 |
 | Ranking and recommendation pipelines | 11, 20, 23, 26 |
 | End-to-end encryption and privacy | 08 |
 | Matching and scheduling | 15, 16, 19, 21, 27 |

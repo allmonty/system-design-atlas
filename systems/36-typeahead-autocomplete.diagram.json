@@ -1,0 +1,261 @@
+{
+  "id": "36-typeahead-autocomplete",
+  "title": "Typeahead and Autocomplete",
+  "kind": "reference-design",
+  "nodes": [
+    {
+      "id": "user",
+      "label": "User typing",
+      "kind": "client",
+      "c4": "person",
+      "summary": "Types into a search box and expects suggestions to keep up with each keystroke.",
+      "confidence": "INDUSTRY PATTERN",
+      "sources": [
+        "https://engineering.fb.com/2010/05/17/web/the-life-of-a-typeahead-query/"
+      ]
+    },
+    {
+      "id": "browser",
+      "label": "Browser client",
+      "kind": "client",
+      "c4": "container",
+      "summary": "Preloads the user's own connections on focus and caches results so similar queries skip the backend (Facebook). Debounce and request cancellation are our additions.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://engineering.fb.com/2010/05/17/web/the-life-of-a-typeahead-query/"
+      ],
+      "group": "Client"
+    },
+    {
+      "id": "edge",
+      "label": "Edge cache",
+      "kind": "edge",
+      "c4": "container",
+      "summary": "Caches responses for popular short prefixes that are not personalised. Our reference design.",
+      "confidence": "INDUSTRY PATTERN",
+      "sources": [
+        "https://engineering.fb.com/2010/05/17/web/the-life-of-a-typeahead-query/"
+      ]
+    },
+    {
+      "id": "agg",
+      "label": "Typeahead aggregator",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Stateless, with no index of its own: fans the query out to leaf services in parallel, merges and ranks their results, and returns ids (Facebook's aggregator).",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://engineering.fb.com/2010/05/17/web/the-life-of-a-typeahead-query/"
+      ],
+      "technology": "Thrift"
+    },
+    {
+      "id": "global",
+      "label": "Global prefix index",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Unpersonalised index of pages, applications or popular queries; results are the same for everyone, so recent results are kept in a memcached query cache (Facebook). Query completion serves per-prefix top-k from an in-memory structure.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://engineering.fb.com/2010/05/17/web/the-life-of-a-typeahead-query/",
+        "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters.html"
+      ]
+    },
+    {
+      "id": "network",
+      "label": "Network typeahead",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Personalised index over the user's graph neighbourhood. Cleo keeps an in-memory adjacency list, a per-document Bloom filter and a forward index per partition, and serves in about 20 ms on average.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://engineering.fb.com/2010/05/17/web/the-life-of-a-typeahead-query/",
+        "https://web.archive.org/web/20150227001852/https://engineering.linkedin.com/open-source/cleo-open-source-technology-behind-linkedins-typeahead-search"
+      ]
+    },
+    {
+      "id": "web",
+      "label": "Web tier",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Fetches names and pictures for the returned ids from memcache and MySQL, and checks the searcher may see each result.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://engineering.fb.com/2010/05/17/web/the-life-of-a-typeahead-query/"
+      ]
+    },
+    {
+      "id": "logs",
+      "label": "Query logs",
+      "kind": "datastore",
+      "c4": "container",
+      "summary": "Past searches; Google says its predictions reflect searches that have been done, adjusted for language, location and freshness.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://blog.google/products/search/how-google-autocomplete-predictions-work/"
+      ]
+    },
+    {
+      "id": "build",
+      "label": "Index builder",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Batch job: normalise and count queries, apply the policy filter, build per-prefix top-k lists, ship a versioned index. A streaming job adds a trending overlay. Our reference design.",
+      "confidence": "INDUSTRY PATTERN",
+      "sources": [
+        "https://blog.google/products/search/how-google-autocomplete-predictions-work/",
+        "https://www.elastic.co/guide/en/elasticsearch/reference/current/search-suggesters.html"
+      ]
+    },
+    {
+      "id": "policy",
+      "label": "Policy filter",
+      "kind": "service",
+      "c4": "container",
+      "summary": "Blocks violent, sexually explicit, hateful, disparaging or dangerous predictions and those unlikely to lead to reliable content; enforcement teams remove what gets through (Google). The serving-time deny list is our addition.",
+      "confidence": "CONFIRMED",
+      "sources": [
+        "https://blog.google/products/search/how-google-autocomplete-predictions-work/"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "user-browser",
+      "from": "user",
+      "to": "browser",
+      "label": "keystroke"
+    },
+    {
+      "id": "browser-edge",
+      "from": "browser",
+      "to": "edge",
+      "label": "GET /suggest?q=prefix"
+    },
+    {
+      "id": "edge-agg",
+      "from": "edge",
+      "to": "agg",
+      "label": "cache miss"
+    },
+    {
+      "id": "agg-global",
+      "from": "agg",
+      "to": "global",
+      "label": "prefix match (parallel)"
+    },
+    {
+      "id": "agg-network",
+      "from": "agg",
+      "to": "network",
+      "label": "prefix match in neighbourhood (parallel)"
+    },
+    {
+      "id": "agg-web",
+      "from": "agg",
+      "to": "web",
+      "label": "ranked ids"
+    },
+    {
+      "id": "logs-build",
+      "from": "logs",
+      "to": "build",
+      "label": "count queries",
+      "mode": "async"
+    },
+    {
+      "id": "build-policy",
+      "from": "build",
+      "to": "policy",
+      "label": "filter candidates",
+      "mode": "async"
+    },
+    {
+      "id": "build-global",
+      "from": "build",
+      "to": "global",
+      "label": "ship versioned index",
+      "mode": "async"
+    }
+  ],
+  "flows": [
+    {
+      "id": "keystroke",
+      "name": "A keystroke becomes suggestions",
+      "steps": [
+        {
+          "edge": "user-browser",
+          "caption": "The user types; the browser first answers from results it preloaded on focus and from its cache."
+        },
+        {
+          "edge": "browser-edge",
+          "caption": "If the cache has too few results, it sends the prefix (and what it already shows)."
+        },
+        {
+          "edge": "edge-agg",
+          "caption": "Popular unpersonalised prefixes are answered at the edge; the rest reach the aggregator."
+        },
+        {
+          "edge": "agg-global",
+          "caption": "The global index returns prefix matches, often from its query cache."
+        },
+        {
+          "edge": "agg-network",
+          "caption": "In parallel, the network index returns matches from the user's connections."
+        },
+        {
+          "edge": "agg-web",
+          "caption": "The aggregator merges and ranks; the web tier fetches display data, checks privacy and returns the list."
+        }
+      ]
+    },
+    {
+      "id": "build-index",
+      "name": "Building the completion index",
+      "steps": [
+        {
+          "edge": "logs-build",
+          "caption": "The builder counts normalised queries over a decayed window and drops rare ones."
+        },
+        {
+          "edge": "build-policy",
+          "caption": "Candidates pass the policy filter; harmful or unreliable predictions are removed."
+        },
+        {
+          "edge": "build-global",
+          "caption": "A new immutable index version is shipped and swapped in atomically on each server."
+        }
+      ]
+    },
+    {
+      "id": "slow-leaf",
+      "failure": true,
+      "name": "A leaf service is slow (failure)",
+      "steps": [
+        {
+          "edge": "agg-network",
+          "caption": "The network index misses its deadline, for example during a partition rebalance."
+        },
+        {
+          "edge": "agg-web",
+          "caption": "The aggregator returns what the global index sent rather than wait; a late answer is a wrong answer for typeahead."
+        }
+      ]
+    },
+    {
+      "id": "harmful",
+      "failure": true,
+      "name": "A harmful prediction gets through (failure)",
+      "steps": [
+        {
+          "edge": "build-policy",
+          "caption": "The automated filter missed a policy-violating prediction and it is reported."
+        },
+        {
+          "edge": "build-global",
+          "caption": "It is blocked at once by a serving-time deny list, then removed with its close variants in the next build."
+        }
+      ]
+    }
+  ]
+}
