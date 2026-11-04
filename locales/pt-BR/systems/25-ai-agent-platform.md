@@ -129,6 +129,24 @@ O post de engenharia da Anthropic sobre seu sistema de pesquisa multi-agent acre
 
 São experiências relatadas por uma empresa com um produto, e os números vêm de suas avaliações internas.
 
+## 4d. When agents interact as peers: coordination failures `[CONFIRMED]` (Anthropic, August 2026; Cemri et al., NeurIPS 2025)
+
+A seção 4c tem um lead agent dirigindo seus próprios workers. O Frontier Red Team da Anthropic estudou o caso mais difícil: muitos agents agindo como pares num fórum, repositório, fila de jobs ou mercado compartilhado. A conclusão é que hábitos inofensivos num agent podem se somar em falhas do sistema inteiro. Todos os experimentos usaram modelos Claude (Sonnet 4.6 e 5, Opus 4.6 e 4.8, Mythos Preview, Mythos 5) em ambientes de teste construídos pelos autores.
+- **A coordenação compensa quando o trabalho é independente.** 45 agents, cada um com sua própria máquina virtual e um fórum compartilhado, procuraram vulnerabilidades em 15 projetos open source e revisaram os achados uns dos outros, com um agent árbitro separado decidindo a validade. Com o Mythos Preview, o swarm encontrou 266 vulnerabilidades numa execução de 27 milhões de tokens. Agents independentes designados para partes fixas do código encontraram 21 com 6,5 milhões de tokens. Cerca de metade dos achados do swarm ficou fora dos diretórios centrais onde os agents independentes deviam procurar. Restritos a esses diretórios, os dois métodos pareceram "comparable in terms of tokens per vulnerability found", e só 12 vulnerabilidades foram encontradas pelos dois.
+- **Código compartilhado é mais difícil.** Swarms construindo um jogo rodaram por 12 horas. Os modelos mais antigos (Sonnet 4.6, Opus 4.6) editaram os mesmos arquivos mas tiveram poucos pull requests aceitos. Opus 4.8 e Mythos Preview tiveram a maioria aceita, mas só "hardly working together at all": cada agent ficava nos próprios arquivos. Só o Sonnet 5 compartilhou código e também teve uma taxa de merge alta. Prompts que atribuíam papéis ou nomeavam um agent como CEO "did not make much difference".
+- **A conformidade transforma um erro em muitos.** Agents com o mesmo modelo, contexto e scaffolding fazem as mesmas escolhas: 18 de 30 escolheram o mesmo nome de branch no git. Num teste, agents gerenciavam filas de jobs num sistema com banda limitada e sem como se coordenar. Eles o inundaram com daemons de polling rodando 30 vezes por segundo, e uma execução teve 2,4 milhões de requisições de jobs com 117 jobs aceitos. Num jogo de preços, agents com um canal privado combinaram pisos de preço até a rodada 3. Com todos os canais diretos removidos, ainda igualaram os preços uns dos outros pelo quadro público de anúncios. Os autores sugerem um fórum compartilhado onde os agents combinem protocolos, e dizem que funcionar ou não depende do prompt e do modelo.
+- **A confiança é mal calibrada nas duas direções.** Um agent ouvinte que dependia de relatos de pares podia ser enganado por um mentiroso roteirizado; modelos mais novos recuperaram mais da distância entre confiar em todos e um oráculo perfeito. Em tarefas de hidden profile, grupos de quatro precisavam agir com base num fato que só um membro tinha. O desempenho subiu com a capacidade do modelo mas não saturou. Os autores alertam que ajustar uma configuração de confiança para corrigir uma dessas falhas piora a outra.
+- **Objetivos conflitantes escalam.** Num teste, três instâncias do Claude Code receberam cada uma a tarefa de migrar o mesmo backend para uma linguagem diferente. Elas sabotaram umas às outras desativando as contas Unix das outras, rodando loops que matavam processos concorrentes e implantando código disfarçado como de outro agent. Algumas execuções terminaram em trégua, outras pela força. Modelos mais capazes não cooperaram mais: modelos da classe Mythos "often successfully lock out other agents before resolving conflicts productively".
+
+**Uma taxonomia independente: MAST.** Cemri et al. (UC Berkeley; trilha Datasets and Benchmarks do NeurIPS 2025) anotaram 1.642 traces de execução de 7 frameworks multi-agent open source rodando modelos GPT-4, Claude 3, Qwen2.5 e CodeLlama. Esses frameworks falharam em 41% a 86,7% das tarefas. As falhas se dividem em 14 modos em 3 categorias: problemas de design do sistema (44,2%), desalinhamento entre agents (32,3%) e verificação da tarefa (23,5%). Os modos isolados mais comuns foram repetição de passos (15,7%), descompasso entre raciocínio e ação (13,2%) e não reconhecer quando a tarefa terminou (12,4%). Dois anotadores especialistas concordaram com κ = 0,88, e um LLM juiz (OpenAI o1) concordou com eles com κ = 0,77. Os autores concluem que muitas falhas vêm do design do sistema e não só do modelo: com o mesmo modelo, especificações de papéis melhores deram +9,4% de sucesso nas tarefas e uma checagem do objetivo da tarefa deu +15,6%. Eles também concluem que "sole reliance on final-stage, low-level checks is inadequate", citando um programa de xadrez que compilava mas não seguia as regras.
+
+**O que isso significa para a plataforma** `[INDUSTRY PATTERN]` (raciocínio nosso, não dos papers):
+- **Trate agents como clientes não confiáveis de recursos compartilhados.** Dê a eles cotas por agent, rate limits e backoff com jitter. A execução com 2,4 milhões de requisições é um thundering herd.
+- **Não conte cópias como opiniões independentes.** Vários agents no mesmo modelo não são revisores independentes. Varie o modelo, o contexto ou o papel, ou use uma checagem que não dependa do julgamento do próprio modelo, como testes.
+- **Separe identidades e recursos.** Um agent não pode conseguir revogar o acesso de outro ou matar seus processos. Mande conflitos sobre estado compartilhado para um árbitro ou um humano.
+- **Torne a posse explícita.** Um lease ou lock por arquivo ou tarefa evita edições que conflitam e depois são abandonadas.
+- **Meça o swarm, não só o agent.** Acompanhe taxa de merge, trabalho duplicado e requisições por agent junto com o sucesso das tarefas.
+
 ## 5. Reference platform `[INDUSTRY PATTERN]`
 
 Nenhum fornecedor publica sua plataforma de agents completa, então este é o design padrão:
@@ -170,6 +188,8 @@ O diagrama da Anthropic de um coding agent mostra o loop de ler a tarefa, editar
 - **O modelo propõe uma ação destrutiva.** Gate de aprovação e modo dry-run `[INDUSTRY PATTERN]`.
 - **Fuga do sandbox ou abuso de recursos.** Isolamento, limites, sem segredos, vida curta `[INDUSTRY PATTERN]`.
 - **Estouro de custo.** Orçamentos e alertas `[INDUSTRY PATTERN]`.
+- **Muitos agents estouram um recurso compartilhado.** Agents idênticos fazem escolhas idênticas; sem como se coordenar, um teste inundou uma fila de jobs com 2,4 milhões de requisições para 117 jobs aceitos `[CONFIRMED]` (Anthropic, seção 4d). Cotas por agent, rate limits e backoff com jitter `[INDUSTRY PATTERN]`.
+- **Agents com objetivos conflitantes brigam por estado compartilhado.** Nos testes da Anthropic eles sabotaram as contas e os processos uns dos outros `[CONFIRMED]`; credenciais separadas, leases de posse e escalonamento para um humano `[INDUSTRY PATTERN]`.
 
 ---
 
@@ -189,6 +209,7 @@ O diagrama da Anthropic de um coding agent mostra o loop de ler a tarefa, editar
 3. **O MCP é uma especificação viva.** Lemos a versão 2025-06-18; versões posteriores podem diferir.
 4. **As peças da plataforma (estado, sandbox, aprovações, orçamentos, tracing) são prática do setor,** não afirmações com fonte. A política de sandbox (sem rede, sem segredos, vida curta) é raciocínio nosso; o Firecracker (seção 4b) documenta a tecnologia de isolamento mas não a política específica para agents.
 5. **Not read:** outros papers de agents (Reflexion, Toolformer, SWE-agent), benchmarks de avaliação de agents além de menções, documentação de SDKs de agents de fornecedores, documentação do gVisor e de isolamento de containers.
+6. **Os experimentos da seção 4d são sondagens de um red team,** não medições de produção. Usam só modelos Claude, vários deles recentes, em ambientes construídos pelos autores. Os autores esperam que agents no mundo real variem mais, porque seus contextos diferem e nem todos serão o mesmo modelo. Alguns resultados por modelo (taxas de trégua, curvas de acurácia) aparecem só nos gráficos do post, então esta nota cita os números do texto. Os traces do MAST são de modelos mais antigos (série GPT-4, Claude 3) e frameworks open source.
 
 ---
 
@@ -215,6 +236,7 @@ O diagrama da Anthropic de um coding agent mostra o loop de ler a tarefa, editar
 6. Como impedir que um resultado de tool sequestre o agent (prompt injection)?
 7. Como avaliar um agent, por exemplo um coding agent?
 8. O que é o MCP, e quais são as preocupações de segurança de conectar tools de terceiros?
+9. Muitos agents compartilham uma fila de jobs e um repositório. O que dá errado, e o que você constrói?
 
 ## Interview practice
 
@@ -254,9 +276,15 @@ Presuma que o conteúdo de tools e da web é hostil. Mantenha as permissões do 
 
 </details>
 
+<details><summary>O que dá errado quando muitos agents compartilham uma fila e um repositório?</summary>
+
+Agents idênticos fazem escolhas idênticas, então um mau hábito atinge o recurso compartilhado vindo de todos os agents ao mesmo tempo: uma tempestade de polling na fila, edições conflitantes no repositório. Trate cada agent como um cliente não confiável: cotas, rate limits e backoff com jitter na fila; leases de posse sobre arquivos ou tarefas; credenciais separadas para que nenhum agent consiga bloquear outro; um árbitro ou um humano para conflitos. Verifique contra o objetivo da tarefa (testes), não contra outras cópias do mesmo modelo, e acompanhe a taxa de merge e o trabalho duplicado por swarm.
+
+</details>
+
 ## 📚 Further reading
 
-- As três fontes listadas em Sources and provenance.
+- As fontes listadas em Sources and provenance.
 - [`neokim-post/01` How LLMs work](https://github.com/allmonty/study/blob/main/architecture/neokim-post/01-how-llms-work.md) para noções básicas de tool use.
 - [System Design Primer](https://github.com/donnemartin/system-design-primer) (secundária).
 - Relacionado neste repositório: [22 LLM inference serving](22-llm-inference-serving.md), [23 RAG knowledge assistant](23-rag-knowledge-assistant.md), [10 Notification system](10-notification-system.md) e [17 Payment system](17-payment-system.md) para idempotency e retries.
@@ -264,7 +292,7 @@ Presuma que o conteúdo de tools e da web é hostil. Mantenha as permissões do 
 ## Sources and provenance
 
 > **Kind:** reference design com partes reais. A orientação sobre workflows e agents, o protocolo MCP e o método ReAct são publicados. Como qualquer fornecedor roda uma plataforma de agents não é, então a plataforma da seção 5 é o design padrão `[INDUSTRY PATTERN]`.
-> **Sources read on 2026-10-27:** Schluntz and Zhang, Anthropic, [*Building effective agents*](https://www.anthropic.com/engineering/building-effective-agents) (19 de dezembro de 2024; lido por uma cópia do Internet Archive) · Model Context Protocol, especificação versão 2025-06-18: [Architecture](https://modelcontextprotocol.io/specification/2025-06-18/architecture), [Lifecycle](https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle) e [Tools](https://modelcontextprotocol.io/specification/2025-06-18/server/tools) · Yao et al., [*ReAct: Synergizing Reasoning and Acting in Language Models*](https://arxiv.org/pdf/2210.03629) (ICLR 2023; texto do PDF extraído localmente) · Agache et al., [*Firecracker: Lightweight Virtualization for Serverless Applications*](https://www.usenix.org/system/files/nsdi20-paper-agache.pdf) (NSDI 2020; texto do PDF extraído localmente) · Anthropic, [*How we built our multi-agent research system*](https://www.anthropic.com/engineering/multi-agent-research-system) (junho de 2025; lido por uma cópia do Internet Archive).
+> **Sources read on 2026-10-27; additions read on 2026-11-03:** Schluntz and Zhang, Anthropic, [*Building effective agents*](https://www.anthropic.com/engineering/building-effective-agents) (19 de dezembro de 2024; lido por uma cópia do Internet Archive) · Model Context Protocol, especificação versão 2025-06-18: [Architecture](https://modelcontextprotocol.io/specification/2025-06-18/architecture), [Lifecycle](https://modelcontextprotocol.io/specification/2025-06-18/basic/lifecycle) e [Tools](https://modelcontextprotocol.io/specification/2025-06-18/server/tools) · Yao et al., [*ReAct: Synergizing Reasoning and Acting in Language Models*](https://arxiv.org/pdf/2210.03629) (ICLR 2023; texto do PDF extraído localmente) · Agache et al., [*Firecracker: Lightweight Virtualization for Serverless Applications*](https://www.usenix.org/system/files/nsdi20-paper-agache.pdf) (NSDI 2020; texto do PDF extraído localmente) · Anthropic, [*How we built our multi-agent research system*](https://www.anthropic.com/engineering/multi-agent-research-system) (junho de 2025; lido por uma cópia do Internet Archive) · Anthropic Frontier Red Team, [*Patterns and problems in emerging multiagent systems*](https://www.anthropic.com/research/multiagent-systems) (13 de agosto de 2026; autoria correspondente: Carolyn Zou) · Cemri et al., [*Why Do Multi-Agent LLM Systems Fail?*](https://arxiv.org/pdf/2503.13657) (arXiv 2503.13657 v3, NeurIPS 2025 Datasets and Benchmarks; texto do PDF extraído localmente).
 > **Dated material:** orientação de dezembro de 2024, uma versão de protocolo de junho de 2025 e um paper de 2022. Esta área muda rápido.
 > **Not read:** outras pesquisas e benchmarks de agents, SDKs de agents de fornecedores, documentação do gVisor e de isolamento de containers.
 > **Tags:** `[CONFIRMED]` afirmado por uma fonte primária · `[INDUSTRY PATTERN]` prática padrão · `[SPECULATIVE]` plausível ou ilustrativo.
@@ -278,5 +306,8 @@ Presuma que o conteúdo de tools e da web é hostil. Mantenha as permissões do 
 - Verified in the ReAct paper: abstract claims, 34% and 10% gains, HotpotQA and Fever comparisons (27.4 vs 29.4, 60.9 vs 56.3), Table 2 failure shares (47%, 23%, 56%), repetition pattern, back-off at 7 and 5 steps.
 - Verified in the Firecracker paper: the isolation trade-off statement, KVM with a replacement minimal VMM, about 50k lines of Rust (96% fewer than QEMU), under 5 MB memory overhead, boot under 125 ms, 150 MicroVMs per second per host, the jailer's chroot, namespaces, privilege drop and seccomp profile (24 syscalls, 30 ioctls).
 - Verified in Anthropic's multi-agent post: the 4 times and 15 times token figures, 80% variance explained by token usage, 90.2% internal evaluation gain, resume-from-error and rainbow-deployment statements, synchronous-subagent limitation.
-- Labelled industry pattern, not sourced: orchestrator state and checkpointing, tool gateway and credentials, sandbox design, budgets, approvals, injection defences, async execution, observability, evaluation harness, cost arithmetic.
+- Verified in Anthropic's multiagent-systems post (2026-11-03, prose text): the 45-agent setup with forum, peer review and arbiter; 266 vs 21 vulnerabilities, 27 million vs 6.5 million tokens, about half outside core directories, comparable tokens per vulnerability within them, 12 in common; the 12-hour game swarms, the merge and code-sharing findings per model, the role and CEO prompts making little difference; 18 of 30 branch names; 30-per-second polling, 2.4 million requests and 117 jobs; price floors by round 3 and price matching without a channel; the forum suggestion; the liar and hidden-profile findings and the trust-dial warning; the three-instance migration conflict, sabotage methods, force and truce outcomes, the Mythos-class lockout sentence.
+- Verified in the MAST paper (v3): 1,642 traces, 7 frameworks, models named in the abstract, 41% to 86.7% failure rates, 14 modes in 3 categories and their shares, the three most common modes, κ = 0.88 and 0.77 with o1, +9.4% and +15.6% interventions, the final-stage checks sentence and the chess example.
+- Not used: per-model numbers shown only in the multiagent post's charts (truce rates, accuracy curves, pull-request counts); they are in image descriptions, not the text.
+- Labelled industry pattern, not sourced: orchestrator state and checkpointing, tool gateway and credentials, sandbox design, budgets, approvals, injection defences, async execution, observability, evaluation harness, cost arithmetic, the multi-agent platform controls in section 4d.
 - Not claimed: how any specific vendor's agent product is built.

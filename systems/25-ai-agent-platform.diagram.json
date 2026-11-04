@@ -391,6 +391,25 @@
           "caption": "A sensitive action it provokes still needs human approval (our design reasoning)."
         }
       ]
+    },
+    {
+      "id": "swarm-stampede",
+      "failure": true,
+      "name": "Many identical agents stampede a shared tool (failure)",
+      "steps": [
+        {
+          "edge": "loop-tools",
+          "caption": "Many agents on the same model make the same choice at once; in Anthropic's test they polled a job queue 30 times per second (2.4 million requests, 117 jobs accepted)."
+        },
+        {
+          "edge": "toolgw-mcp",
+          "caption": "The tool gateway enforces per-agent quotas and rate limits, so the shared tool server is not flooded (our design reasoning)."
+        },
+        {
+          "edge": "loop-guard",
+          "caption": "Rejected calls come back as errors; the guard applies backoff with jitter and counts the retries against the run budget (our design reasoning)."
+        }
+      ]
     }
   ]
 }
