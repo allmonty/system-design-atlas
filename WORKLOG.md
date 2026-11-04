@@ -21,7 +21,7 @@ Status: `[ ]` to do · `[x]` done (ticked in the commit that does it) · `[-]` d
 - [x] B7 Item 10: top bar polish (lucide settings icon, alignment with centred pages).
 
 ## C. Design system document
-- [ ] C1 Write `DESIGN.md` (palette per theme, diagram palette, spacing, radii, type scale and fonts, headings, layout and positions, layers, components, motion, accessibility, how to add a component). Point `design.css` header and CLAUDE.md to it.
+- [x] C1 Write `DESIGN.md` (palette per theme, diagram palette, spacing, radii, type scale and fonts, headings, layout and positions, layers, components, motion, accessibility, how to add a component). Point `design.css` header and CLAUDE.md to it.
 
 ## D. Roadmap
 - [ ] D1 Clean and restructure ROADMAP.md (open items first, done items condensed).
