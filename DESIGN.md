@@ -160,7 +160,7 @@ Failure-flow buttons use a `--c-spec` border, and a `--c-spec` fill when pressed
 
 - **Pill** (`.pill`): `--t-xs`, `--r-pill`, `--line` border, `--muted` text. Colour variants follow meaning: `type-system` green, `type-primer` accent, `type-incident` red, `type-exercise` amber; `up-next` is filled accent.
 - **Kind badge** (`.kind`): "Real system" in `--c-confirmed`, "Reference design" in `--c-pattern`.
-- **Confidence tag** (`.conf-tag`): the notes' `[CONFIRMED]`, `[INDUSTRY PATTERN]`, `[SPECULATIVE]` and `[EARLIER PASS]` render as `[c]`, `[ip]`, `[s]`, `[ep]` in `--t-xs` bold at 70% opacity, with a tooltip (`--card`, `--shadow-pop`, max 18rem). A new tag needs an entry in `site/src/tags.tsx` and its text in `i18n.tsx`.
+- **Confidence tag** (`.conf-tag`): the notes' `[CONFIRMED]`, `[INDUSTRY PATTERN]`, `[SPECULATIVE]` and `[EARLIER PASS]` render as `[c]`, `[ip]`, `[s]`, `[ep]` in `--t-xs` bold at 70% opacity, with a tooltip (`--card`, `--shadow-pop`, max 18rem). The tooltip is `display: none` until hover or focus: a box hidden with `visibility` still widens its scroll container, which made note columns scroll sideways. A new tag needs an entry in `site/src/tags.tsx` and its text in `i18n.tsx`.
 - **Chip** (`.chip`, `.chips a`): legend swatches and concept links; `--r-pill` for links, `--r-sm` for legend swatches.
 
 ### 6.4 Disclosure (`<details>`)

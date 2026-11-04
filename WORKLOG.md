@@ -35,3 +35,4 @@ Status: `[ ]` to do · `[x]` done (ticked in the commit that does it) · `[-]` d
 ## Notes
 - Found during B2: the trust card says "1 days ago" (plural for one day). Add to the quick wins in D3.
 - E1 first run: 144 failures, all light-theme contrast on inline code from B4 (7% tint: links 4.31:1, muted text 4.42:1) plus one link on a table header (5% tint, 4.49:1). Fixed by using a 4% tint for both (worst case 4.58:1), documented in DESIGN.md.
+- After the plan: the user saw sideways scroll in note 02. Cause: hidden confidence-tag tooltips (visibility: hidden) widened the note column, by up to 257px in split view. Fixed with display: none, and the sweep now checks reading columns.
