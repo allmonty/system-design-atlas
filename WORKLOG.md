@@ -17,7 +17,7 @@ Status: `[ ]` to do · `[x]` done (ticked in the commit that does it) · `[-]` d
 - [x] B3 Item 2: text mode scrolls an inner box plus the page; scroll-spy offset disagrees with `scroll-margin-top`.
 - [x] B4 Item 3: note typography (heading scale, hr, mono font token for code, tables).
 - [x] B5 Item 8: one global focus ring; remove `outline: none` overrides.
-- [ ] B6 Item 9: `<details>` answer outlines (chevron, open state, prose width), shared with the trust card.
+- [x] B6 Item 9: `<details>` answer outlines (chevron, open state, prose width), shared with the trust card.
 - [ ] B7 Item 10: top bar polish (lucide settings icon, alignment with centred pages).
 
 ## C. Design system document
