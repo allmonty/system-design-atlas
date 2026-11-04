@@ -1,5 +1,5 @@
 // Browser sweep: opens every page of the built site at 1280px and 500px in three themes, then once more in pt-BR, and reports console errors,
-// sideways scroll, clipped cards, text overflowing a diagram node, a missing or non-sticky top bar, empty pages, a missing trust card or diagram, and text below WCAG AA contrast.
+// sideways scroll (of the page or of a reading column), clipped cards, text overflowing a diagram node, a missing or non-sticky top bar, empty pages, a missing trust card or diagram, and text below WCAG AA contrast.
 // The pt-BR pass also checks that <html lang> switched and that a note shows the not-translated notice exactly when it has no mirror in locales/pt-BR.
 //
 //   cd site && npm run build && npx vite preview --port 5188 &
@@ -41,6 +41,8 @@ const CHECK = `(() => {
   const out = {};
   const de = document.documentElement;
   out.overflowX = de.scrollWidth > innerWidth + 1;
+  // a reading column must not scroll sideways either (wide tables and code scroll inside their own boxes)
+  out.columnOverflow = [...document.querySelectorAll('.split > .left, .split > .right, main.toolkit')].filter((c) => c.scrollWidth > c.clientWidth + 1).length;
   out.cardOverflow = [...document.querySelectorAll('.cards a, .track-cards a, .text-hits a, .concept-list > li')].filter((a) => a.scrollHeight > a.clientHeight + 1).length;
   out.h1 = document.querySelectorAll('h1').length;
   const bar = document.querySelector('.top'); out.topBar = !!bar && !!bar.querySelector('a.coffee') && !!bar.querySelector('.settings') && getComputedStyle(bar).position === 'sticky';
@@ -108,8 +110,8 @@ for (const w of widths) {
 }
 await ev(`document.cookie = 'atlas-settings=; Max-Age=0; Path=/'`);
 writeFileSync(`${SP}/sweep.json`, JSON.stringify({ results, errors }, null, 1));
-const bad = results.filter((r) => r.crash || r.overflowX || r.cardOverflow || r.nodeOverflow || !r.topBar || r.emptyMain || (r.route.startsWith("sys-") && !r.route.endsWith("-text") && !r.nodes) || (r.route.startsWith("sys-") && !r.trust) || r.h1 !== 1 || r.lowCount || (r.pt && (r.lang !== "pt-BR" || r.wrongNotice)));
-const fails = bad.filter((r) => !(r.theme === "dark" && r.lowContrast?.every((l) => l.startsWith("span.chip tint")) && !r.crash && !r.overflowX && !r.cardOverflow && !r.nodeOverflow && r.topBar && !r.emptyMain && r.h1 === 1));
+const bad = results.filter((r) => r.crash || r.overflowX || r.columnOverflow || r.cardOverflow || r.nodeOverflow || !r.topBar || r.emptyMain || (r.route.startsWith("sys-") && !r.route.endsWith("-text") && !r.nodes) || (r.route.startsWith("sys-") && !r.trust) || r.h1 !== 1 || r.lowCount || (r.pt && (r.lang !== "pt-BR" || r.wrongNotice)));
+const fails = bad.filter((r) => !(r.theme === "dark" && r.lowContrast?.every((l) => l.startsWith("span.chip tint")) && !r.crash && !r.overflowX && !r.columnOverflow && !r.cardOverflow && !r.nodeOverflow && r.topBar && !r.emptyMain && r.h1 === 1));
 console.log(`${results.length} checks, ${errors.length} console errors, ${fails.length} failing, ${Math.round((Date.now() - t0) / 1000)} s`);
 for (const r of fails.slice(0, 20)) console.log(" ", r.route, r.width, r.pt ? "pt-BR" : r.theme, JSON.stringify(r).slice(0, 200));
 for (const e of errors.slice(0, 10)) console.log("  error:", e.join(" | "));
