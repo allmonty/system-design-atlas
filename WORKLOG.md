@@ -18,7 +18,7 @@ Status: `[ ]` to do · `[x]` done (ticked in the commit that does it) · `[-]` d
 - [x] B4 Item 3: note typography (heading scale, hr, mono font token for code, tables).
 - [x] B5 Item 8: one global focus ring; remove `outline: none` overrides.
 - [x] B6 Item 9: `<details>` answer outlines (chevron, open state, prose width), shared with the trust card.
-- [ ] B7 Item 10: top bar polish (lucide settings icon, alignment with centred pages).
+- [x] B7 Item 10: top bar polish (lucide settings icon, alignment with centred pages).
 
 ## C. Design system document
 - [ ] C1 Write `DESIGN.md` (palette per theme, diagram palette, spacing, radii, type scale and fonts, headings, layout and positions, layers, components, motion, accessibility, how to add a component). Point `design.css` header and CLAUDE.md to it.

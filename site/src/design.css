@@ -24,7 +24,8 @@
   --shadow-1: 0 1px 2px rgb(0 0 0 / .06), 0 10px 24px -14px rgb(0 0 0 / .3);
   --shadow-2: 0 1px 2px rgb(0 0 0 / .06), 0 16px 30px -14px rgb(0 0 0 / .4);
   --shadow-pop: 0 10px 30px rgb(0 0 0 / .18);
-  --z-sticky: 4; --z-tools: 5; --z-top: 10; --z-pop: 20; --top-h: calc(2.3rem + var(--s-5)); /* height of the top bar, for things that stick below it */
+  --z-sticky: 4; --z-tools: 5; --z-top: 10; --z-pop: 20; --top-h: calc(max(2.3rem, var(--hit)) + var(--s-5) + 1px); /* height of the top bar (tallest control + padding + border), for things that stick below it */
+  --hit: 36px; /* smallest click or tap target */
   --page-max: 1100px; --prose-max: 76ch; --page-pad: clamp(var(--s-3), 3vw, var(--s-5));
   --ease: .15s ease;
   --surface: color-mix(in srgb, var(--card) 80%, transparent);
@@ -105,6 +106,7 @@
 
 /* ---- Top bar ---- */
 .top-actions { display: flex; align-items: center; gap: var(--s-2); }
-.coffee { display: inline-flex; align-items: center; gap: var(--s-1); padding: var(--s-1) var(--s-3); border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--card); color: var(--fg); text-decoration: none; font-size: var(--t-sm); white-space: nowrap; }
+.icon-btn { display: inline-grid; place-items: center; min-width: var(--hit); min-height: var(--hit); padding: 0; }
+.coffee { display: inline-flex; align-items: center; gap: var(--s-2); min-height: var(--hit); padding: var(--s-1) var(--s-3); border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--card); color: var(--fg); text-decoration: none; font-size: var(--t-sm); white-space: nowrap; }
 .coffee:hover { border-color: var(--accent); }
 @media (max-width: 520px) { .coffee-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } } /* raw: visually hidden, still read by screen readers */

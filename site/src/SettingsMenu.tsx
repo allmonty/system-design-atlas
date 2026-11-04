@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Settings } from "lucide-react";
 import { FONTS, LANGS, SIZE, THEMES } from "./settings-core.ts";
 import { resetSettings, updateSettings, useSettings } from "./settings.ts";
 import { useT } from "./i18n.tsx";
@@ -24,7 +25,7 @@ export function SettingsMenu() {
 
   return (
     <div className="settings" ref={box}>
-      <button ref={button} onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="settings-pop" aria-label={t.readingSettings}>⚙</button>
+      <button ref={button} onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="settings-pop" aria-label={t.readingSettings} className="icon-btn"><Settings size={18} strokeWidth={2} aria-hidden="true" /></button>
       {open && (
         <div id="settings-pop" className="settings-pop" role="dialog" aria-label={t.readingSettings}>
           <fieldset>

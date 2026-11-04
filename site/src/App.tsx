@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Coffee, Network } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
@@ -38,13 +39,16 @@ export function App() {
   const trackId = id.startsWith("track/") ? id.slice(6) : undefined;
   return (
     <>
-      <header className="top">
-        <a href="#" className="brand">System Design Atlas</a>
-        <div className="top-actions">
-          <a className="coffee" href="https://buymeacoffee.com/allmonty" target="_blank" rel="noreferrer" title={t.coffeeTitle}>
-            <span aria-hidden="true">☕</span> <span className="coffee-text">{t.brandCoffee}</span>
-          </a>
-          <SettingsMenu />
+      {/* On the centred pages (home, tracks, concepts) the bar's contents line up with the page column. */}
+      <header className={`top${page || system ? "" : " centred"}`}>
+        <div className="top-inner">
+          <a href="#" className="brand"><span className="tile sm tone-service" aria-hidden="true"><Network size={16} strokeWidth={2} /></span>System Design Atlas</a>
+          <div className="top-actions">
+            <a className="coffee" href="https://buymeacoffee.com/allmonty" target="_blank" rel="noreferrer" title={t.coffeeTitle}>
+              <Coffee size={16} strokeWidth={2} aria-hidden="true" /> <span className="coffee-text">{t.brandCoffee}</span>
+            </a>
+            <SettingsMenu />
+          </div>
         </div>
       </header>
       {id === "concepts" ? (
