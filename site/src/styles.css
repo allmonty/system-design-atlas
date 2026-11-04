@@ -316,7 +316,7 @@ button.study { margin-left: auto; }
 @media (min-width: 1250px) { .side-outline { top: calc(var(--top-h) + var(--s-3)); max-height: calc(100vh - var(--top-h) - var(--s-5)); } }
 
 /* ---- Confidence markers: [c] [ip] [s] [ep] in notes, full meaning in a tooltip ---- */
-.conf-tag { position: relative; margin: 0 var(--s-1); font-size: var(--t-xs); font-weight: 600; vertical-align: .1em; cursor: help; opacity: .7; white-space: nowrap; }
+.conf-tag { position: relative; margin: 0 0 0 var(--s-1); font-size: var(--t-xs); font-weight: 600; vertical-align: .1em; cursor: help; opacity: .7; white-space: nowrap; }
 .conf-tag:hover, .conf-tag:focus-visible { opacity: 1; }
 .conf-tag::after { content: attr(data-tip); position: absolute; left: 0; bottom: 100%; width: max-content; max-width: 18rem; padding: var(--s-2) var(--s-3); border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); color: var(--fg); box-shadow: var(--shadow-pop); font-weight: 400; white-space: normal; z-index: var(--z-pop); display: none; pointer-events: none; }
 /* display, not visibility: a hidden box still widens its scroll container, so each tooltip added sideways scroll to the note */

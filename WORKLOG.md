@@ -39,7 +39,7 @@ Status: `[ ]` to do · `[x]` done (ticked in the commit that does it) · `[-]` d
 
 ## F. Quick wins (roadmap "Design: quick wins", started 2026-11-04)
 - [x] F1 "1 days ago" on the trust card (English and pt-BR).
-- [ ] F2 Confidence tag before a full stop leaves a gap ("S3 [c] .").
+- [x] F2 Confidence tag before a full stop leaves a gap ("S3 [c] .").
 - [x] F3 Contents list and "Jump to" select show raw "[c]" / "[ip]" in heading labels.
 - [ ] F4 Wrapped flow-step lines put the number marker beside the last line.
 - [ ] F5 "16 px" readout touches the settings menu border.
