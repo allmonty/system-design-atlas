@@ -8,6 +8,7 @@ test("company and standards sites are primary, explainers are secondary", () => 
   assert.equal(classifySource("https://en.wikipedia.org/wiki/Bloom_filter"), "secondary");
   assert.equal(classifySource("https://newsletter.systemdesign.one/p/x"), "secondary");
   assert.equal(classifySource("https://highscalability.com/x/"), "secondary");
+  assert.equal(classifySource("https://www.systemdesignhandbook.com/guides/x/"), "secondary");
 });
 
 test("Medium is primary only for a company engineering blog we name", () => {

@@ -6,7 +6,7 @@
 const SECONDARY = [
   "wikipedia.org", "systemdesign.one", "highscalability.com", "substack.com", "2minutestreaming.com", "awsinsider.net",
   "techcrunch.com", "streaminglearningcenter.com", "datacenterdynamics.com", "dev.to", "geeksforgeeks.org", "educative.io",
-  "bytebytego.com", "hellointerview.com",
+  "bytebytego.com", "hellointerview.com", "systemdesignhandbook.com",
   // Tutorials, glossaries and vendor marketing pages we cite as leads.
   "codecommit.com", "questdb.com", "onixs.biz", "investor.gov", "aiven.io",
 ];
