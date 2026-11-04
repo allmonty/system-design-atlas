@@ -295,6 +295,7 @@ button.study { margin-left: auto; }
 }
 
 /* ---- Concepts ---- */
+.concepts .search { margin-bottom: var(--s-4); } /* the same gap as between the cards below */
 .concept-list > li { scroll-margin-top: var(--s-3); }
 .concept-list > li.focus-row { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
 .concept-list h2 { font-size: var(--t-md); margin: 0 0 var(--s-2); }
