@@ -19,9 +19,9 @@ Found by the 2026-11-03 content review, ranked by value in a senior system-desig
 
 Already covered, so not on this list: queues vs logs (note 04's comparison table), data retention and deletion (P17), search ranking (notes 20 and 36).
 
-### Design: larger changes and quick wins
+### Design: larger changes
 
-From the 2026-11-03 design review (screenshots of notes 01 and 07, a toolkit page, a track page, the concept index and the settings menu, light, warm and dark, 1280px and 500px). Its items 1 to 4 and 8 to 10 are done (see Done). Rules for any of these: [`DESIGN.md`](DESIGN.md).
+From the 2026-11-03 design review (screenshots of notes 01 and 07, a toolkit page, a track page, the concept index and the settings menu, light, warm and dark, 1280px and 500px). Its items 1 to 4 and 8 to 10 and its quick wins are done (see Done). Rules for any of these: [`DESIGN.md`](DESIGN.md).
 
 | # | Change | What the review saw | Proposed change | Effort |
 |---|---|---|---|---|
@@ -62,7 +62,7 @@ The Count-Min Sketch paper (note 34), the Instagram engineering post on IDs (not
 
 ### Testing gaps
 
-`npm run sweep` (`scripts/browser-sweep.mjs`, start instructions in its header) drives headless Chrome over its DevTools protocol. For the home page, every system, toolkit page and track, and the concept index, it checks console errors, sideways scroll, clipped cards, empty pages, a missing trust card or diagram, one h1 per page, the sticky top bar and text contrast (WCAG AA) in light, warm and dark at 1280px and 500px. A pt-BR pass repeats the layout checks and checks `<html lang>` and the not-translated notice. The dark-theme "lighter = component" legend chip is a known contrast false positive (gradient background) and is excluded.
+`npm run sweep` (`scripts/browser-sweep.mjs`, start instructions in its header) drives headless Chrome over its DevTools protocol. For the home page, every system, toolkit page and track, and the concept index, it checks console errors, sideways scroll of the page or of a reading column, overlapping diagram line labels, clipped cards, empty pages, a missing trust card or diagram, one h1 per page, the sticky top bar and text contrast (WCAG AA) in light, warm and dark at 1280px and 500px. A pt-BR pass repeats the layout checks and checks `<html lang>` and the not-translated notice. The dark-theme "lighter = component" legend chip is a known contrast false positive (gradient background) and is excluded.
 
 Still untested: a real phone, a screen reader and a real print dialog. Print was checked only with print-media emulation; the PNG export, study checkboxes and progress saved across reloads were checked by hand in headless Chrome.
 

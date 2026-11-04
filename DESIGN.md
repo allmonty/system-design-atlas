@@ -7,7 +7,7 @@ How the System Design Atlas site looks, and the rules that keep every page consi
 | `site/src/design.css` | The tokens (colour, space, radius, type, shadow, layers), the themes, the page frame, the one card look, the focus ring and the top bar. Its header comment is a one-screen summary of this document. |
 | `site/src/styles.css` | Page and component rules. Uses the tokens, never raw spacing or radius values. |
 | `test/design.test.ts` | Fails the build on raw px in `padding`, `margin`, `gap` or `border-radius` in `styles.css`, on rem font sizes outside the type scale, and on a `var(--s-*|--r-*|--t-*)` that `design.css` does not define. A line ending in `/* raw: reason */` is exempt. |
-| `scripts/browser-sweep.mjs` | Opens every page in three themes at 1280px and 500px, then in pt-BR, and checks console errors, sideways scroll, clipped cards, the sticky top bar and WCAG AA text contrast. |
+| `scripts/browser-sweep.mjs` | Opens every page in three themes at 1280px and 500px, then in pt-BR, and checks console errors, sideways scroll of the page or of a reading column, clipped cards, overlapping diagram line labels, the sticky top bar and WCAG AA text contrast. |
 
 ## 1. Principles
 
@@ -235,6 +235,7 @@ One timing, `--ease` (.15s ease), for hover and state changes: card lift, border
 
 - Node and edge text are in px (node title 13.5px, kind and technology 11px, edge labels 12px, boundary labels 12px), because each node is sized to its text by `site/src/nodeSize.ts`. The padding, gap, font sizes and line height in `.c4-body` are mirrored there: change both together.
 - Node colours come from the diagram palette (section 2.3); the border style shows confidence; `--accent` (or `--c-spec` in a failure flow) marks the current step's nodes and edge; other edges dim to 20% opacity during a flow.
+- Lines and arrowheads use `--muted` in every theme (the library's light grey is faint in dark). A line that points against the layout direction loops around its two boxes (below them left to right, beside them top to bottom) instead of running back through them, and a second loop between the same pair goes further out. Labels never overlap: a label that would land on another slides along its own line. The sweep fails a diagram whose labels overlap.
 - Controls that float over the canvas (level select, reset, export) use `--card`, `--line` and `--z-tools`.
 
 ## 10. Accessibility

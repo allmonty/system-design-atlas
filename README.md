@@ -21,12 +21,13 @@ Each system has a deep note (`systems/NN-*.md`) and a structured diagram (`syste
 |---|---|
 | [`systems/`](systems/) | The 42 notes, one diagram (`.diagram.json`) and one quote ledger (`.claims.json`) each |
 | [`toolkit/`](toolkit/README.md) | Casebook of 6 real incidents (`C`), 18 cross-cutting primers (`P`), a workbook of 6 practice pages (`W`) |
-| [`locales/`](locales/pt-BR/) | Brazilian Portuguese (`pt-BR`) translations (systems 01–30 and 34–42 and five toolkit pages mirrored, remainder in progress) |
+| [`locales/`](locales/pt-BR/) | Brazilian Portuguese (`pt-BR`) translations (systems 01–30 and 34–42 and six toolkit pages mirrored, remainder in progress) |
 | [`site/`](site/) | The React + React Flow site: home page study tracks, diagrams, search, reading settings |
 | [`.github/workflows/`](.github/workflows/pages.yml) | The workflow that builds and deploys the site |
 | [`schema/`](schema/), [`scripts/`](scripts/), [`test/`](test/) | The diagram schema, the validator, the quote verifier, the freshness and link checks, and their tests |
 | [`CLAUDE.md`](CLAUDE.md) | Conventions and sourcing rules, for contributors and for Claude Code |
 | [`ROADMAP.md`](ROADMAP.md) | What is not done yet, and why |
+| [`DESIGN.md`](DESIGN.md) | The site's design system: colours per theme, type, spacing, components, layout and accessibility rules |
 
 ## Why you can trust it, and where not to
 
@@ -201,14 +202,14 @@ npm test           # unit tests: validator, quote and trust helpers, text search
 npm run verify     # re-check every quotation against the sources recorded in systems/*.claims.json
 npm run links      # external link check (separates bot-blocked pages from broken ones)
 npm run freshness  # notes by the age of their last source read
-npm run sweep      # browser check of every page (needs vite preview on :5188 and headless Chrome on :9333, see scripts/browser-sweep.mjs)
+npm run sweep      # browser check of every page: layout, sideways scroll, overlapping diagram labels, contrast (needs vite preview on :5188 and headless Chrome on :9333, see scripts/browser-sweep.mjs)
 ```
 
 `npm run verify -- --write` fetches each note's cited sources (with an Internet Archive fallback) and updates the claims ledgers. PDFs need Python with `pypdf`: `PYTHON=/path/to/python npm run verify -- --write`.
 
 ## References and related material
 
-- **Related:** [`neokim-post/`](https://github.com/allmonty/study/blob/main/architecture/neokim-post/README.md) is the earlier set of 15 case studies this one upgrades (systems 01, 04, 05, 08, 12, 14, 15, 16, 18, 19) and extends. Systems 22 to 35 are new to this repository. It also holds the shared glossary [`00-fundamentals.md`](https://github.com/allmonty/study/blob/main/architecture/neokim-post/00-fundamentals.md). The architecture-lens sections use vocabulary from [`../fundamentals-of-software-architecture/`](https://github.com/allmonty/study/blob/main/architecture/fundamentals-of-software-architecture/summaries/README.md).
+- **Related:** [`neokim-post/`](https://github.com/allmonty/study/blob/main/architecture/neokim-post/README.md) is the earlier set of 15 case studies this one upgrades (systems 01, 04, 05, 08, 12, 14, 15, 16, 18, 19) and extends. Systems 22 to 42 are new to this repository. It also holds the shared glossary [`00-fundamentals.md`](https://github.com/allmonty/study/blob/main/architecture/neokim-post/00-fundamentals.md). The architecture-lens sections use vocabulary from [`../fundamentals-of-software-architecture/`](https://github.com/allmonty/study/blob/main/architecture/fundamentals-of-software-architecture/summaries/README.md).
 - **Study resources used as leads (never as proof):** [System Design Primer](https://github.com/donnemartin/system-design-primer) (the interview-questions list was used as a coverage cross-check: Pastebin/Bit.ly, Twitter timeline, web crawler and key-value store are all covered here) and [awesome-software-architecture](https://github.com/mehdihadeli/awesome-software-architecture) (its case-study list confirmed the choice of systems and pointed to primary sources such as Discord's and Instagram's engineering posts).
 - **Sourcing rules and conventions:** see [`CLAUDE.md`](CLAUDE.md).
 

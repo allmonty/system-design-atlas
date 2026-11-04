@@ -16,7 +16,7 @@ npm run validate   # schema, references, required sections, relative links, sour
 npm test           # unit tests (node:test via tsx): validator, trust helpers, text search, settings, design tokens, learning order, translation overlays and glossary rules; single file: npx tsx --test test/validate.test.ts
 cd site && npm install && npm run dev      # http://localhost:5173
 npm run build      # writes llms.txt, llms-full.txt and md/ note copies (scripts/build-llms.ts, gitignored in site/public), then tsc --noEmit + vite build, output in site/dist (not committed; the Pages workflow builds and deploys it)
-npm run sweep      # needs `vite preview` on :5188 and headless Chrome on :9333 (see scripts/browser-sweep.mjs); checks every page in English (3 themes) and in pt-BR
+npm run sweep      # needs `vite preview` on :5188 and headless Chrome on :9333 (see scripts/browser-sweep.mjs); checks every page in English (3 themes) and in pt-BR; fails on console errors, sideways scroll of the page or a reading column, overlapping diagram line labels, a missing top bar and text below WCAG AA
 ```
 
 Deep links: `site/#07-photo-upload-storage?flow=upload&step=2` opens a flow at a step.
@@ -42,6 +42,7 @@ Rules for a translated note, checked by `validateTranslations` in `scripts/valid
 - **Failure flows:** every diagram needs at least one flow with `"failure": true` (validator). Use it for faults, overloads and other abnormal cases, not the normal path.
 - **Section links and search** use heading slugs from `site/src/text.ts` (`slugify`, same suffixing as the rendered ids). Do not rename a heading without expecting old `?section=` links to break.
 - **Concept index** is parsed from the README's `Concept → systems matrix` table (`schema/concepts.ts`): one row per concept, system numbers separated by commas.
+- **Diagram lines** are drawn by `C4Edge` in `site/src/DiagramView.tsx`: forward lines are smoothstep paths, a line pointing against the layout direction loops around its boxes, and labels that would overlap slide along their own line (widths from `textWidth` in `nodeSize.ts`). The SVG and PNG export (`site/src/export.ts`) draws its own straight lines.
 - **Names in the note** that match a diagram element's label (parentheses stripped, 4+ letters) become clickable in Split view (`site/src/nodeRefs.ts`), once per h2 section. Keep element labels distinctive.
 
 ## Site design system

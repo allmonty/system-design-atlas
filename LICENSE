@@ -4,8 +4,8 @@ Copyright (c) 2026 Allan Monteiro
 
 This license covers the code: scripts/, schema/, test/, site/ and the build
 configuration. The written content (systems/, toolkit/, locales/, README.md,
-ROADMAP.md and the diagram JSON files) is licensed under CC BY 4.0, see
-LICENSE-CONTENT.
+ROADMAP.md, DESIGN.md and the diagram JSON files) is licensed under CC BY 4.0,
+see LICENSE-CONTENT.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
