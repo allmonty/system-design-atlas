@@ -29,18 +29,7 @@ From the 2026-11-03 design review (screenshots of notes 01 and 07, a toolkit pag
 | 2 | Less chrome above the note | On system pages the breadcrumbs, title, eight legend chips and the legend sentence take about 230px, then the trust card pushes the note's first line to about y=850. | Move the legend into a "Legend" disclosure inside the canvas; put "Mark as studied" on the breadcrumb row; collapse the trust card into a one-line bar (freshness, tag tallies, quotes found, "Details") with its four sections behind it; hide the note's repeated title (`h2.note-title`) on system pages but keep it for print. | M |
 | 3 | Home cards: less empty space, even rows | System cards are 170px tall with about 40% empty (a number and a title), so the page is about 6000px tall; five track columns at 1100px wrap titles onto three lines; "Continue" falls onto its own row; stage subtitles are indented while cards are flush left. | Lower the card `min-height` to about 112px or add a one-line description; track cards `minmax(min(200px, 100%), 1fr)` with title line height 1.3; a separate "Resume" strip; align stage subtitles with the cards. | S |
 
-**Quick wins** (small, each its own commit):
-- Wrapped flow-step lines put the number marker beside the last line: `.step-list button.linkish { vertical-align: top }`.
-- The "16 px" readout in the settings menu touches the right border: drop `min-width: 3.2em` on `.size-row output`.
-- On the concept index at 500px, the filter input touches the first card: give it a bottom margin of `--s-3`.
-- A confidence tag before a full stop leaves a gap ("S3 [c] ."): `.conf-tag { margin: 0 0 0 var(--s-1) }`.
-- The contents list and the "Jump to" select show raw "[c]" and "[ip]" in heading labels: strip them or render them as tags.
-- Diagram edge labels collide ("upl write derivativesent", note 07 graph view in dark), and edges are faint in dark: `.react-flow__edge-path { stroke: var(--muted) }` and label placement.
-- On a track page, a step with no reading time shows a stray "practice" at body size.
-- An unknown route such as `#toolkit/P18` silently shows the home page: show a "page not found" line with a link.
-- In dark, cards (`#1b1b20`) barely stand out from the page (`#111114`): try `--card: #1d1d23` and `--line: #383842`, then re-run the contrast sweep.
-- The trust card says "1 days ago": use the singular for one day (English and pt-BR).
-- Toolkit pages keep a full-width top bar while their column is 860px: consider lining the bar up with the column, as on the home page.
+**Diagram export:** the SVG and PNG export (`site/src/export.ts`) draws straight lines between box edges, so two lines between the same pair of elements, or a line pointing backwards, can overlap there, and their labels with them. The on-screen diagram routes and spaces them since 2026-11-04; the export would need the same treatment.
 
 **Bigger ideas** (not planned; each changes how the site feels, so decide first):
 1. **Docs-style three-column system page:** stage or system navigation on the left, the note in the centre, the contents and a compact trust summary on the right, the diagram as a sticky panel you can toggle (the Stripe and Tailwind docs pattern). Much easier to keep your place; a large `SystemPage` refactor that gives the diagram less room in Split.
@@ -87,6 +76,7 @@ Still untested: a real phone, a screen reader and a real print dialog. Print was
 
 | When | What |
 |---|---|
+| 2026-11-04 | The design review's quick wins: "1 day ago" and "today" on the trust card; no gap between a tag and its full stop; contents labels without raw tags; flow step numbers beside the first line; the size readout inside the settings menu; space below the concept filter; no stray "practice" on exercise steps; "Page not found" for unknown addresses; diagram lines visible in dark, backward lines looped around their boxes and labels that never overlap (checked on all 42 diagrams); clearer dark cards and borders; the toolkit top bar aligned with its column; one disclosure style for every `<details>`. The sweep now also fails on overlapping diagram labels and on reading columns that scroll sideways (the cause of a sideways scroll in note 02, from hidden tag tooltips, fixed the same day). |
 | 2026-11-04 | Follow-ups from the 2026-11-03 reviews: wording fixes in notes 03, 23 and 25, P16, P18 and the tracks; design fixes (mobile text view, toolkit tables, page scroll in text view, note typography, focus ring, disclosures, top bar); [`DESIGN.md`](DESIGN.md) documents the design system. |
 | 2026-11-03 | Primer P18 (evaluating LLM and agent systems) and additions to notes 23 (Ragas) and 25 (multi-agent coordination failures), with pt-BR mirrors. Two read-only reviews (content, design) found the items above. |
 | 2026-11-01 | Systems 36 to 42 (typeahead, job scheduler, CDN, maps and ETA, video conferencing, moderation and fraud ML, authorization and identity) and primers P11 to P17, each in English and pt-BR. |
