@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-  Background, Controls, Handle, MarkerType, Position, ReactFlow,
-  type Edge, type Node, type NodeChange, type NodeProps,
+  Background, BaseEdge, Controls, getSmoothStepPath, Handle, MarkerType, Position, ReactFlow,
+  type Edge, type EdgeProps, type Node, type NodeChange, type NodeProps,
 } from "@xyflow/react";
 import ReactMarkdown from "react-markdown";
 import { rehypeTags, tagComponents } from "./tags.tsx";
 import type { Diagram } from "../../schema/diagram.schema.ts";
 import { classifySource, type LedgerEntry } from "../../schema/trust.ts";
 import { layout, NODE_W } from "./layout.ts";
-import { nodeHeight, shortSummary } from "./nodeSize.ts";
+import { nodeHeight, shortSummary, textWidth } from "./nodeSize.ts";
 import { mentionsOf, scrollToSection } from "./sections.tsx";
 import { buildSvg, downloadPng, downloadSvg } from "./export.ts";
 import { useT } from "./i18n.tsx";
@@ -30,6 +30,32 @@ function C4Node({ data }: NodeProps<Node<C4Data>>) {
 }
 const Boundary = ({ data }: NodeProps<Node<{ label: string }>>) => <div className="boundary-label">{data.label}</div>;
 const nodeTypes = { c4: C4Node, boundary: Boundary };
+
+// A line that points against the layout direction (right to left in a left-to-right layout) would be drawn as a
+// smoothstep straight back through both boxes, on top of the line going the other way. Those loop around instead:
+// below the boxes in LR, beside them in TB, `drop` px out, with the label on the loop.
+type C4EdgeData = { dir: "LR" | "TB"; drop: number; dx: number; dy: number };
+const OUT = 20; // how far a looped line leaves its box before turning
+const isBackward = (dir: "LR" | "TB", sx: number, sy: number, tx: number, ty: number) => (dir === "LR" ? tx < sx + OUT : ty < sy + OUT);
+function C4Edge(p: EdgeProps<Edge<C4EdgeData>>) {
+  const { sourceX: sx, sourceY: sy, targetX: tx, targetY: ty, data } = p;
+  const dir = data?.dir ?? "LR", drop = data?.drop ?? 60, out = OUT;
+  const backward = isBackward(dir, sx, sy, tx, ty);
+  let path: string, lx: number, ly: number;
+  if (!backward) {
+    [path, lx, ly] = getSmoothStepPath({ sourceX: sx, sourceY: sy, sourcePosition: p.sourcePosition, targetX: tx, targetY: ty, targetPosition: p.targetPosition });
+  } else if (dir === "LR") {
+    const y = Math.max(sy, ty) + drop;
+    path = `M ${sx} ${sy} L ${sx + out} ${sy} L ${sx + out} ${y} L ${tx - out} ${y} L ${tx - out} ${ty} L ${tx} ${ty}`;
+    [lx, ly] = [(sx + tx) / 2, y];
+  } else {
+    const x = Math.max(sx, tx) + drop;
+    path = `M ${sx} ${sy} L ${sx} ${sy + out} L ${x} ${sy + out} L ${x} ${ty - out} L ${tx} ${ty - out} L ${tx} ${ty}`;
+    [lx, ly] = [x, (sy + ty) / 2];
+  }
+  return <BaseEdge id={p.id} path={path} labelX={lx + (data?.dx ?? 0)} labelY={ly + (data?.dy ?? 0)} label={p.label} markerEnd={p.markerEnd} style={p.style} interactionWidth={p.interactionWidth} />;
+}
+const edgeTypes = { c4: C4Edge };
 
 const PAD = 34;
 const LEVELS: { id: Level; name: string }[] = [
@@ -154,13 +180,43 @@ export function DiagramView({
     });
   }
 
+  // Backward lines loop out past the taller of their two boxes; a second loop between the same pair goes further out.
+  // Labels that would land on an earlier label slide along their own line until they are clear.
+  const dir = arranged.dir;
+  const pairCount = new Map<string, number>();
+  const placed: { x: number; y: number; w: number; h: number }[] = [];
+  const route = new Map(view.rels.map((r) => {
+    const pair = [r.from, r.to].sort().join("|");
+    const nth = pairCount.get(pair) ?? 0;
+    pairCount.set(pair, nth + 1);
+    const drop = (dir === "LR" ? Math.max(heights[r.from] ?? 0, heights[r.to] ?? 0) / 2 : NODE_W / 2) + 24 + 24 * nth;
+    let dx = 0, dy = 0;
+    if (labels && r.label) {
+      const a = pos(r.from), b = pos(r.to);
+      const [sx, sy, tx, ty] = dir === "LR"
+        ? [a.x + NODE_W, a.y + heights[r.from] / 2, b.x, b.y + heights[r.to] / 2]
+        : [a.x + NODE_W / 2, a.y + heights[r.from], b.x + NODE_W / 2, b.y];
+      const back = isBackward(dir, sx, sy, tx, ty);
+      const [cx, cy] = !back ? [(sx + tx) / 2, (sy + ty) / 2] : dir === "LR" ? [(sx + tx) / 2, Math.max(sy, ty) + drop] : [Math.max(sx, tx) + drop, (sy + ty) / 2];
+      const w = textWidth(r.label, "12px system-ui, sans-serif", 12) + 14, h = 22; // .react-flow__edge-text box plus the label background's padding and a small margin
+      const vertical = dir === "LR" ? !back : back; // the line's middle segment runs vertically, so slide up and down; else sideways
+      const hits = () => placed.some((q) => Math.abs(q.x - (cx + dx)) < (q.w + w) / 2 && Math.abs(q.y - (cy + dy)) < (q.h + h) / 2);
+      for (let k = 1; hits() && k <= 12; k++) {
+        const step = (k % 2 ? 1 : -1) * Math.ceil(k / 2);
+        if (vertical) dy = step * h; else dx = step * (w / 2 + 6);
+      }
+      placed.push({ x: cx + dx, y: cy + dy, w, h });
+    }
+    return [r.id, { drop, dx, dy }] as const;
+  }));
   const edges: Edge[] = view.rels.map((r) => {
     const isCurrent = r.id === activeRel?.id;
     const dim = flow && !isCurrent && !seen.has(r.id);
     return {
-      id: r.id, source: r.from, target: r.to, label: labels ? r.label : undefined, type: "smoothstep",
+      id: r.id, source: r.from, target: r.to, label: labels ? r.label : undefined, type: "c4",
+      data: { dir, ...route.get(r.id)! },
       animated: isCurrent || r.async,
-      markerEnd: { type: MarkerType.ArrowClosed },
+      markerEnd: { type: MarkerType.ArrowClosed, color: "var(--muted)" },
       className: `${isCurrent ? "edge-current" : ""} ${dim ? "edge-dim" : ""}`,
       style: r.async && !isCurrent ? { strokeDasharray: "5 4" } : undefined,
     };
@@ -207,6 +263,7 @@ export function DiagramView({
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
           fitView
           fitViewOptions={{ padding: 0.12 }}
           minZoom={0.1}

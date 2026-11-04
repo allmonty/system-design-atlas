@@ -52,6 +52,7 @@ button:disabled { opacity: .4; cursor: default; }
 .conf-INDUSTRY-PATTERN.react-flow__node { border-style: dashed; } .conf-SPECULATIVE.react-flow__node { border-style: dotted; }
 .react-flow__node.lit { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent); }
 .react-flow__node.sel { border-color: var(--fg); }
+.react-flow__edge-path { stroke: var(--muted); } /* the library's light grey is faint on the dark theme */
 .react-flow__edge.edge-dim .react-flow__edge-path { opacity: .2; }
 .react-flow__edge.edge-current .react-flow__edge-path { stroke: var(--accent); stroke-width: 3; }
 .react-flow__edge-text { fill: var(--fg); font-size: 12px; }

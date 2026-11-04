@@ -12,10 +12,16 @@ export const shortSummary = (s: string) => (s.length > 80 ? s.slice(0, 77) + "â€
 
 const ctx = typeof document !== "undefined" ? document.createElement("canvas").getContext("2d") : null;
 
+/** Width in px of one line of text in this CSS font. */
+export const textWidth = (text: string, font: string, px: number) => {
+  // shortcut: without a canvas (tests, server) assume an average glyph is 0.55em wide.
+  if (ctx) { ctx.font = font; return ctx.measureText(text).width; }
+  return text.length * px * 0.55;
+};
+
 /** Number of lines `text` needs at `width`, wrapping at spaces like the browser does; an over-long word wraps by letters. */
 export function wrappedLines(text: string, font: { px: number; font: string }, width: number): number {
-  // shortcut: without a canvas (tests, server) assume an average glyph is 0.55em wide.
-  const measure = (t: string) => { if (ctx) { ctx.font = font.font; return ctx.measureText(t).width; } return t.length * font.px * 0.55; };
+  const measure = (t: string) => textWidth(t, font.font, font.px);
   let lines = 1, cur = 0;
   const space = measure(" ");
   for (const word of text.split(/\s+/).filter(Boolean)) {
