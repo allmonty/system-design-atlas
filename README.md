@@ -174,7 +174,7 @@ For interviews, practise each note's **Interview questions**, and walk the **flo
 
 The home page is a study guide: pick a goal (interview, building blocks, architect, AI, or the whole atlas in order) and follow an ordered track with a reason for each step; tick pages as you finish them (saved only in your browser); or browse by stage and search. Tracks live in `site/src/tracks.json`, and `npm run validate` checks that every step points at a real page.
 
-The top-bar gear menu sets theme, font, reading text size, and language (**English** or **Português do Brasil**). Translated notes mirror under `locales/pt-BR/` (currently systems 01 to 30 and 34 to 42, and toolkit pages P02, P11, P14, P17 and W04) and fall back to English with a notice when an individual translation is not yet ready. The UI text, study tracks and stages automatically adapt to the chosen language.
+The top-bar gear menu sets theme, font, reading text size, and language (**English** or **Português do Brasil**). Translated notes mirror under `locales/pt-BR/` (currently systems 01 to 30 and 34 to 42, and toolkit pages P02, P11, P14, P17, P18 and W04) and fall back to English with a notice when an individual translation is not yet ready. The UI text, study tracks and stages automatically adapt to the chosen language.
 
 ```sh
 npm install && (cd site && npm install)   # once
