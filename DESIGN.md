@@ -176,7 +176,7 @@ Every `<details>` on the site (answer outlines, the trust card, the home page's 
 
 ### 6.6 Top bar
 
-Sticky at the top of every page (the sweep fails a page without it): the brand with its `--p-service` tile on the left; the coffee link and the settings button on the right, each at least `--hit` tall. It uses a 92% `--bg` background with blur and a `--line` bottom border. On the centred pages (home, tracks, concepts) its contents line up with the page column; on system and toolkit pages it spans the window.
+Sticky at the top of every page (the sweep fails a page without it): the brand with its `--p-service` tile on the left; the coffee link and the settings button on the right, each at least `--hit` tall. It uses a 92% `--bg` background with blur and a `--line` bottom border. On the centred pages its contents line up with the page column (home, tracks and concepts at `--page-max`, toolkit pages at `--read-max`); on system pages it spans the window.
 
 ### 6.7 Trust card
 
@@ -193,7 +193,7 @@ One ring for every focusable element: `outline: 2px solid var(--accent); outline
 | Token or rule | Value | What |
 |---|---|---|
 | `--page-max` | 1100px | home, track and concept pages |
-| `main.toolkit` | 860px | toolkit reading pages |
+| `--read-max` | 860px | toolkit reading pages (`main.toolkit`) |
 | `.system` | 1800px | system pages (diagram and note side by side) |
 | `.split.mode-text .notes` | 960px | the note column in text view |
 | `--prose-max` | 76ch | paragraphs, list items, quotes and disclosures in notes |

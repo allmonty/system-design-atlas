@@ -48,6 +48,6 @@ Status: `[ ]` to do · `[x]` done (ticked in the commit that does it) · `[-]` d
 - [x] F8 Unknown route silently shows the home page.
 - [x] F9 Diagram edges faint in dark; edge labels collide.
 - [x] F10 Dark cards barely stand out from the page.
-- [ ] F11 Toolkit top bar not aligned with the 860px column.
+- [x] F11 Toolkit top bar not aligned with the 860px column.
 - [ ] F12 Full sweep, then move the quick wins to Done in ROADMAP.md.
 - Found during F10: the home reading guide and the diagram panel still used the browser triangle; the chevron now applies to every <details>.

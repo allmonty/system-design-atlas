@@ -39,8 +39,8 @@ export function App() {
   const trackId = id.startsWith("track/") ? id.slice(6) : undefined;
   return (
     <>
-      {/* On the centred pages (home, tracks, concepts) the bar's contents line up with the page column. */}
-      <header className={`top${page || system ? "" : " centred"}`}>
+      {/* On centred pages (home, tracks, concepts, toolkit) the bar's contents line up with the page column. */}
+      <header className={`top${system ? "" : page ? " reading" : " centred"}`}>
         <div className="top-inner">
           <a href="#" className="brand"><span className="tile sm tone-service" aria-hidden="true"><Network size={16} strokeWidth={2} /></span>System Design Atlas</a>
           <div className="top-actions">

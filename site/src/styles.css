@@ -11,6 +11,7 @@ button:disabled { opacity: .4; cursor: default; }
 .top { display: flex; align-items: center; padding: var(--s-3) var(--page-pad); border-bottom: 1px solid var(--line); }
 .top-inner { flex: 1; min-width: 0; display: flex; justify-content: space-between; align-items: center; gap: var(--s-3); }
 .top.centred .top-inner { max-width: calc(var(--page-max) - 2 * var(--page-pad)); margin: 0 auto; } /* same column as .home */
+.top.reading .top-inner { max-width: calc(var(--read-max) - 2 * var(--page-pad)); margin: 0 auto; } /* same column as main.toolkit */
 .brand { display: inline-flex; align-items: center; gap: var(--s-2); font-weight: 700; text-decoration: none; color: var(--fg); }
 .home, .system { max-width: 1800px; margin: 0 auto; }
 .bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--s-2); }
@@ -133,7 +134,7 @@ details[open] > summary::before { transform: translateY(-.25em) rotate(45deg); b
 .glance { border-left: 4px solid var(--accent); padding-left: var(--s-4); }
 
 /* Toolkit pages are single-column reading pages. */
-main.toolkit { max-width: 860px; margin: 0 auto; overflow-wrap: break-word; } /* break-word, not anywhere: anywhere shrinks table columns to a letter or two */
+main.toolkit { max-width: var(--read-max); margin: 0 auto; overflow-wrap: break-word; } /* break-word, not anywhere: anywhere shrinks table columns to a letter or two */
 
 /* ---- Home: guided study ---- */
 .home { max-width: var(--page-max); }

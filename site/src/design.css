@@ -3,7 +3,7 @@
    never raw values (test/design.test.ts fails the build if padding, margin, gap or border-radius use raw px).
    The full guide, with every value per theme and the component rules, is DESIGN.md at the repository root.
 
-   LAYOUT    --hit 36px (smallest target) · --page-max 1100px · --prose-max 76ch · --page-pad · --top-h (top bar height)
+   LAYOUT    --hit 36px (smallest target) · --page-max 1100px · --read-max 860px (toolkit pages) · --prose-max 76ch · --page-pad · --top-h (top bar height)
    SPACE     --s-1 4 · --s-2 8 · --s-3 12 · --s-4 16 · --s-5 24 · --s-6 32 · --s-7 48 (px, on a 4px grid)
              inside a control: s-1/s-2 · inside a card: s-4 · between cards: s-4 · between sections: s-6
    RADIUS    --r-sm 6 (buttons, inputs) · --r-md 10 (small panels, popovers) · --r-lg 14 (cards) · --r-pill
@@ -28,7 +28,7 @@
   --shadow-pop: 0 10px 30px rgb(0 0 0 / .18);
   --z-sticky: 4; --z-tools: 5; --z-top: 10; --z-pop: 20; --top-h: calc(max(2.3rem, var(--hit)) + var(--s-5) + 1px); /* height of the top bar (tallest control + padding + border), for things that stick below it */
   --hit: 36px; /* smallest click or tap target */
-  --page-max: 1100px; --prose-max: 76ch; --page-pad: clamp(var(--s-3), 3vw, var(--s-5));
+  --page-max: 1100px; --read-max: 860px; --prose-max: 76ch; --page-pad: clamp(var(--s-3), 3vw, var(--s-5));
   --ease: .15s ease;
   --surface: color-mix(in srgb, var(--card) 80%, transparent);
 }
