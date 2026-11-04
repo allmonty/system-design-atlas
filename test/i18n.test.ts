@@ -22,3 +22,9 @@ test("the pt-BR overlays name no track, step or stage that the English lacks", (
   }
   assert.deepEqual(Object.keys(stagePt).sort(), read("stages.json").map((s: { title: string }) => s.title).sort());
 });
+
+test("the source freshness phrase says today, 1 day and n days in both languages", async () => {
+  const { ago } = await import("../site/src/ago.ts");
+  assert.deepEqual([0, 1, 6].map((d) => ago(d, "en")), ["today", "1 day ago", "6 days ago"]);
+  assert.deepEqual([0, 1, 6].map((d) => ago(d, "pt-BR")), ["hoje", "1 dia atrás", "6 dias atrás"]);
+});

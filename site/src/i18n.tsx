@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { useSettings } from "./settings.ts";
 import type { ItemType } from "./data.ts";
+import { ago } from "./ago.ts";
 
 // UI text in both languages. Only sentences and labels are translated; technical terms (Mermaid, Graph, Split,
 // CONFIRMED, container, component, flow, ...) stay in English. The pt-BR object is typed as the English one, so a
@@ -161,7 +162,7 @@ const en = {
   trustSummary: "Trust summary",
   noSourceDate: "No source date recorded",
   sourcesRead: (date: string, days: number, stale: boolean, limit: number) =>
-    `Sources read ${date} (${days} days ago)${stale ? ` · older than ${limit} days, may be out of date` : ""}`,
+    `Sources read ${date} (${ago(days, "en")})${stale ? ` · older than ${limit} days, may be out of date` : ""}`,
   diagramFacts: (confirmed: number, pattern: number, speculative: number) =>
     `${confirmed} elements confirmed by a source, ${pattern} industry pattern${speculative ? `, ${speculative} speculative` : ""}.`,
   diagramLabel: "Diagram:",
@@ -344,7 +345,7 @@ const ptBR: Dict = {
   trustSummary: "Resumo de confiança",
   noSourceDate: "Sem data de fonte registrada",
   sourcesRead: (date, days, stale, limit) =>
-    `Fontes lidas em ${date} (${days} dias atrás)${stale ? ` · mais de ${limit} dias, pode estar desatualizado` : ""}`,
+    `Fontes lidas em ${date} (${ago(days, "pt-BR")})${stale ? ` · mais de ${limit} dias, pode estar desatualizado` : ""}`,
   diagramFacts: (confirmed, pattern, speculative) =>
     `${confirmed} elementos confirmados por uma fonte, ${pattern} industry pattern${speculative ? `, ${speculative} speculative` : ""}.`,
   diagramLabel: "Diagrama:",

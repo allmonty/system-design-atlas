@@ -36,3 +36,17 @@ Status: `[ ]` to do · `[x]` done (ticked in the commit that does it) · `[-]` d
 - Found during B2: the trust card says "1 days ago" (plural for one day). Add to the quick wins in D3.
 - E1 first run: 144 failures, all light-theme contrast on inline code from B4 (7% tint: links 4.31:1, muted text 4.42:1) plus one link on a table header (5% tint, 4.49:1). Fixed by using a 4% tint for both (worst case 4.58:1), documented in DESIGN.md.
 - After the plan: the user saw sideways scroll in note 02. Cause: hidden confidence-tag tooltips (visibility: hidden) widened the note column, by up to 257px in split view. Fixed with display: none, and the sweep now checks reading columns.
+
+## F. Quick wins (roadmap "Design: quick wins", started 2026-11-04)
+- [x] F1 "1 days ago" on the trust card (English and pt-BR).
+- [ ] F2 Confidence tag before a full stop leaves a gap ("S3 [c] .").
+- [ ] F3 Contents list and "Jump to" select show raw "[c]" / "[ip]" in heading labels.
+- [ ] F4 Wrapped flow-step lines put the number marker beside the last line.
+- [ ] F5 "16 px" readout touches the settings menu border.
+- [ ] F6 Concept filter input touches the first card at 500px.
+- [ ] F7 Track page: a step with no reading time shows a stray "practice".
+- [ ] F8 Unknown route silently shows the home page.
+- [ ] F9 Diagram edges faint in dark; edge labels collide.
+- [ ] F10 Dark cards barely stand out from the page.
+- [ ] F11 Toolkit top bar not aligned with the 860px column.
+- [ ] F12 Full sweep, then move the quick wins to Done in ROADMAP.md.
