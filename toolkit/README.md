@@ -38,6 +38,7 @@ Short sourced explainers for topics that recur across the atlas. Each ends with 
 | P15 | [Reviewing code and designs effectively](P15-effective-review.md) | Google engineering practices, GitHub Docs, Perry et al., Fu et al. |
 | P16 | [Consistency claims done right, and how caches fail](P16-consistency-and-cache-failures.md) | Brewer, Abadi, the Dynamo paper, Deutsch, AWS Builders' Library |
 | P17 | [Privacy by design for system architects](P17-privacy-by-design.md) | EDPB Guidelines 4/2019, NIST Privacy Framework, Meta Privacy Aware Infrastructure |
+| P18 | [Evaluating LLM and agent systems](P18-evaluating-llm-and-agent-systems.md) | Anthropic's guide to agent evals, the Ragas paper, AWS Machine Learning Blog, MAST |
 
 ## Workbook: practice with feedback (`W`)
 

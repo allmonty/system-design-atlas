@@ -87,6 +87,7 @@
       "23": "Retrieval-augmented generation como sistema: chunking, hybrid search, permissões.",
       "25": "Agents: workflows versus loops, tools, sandboxes e orçamentos.",
       "28": "Melhorar um modelo: adapters, preference tuning, evaluation gates e rollout.",
+      "P18": "Avaliar funcionalidades de LLM e agents: avaliadores, suítes de regressão versus de capacidade, pass@k versus pass^k e evals que estão elas mesmas quebradas.",
       "26": "Recomendação em dois estágios e aprendizado a partir de feedback.",
       "27": "Treinamento em larga escala: paralelismo, checkpoints e falhas.",
       "P06": "Threat modeling, que importa mais para tools e texto recuperado.",

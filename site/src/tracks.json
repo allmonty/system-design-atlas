@@ -279,6 +279,10 @@
           "why": "Improving a model: adapters, preference tuning, evaluation gates and rollout."
         },
         {
+          "ref": "P18",
+          "why": "Evaluating LLM features and agents: graders, regression versus capability suites, pass@k versus pass^k, and evals that are themselves broken."
+        },
+        {
           "ref": "26",
           "why": "Two-stage recommendation and learning from feedback."
         },
