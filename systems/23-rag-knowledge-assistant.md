@@ -11,6 +11,7 @@
 - Adding generated context to each chunk cut top-20 retrieval failures by 35% (embeddings) and 49% (with keyword search); adding a reranker reached 67% (5.7% → 1.9%) `[CONFIRMED]` (Anthropic's own datasets).
 - In the original RAG paper the knowledge source was 21 million 100-word Wikipedia chunks behind an approximate nearest-neighbour index `[CONFIRMED]`.
 - Replacing the index updates the model's knowledge without retraining: 70% correct with a matching 2016 index, 68% with a matching 2018 index, 12% and 4% when mismatched `[CONFIRMED]` (RAG paper).
+- Model-graded faithfulness (Ragas) picked the answer people preferred in 95% of pairwise comparisons on its WikiEval set, using gpt-3.5-turbo-16k as the grader `[CONFIRMED]` (Es et al., 2023).
 
 **Decisions and trade-offs**
 
@@ -42,6 +43,7 @@ Imagine a **new employee with a great memory for general knowledge but who has n
 - **Knowledge updates by replacing the index,** not by retraining `[CONFIRMED]`.
 - **Chunks lose context.** Prepending a short generated explanation before embedding and keyword indexing reduced failed retrievals `[CONFIRMED]` (Anthropic).
 - **Hybrid search plus reranking** beat embeddings alone in Anthropic's tests `[CONFIRMED]`.
+- **Faithfulness, answer relevance and context relevance** can be scored by an LLM without reference answers (Ragas) `[CONFIRMED]` (Es et al., 2023).
 - **Permissions, freshness, citations, evaluation and cost control** are the production concerns `[INDUSTRY PATTERN]`.
 
 ---
@@ -114,12 +116,23 @@ user ─► permission scope ─► hybrid retrieve ─► rerank ─► build p
 
 **Evaluation and operations**
 - **Retrieval metrics:** recall of the known relevant chunk in the top-k, on a labelled question set. This is what the Anthropic post measured.
-- **Answer metrics:** groundedness (does each claim appear in a cited chunk), correctness against reference answers, refusal quality. Use human review on samples and model-based grading with care, since graders have their own errors.
+- **Answer metrics:** groundedness (does each claim appear in a cited chunk), correctness against reference answers, refusal quality. Ragas faithfulness (section 4b) automates the groundedness check. Use human review on samples and model-based grading with care, since graders have their own errors.
 - **Monitoring:** log question, retrieved chunks, answer and feedback (with privacy controls); watch no-answer rate, citation click-through and latency.
 - **Cost control:** cache embeddings and frequent answers where permissions allow, cap context size, rerank fewer candidates, use a small model for easy questions.
 - **Security:** prompt injection through documents is a real risk, since retrieved text enters the prompt. Treat retrieved content as data, limit what the model can do with it, and keep the permission filter outside the model.
 
 ---
+
+## 4b. Scoring answers without reference answers: Ragas `[CONFIRMED]` (Es et al., arXiv, September 2023)
+
+Labelled reference answers are expensive and usually missing when a RAG system is first built. The Ragas paper proposes three metrics that need only the question, the retrieved context and the answer. Each is computed by prompting an LLM (gpt-3.5-turbo-16k in the paper):
+- **Faithfulness:** an answer is faithful "if the claims that are made in the answer can be inferred from the context". The LLM splits the answer into short statements, then checks each one against the context. Score = supported statements ÷ all statements.
+- **Answer relevance:** the LLM writes several questions that the answer would answer. The score is the average cosine similarity between their embeddings (text-embedding-ada-002) and the real question. It does not check facts. It penalises answers that are incomplete or padded.
+- **Context relevance:** the LLM pulls out the sentences of the context needed to answer the question. Score = extracted sentences ÷ all sentences. It penalises padded context, which costs tokens and is used less well when the key fact sits in the middle (see *Lost in the Middle* in section 4).
+
+**How well it agrees with people.** The authors built WikiEval: 50 Wikipedia pages about events since the start of 2022, with pairs of answers or contexts judged by two annotators. Ragas picked the option the annotators preferred 95% of the time for faithfulness, 78% for answer relevance and 70% for context relevance. Asking the same model directly for a 0 to 10 score (their "GPT Score" baseline) gave 72%, 52% and 63%. The authors found context relevance the hardest to score, because the model struggled to pick the crucial sentences out of long contexts.
+
+**Using it** `[INDUSTRY PATTERN]` (our reasoning): these are model judgments, so run them on a fixed question set next to retrieval recall against labelled chunks, and check them against a sample graded by people, as with any LLM judge (see [28](28-llm-finetuning-evaluation.md)). The Ragas library has since added more metrics; we read only the paper.
 
 ## 5. Failure scenarios
 
@@ -127,7 +140,7 @@ user ─► permission scope ─► hybrid retrieve ─► rerank ─► build p
 - **Permission change.** A revoked permission must propagate to the chunk store before the next query; otherwise the answer leaks content `[INDUSTRY PATTERN]`.
 - **Exact identifier missed.** Embeddings alone can miss a ticket number or error code; the keyword index rescues it `[CONFIRMED]` (Anthropic's example).
 - **Right chunk not retrieved.** The model cannot answer or answers wrongly; fix chunking, add context, widen the candidate list and rerank `[CONFIRMED]` as a direction, with numbers specific to the Anthropic tests.
-- **Hallucinated answer.** Require citations and check that cited chunks support the claim `[INDUSTRY PATTERN]`.
+- **Hallucinated answer.** Require citations and check that cited chunks support the claim `[INDUSTRY PATTERN]`; a faithfulness score (section 4b) flags answers whose statements the context does not support `[CONFIRMED]` (Ragas).
 
 ---
 
@@ -145,8 +158,9 @@ user ─► permission scope ─► hybrid retrieve ─► rerank ─► build p
 1. **The retrieval gains come from one vendor's experiments** (their datasets, one reranker, a Gemini embedding model). They are not general results.
 2. **The RAG paper's system trains the retriever and generator together** (fine-tuning the query encoder and generator). Most enterprise "RAG" does not; it assembles a prompt at query time. The shared idea is the retrieval step, not the training recipe.
 3. **The 200,000-token threshold** is from the Anthropic post and tied to that model's context window then; it moves as context windows grow.
-4. **Access control, sync, evaluation and prompt-injection guidance are industry practice,** not sourced claims.
-5. **Not read:** other chunking studies, reranker papers (long-context position effects are covered from the *Lost in the Middle* abstract only), graph-based or agentic retrieval, ColBERT-style multi-vector retrieval, and vendor vector database documentation.
+4. **Access control, sync, evaluation and prompt-injection guidance are industry practice,** not sourced claims, except the three Ragas metrics and their agreement figures (section 4b).
+5. **Ragas was validated on one small set** (WikiEval, 50 pages, questions and answers generated by ChatGPT) with one grader model. Its agreement figures need not hold for your documents, language or grader.
+6. **Not read:** other chunking studies, reranker papers (long-context position effects are covered from the *Lost in the Middle* abstract only), graph-based or agentic retrieval, ColBERT-style multi-vector retrieval, and vendor vector database documentation.
 
 ---
 
@@ -208,13 +222,13 @@ Store each chunk's access list with it, resolve the user's groups at query time,
 
 <details><summary>How do you evaluate it?</summary>
 
-Build a labelled question set. Measure retrieval recall in the top k first, then groundedness and correctness of answers, then refusal behaviour. Track the same set over time so every change to chunking, models or prompts is compared before release.
+Build a labelled question set. Measure retrieval recall in the top k first, then groundedness and correctness of answers, then refusal behaviour. Where there are no reference answers yet, reference-free scores such as Ragas faithfulness and context relevance give a first signal; check them against human grades. Track the same set over time so every change to chunking, models or prompts is compared before release.
 
 </details>
 
 ## 📚 Further reading
 
-- The two sources listed under Sources and provenance.
+- The sources listed under Sources and provenance.
 - [`neokim-post/01` How LLMs work](https://github.com/allmonty/study/blob/main/architecture/neokim-post/01-how-llms-work.md) for embeddings and retrieval basics.
 - [System Design Primer](https://github.com/donnemartin/system-design-primer) (secondary).
 - Related in this repo: [20 Web crawler and search](20-web-crawler-search.md), [22 LLM inference serving](22-llm-inference-serving.md), [24 Vector / semantic search at scale](24-vector-semantic-search.md), [25 AI agent platform](25-ai-agent-platform.md) and [28 LLM fine-tuning, evaluation and deployment](28-llm-finetuning-evaluation.md).
@@ -222,9 +236,9 @@ Build a labelled question set. Measure retrieval recall in the top k first, then
 ## Sources and provenance
 
 > **Kind:** reference design. RAG (the method) and Contextual Retrieval (a technique and its measurements) are published. How any particular company builds its internal assistant is not, so the platform in section 4 is the standard design `[INDUSTRY PATTERN]`.
-> **Sources read on 2026-10-27:** Lewis et al., [*Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*](https://arxiv.org/pdf/2005.11401) (arXiv 2005.11401, 2020; PDF text extracted locally) · Anthropic, [*Introducing Contextual Retrieval*](https://www.anthropic.com/news/contextual-retrieval) (19 September 2024; read through an Internet Archive copy) · Liu et al., [*Lost in the Middle: How Language Models Use Long Contexts*](https://arxiv.org/pdf/2307.03172) (2023; abstract and introduction).
-> **Dated material:** the RAG paper is from 2020 and the Anthropic post from 2024. Models, context windows and prices have changed since.
-> **Not read:** the Anthropic cookbook, other chunking and reranking papers, vendor documentation for vector databases or enterprise search products.
+> **Sources read on 2026-10-27; additions read on 2026-11-03:** Lewis et al., [*Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks*](https://arxiv.org/pdf/2005.11401) (arXiv 2005.11401, 2020; PDF text extracted locally) · Anthropic, [*Introducing Contextual Retrieval*](https://www.anthropic.com/news/contextual-retrieval) (19 September 2024; read through an Internet Archive copy) · Liu et al., [*Lost in the Middle: How Language Models Use Long Contexts*](https://arxiv.org/pdf/2307.03172) (2023; abstract and introduction) · Es et al., [*Ragas: Automated Evaluation of Retrieval Augmented Generation*](https://arxiv.org/pdf/2309.15217) (arXiv 2309.15217, September 2023; PDF text extracted locally).
+> **Dated material:** the RAG paper is from 2020, the Ragas paper from 2023 (graded with gpt-3.5-turbo-16k) and the Anthropic post from 2024. Models, context windows and prices have changed since.
+> **Not read:** the Ragas library documentation and its later metrics, the Anthropic cookbook, other chunking and reranking papers, vendor documentation for vector databases or enterprise search products.
 > **Tags:** `[CONFIRMED]` stated by a primary source · `[INDUSTRY PATTERN]` standard practice · `[SPECULATIVE]` plausible or illustrative.
 
 ---
@@ -234,5 +248,6 @@ Build a labelled question set. Measure retrieval recall in the top k first, then
 - Verified in the RAG paper: the parametric and non-parametric memory definition, BART-large with 400M parameters, DPR bi-encoder with BERT-base encoders, MIPS in sub-linear time, FAISS with HNSW, December 2018 dump in 100-word chunks giving 21M documents, k in 5 or 10 for training, hallucination statement, Jeopardy factuality percentages (42.7% and 7.1%), index hot-swapping results (70%, 68%, 12%, 4%).
 - Verified in the Anthropic post: 200,000-token threshold, chunk size wording, BM25 description and error-code example, context length of 50–100 tokens, $1.02 per million document tokens and its assumptions, the 35%, 49% and 67% figures with 5.7% to 1.9%, top-150 to top-20 reranking, 20 chunks versus 10 or 5, the limited gains from generic summaries, "always run evals", datasets used.
 - Verified in the Lost in the Middle abstract: the two tasks, the position effect (best at beginning or end, worse in the middle, even for long-context models). The models and quantitative results in the paper were not reviewed.
-- Labelled industry pattern, not sourced: ingestion and sync design, permission filtering, evaluation metrics and monitoring, cost control, prompt-injection advice, capacity figures.
+- Verified in the Ragas paper (2026-11-03): reference-free framing, gpt-3.5-turbo-16k and text-embedding-ada-002, the faithfulness definition and formula, answer relevance by generated questions and cosine similarity, context relevance by extracted sentences, WikiEval (50 pages since 2022, two annotators, about 95% and 90% annotator agreement), Table 1 (0.95, 0.78, 0.70 vs GPT Score 0.72, 0.52, 0.63), context relevance as the hardest dimension.
+- Labelled industry pattern, not sourced: ingestion and sync design, permission filtering, retrieval metrics and monitoring, how to combine Ragas scores with human grading, cost control, prompt-injection advice, capacity figures.
 - Not claimed: results on any dataset other than those in the cited sources.
