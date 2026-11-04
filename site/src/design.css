@@ -5,6 +5,7 @@
    SPACE     --s-1 4 · --s-2 8 · --s-3 12 · --s-4 16 · --s-5 24 · --s-6 32 · --s-7 48 (px, on a 4px grid)
              inside a control: s-1/s-2 · inside a card: s-4 · between cards: s-4 · between sections: s-6
    RADIUS    --r-sm 6 (buttons, inputs) · --r-md 10 (small panels, popovers) · --r-lg 14 (cards) · --r-pill
+   FONTS     --font-body (reader's choice in settings) · --font-mono (code, ASCII diagrams)
    TYPE      --t-xs .75rem (labels, pills) · --t-sm .85rem (secondary text) · --t-md 1rem (body) · --t-lg 1.15rem
              (section titles) · --t-xl 1.5rem (page titles) · --t-2xl 2.3rem (home headline). Sizes are rem, so
              the reader's size setting scales them. Diagram node text is fixed px on purpose.
@@ -52,7 +53,7 @@
     --k-client: #0c4a6e; --k-edge: #3b2a6b; --k-service: #14532d; --k-datastore: #5b3f08; --k-queue: #6b1d44; --k-external: #3a3a42;
   }
 }
-:root { --font-body: system-ui, sans-serif; }
+:root { --font-body: system-ui, sans-serif; --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 :root[data-font="atkinson"] { --font-body: "Atkinson Hyperlegible", system-ui, sans-serif; }
 :root[data-font="lexend"] { --font-body: "Lexend Variable", system-ui, sans-serif; }
 :root[data-font="literata"] { --font-body: "Literata Variable", Georgia, serif; }
