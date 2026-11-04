@@ -41,9 +41,9 @@ button:disabled { opacity: .4; cursor: default; }
 .notes > :first-child { margin-top: 0; }
 .notes table { border-collapse: collapse; font-size: var(--t-sm); }
 .notes th, .notes td { border: 0; border-bottom: 1px solid var(--line); padding: var(--s-2) var(--s-3); text-align: left; vertical-align: top; }
-.notes th { background: color-mix(in srgb, var(--fg) 5%, transparent); border-bottom-color: color-mix(in srgb, var(--fg) 25%, var(--line)); }
+.notes th { background: color-mix(in srgb, var(--fg) 4%, transparent); border-bottom-color: color-mix(in srgb, var(--fg) 25%, var(--line)); }
 .notes code { font-family: var(--font-mono); font-size: .875em; }
-.notes :not(pre) > code { padding: .1em .35em; border-radius: var(--r-sm); background: color-mix(in srgb, var(--fg) 7%, transparent); }
+.notes :not(pre) > code { padding: .1em .35em; border-radius: var(--r-sm); background: color-mix(in srgb, var(--fg) 4%, transparent); } /* 4% at most: muted and link text keep 4.5:1 on it */
 .notes pre { overflow: auto; background: color-mix(in srgb, var(--fg) 4%, var(--bg)); border: 1px solid var(--line); padding: var(--s-3) var(--s-4); border-radius: var(--r-md); line-height: 1.55; }
 /* React Flow nodes: colour by kind, border by confidence */
 .react-flow__node { border: 2px solid var(--line); border-radius: var(--r-md); color: var(--fg); font-size: 13px; display: flex; align-items: center; justify-content: center; text-align: center; padding: var(--s-1); }

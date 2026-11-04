@@ -29,8 +29,9 @@ Status: `[ ]` to do · `[x]` done (ticked in the commit that does it) · `[-]` d
 - [x] D3 Add design items 5-7 (split-view diagram and stepper, chrome above the note, home cards) plus the reviewers' quick wins and bigger ideas.
 
 ## E. Final check
-- [ ] E1 Full browser sweep (`npm run sweep`), English and pt-BR, all themes.
-- [ ] E2 Delete this file.
+- [x] E1 Full browser sweep (`npm run sweep`), English and pt-BR, all themes: 808 checks, 0 console errors, 0 failing (after the tint fix below).
+- [ ] E2 Delete this file (left for the user, who said it will be deleted later).
 
 ## Notes
 - Found during B2: the trust card says "1 days ago" (plural for one day). Add to the quick wins in D3.
+- E1 first run: 144 failures, all light-theme contrast on inline code from B4 (7% tint: links 4.31:1, muted text 4.42:1) plus one link on a table header (5% tint, 4.49:1). Fixed by using a 4% tint for both (worst case 4.58:1), documented in DESIGN.md.

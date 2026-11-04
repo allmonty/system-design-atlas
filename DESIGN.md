@@ -41,7 +41,7 @@ Derived surface: `--surface` is `--card` at 80% over a blur, used by the card lo
 Rules:
 - **Accent means "you can act here" or "you are here".** Do not use it for decoration.
 - **The three status colours carry meaning** (confidence, freshness, failure). Do not reuse them for unrelated emphasis.
-- **Tints are mixed, not new hex values.** For a faint background use `color-mix(in srgb, var(--fg) 4–7%, transparent)` (table headers, code) or `color-mix(in srgb, var(--accent) 18–35%, transparent)` (highlights, rings).
+- **Tints are mixed, not new hex values.** For a faint background behind text use `color-mix(in srgb, var(--fg) 4%, transparent)` (table headers, inline code, code blocks). Do not go above 4%: on the light theme, muted text and links then drop below 4.5:1 (5% gives 4.49 for links, 7% gives 4.31). Stronger accent mixes (`color-mix(in srgb, var(--accent) 18–35%, transparent)`) are for highlights and rings, not for backgrounds of muted or link text.
 - **A theme change touches only `design.css`.** `styles.css` must not contain theme hex values. The existing exceptions are white or near-black text on the fixed diagram palette (which is the same in every theme), the theme swatches in the settings menu, and the print block.
 
 ### 2.2 Kind tints (legend chips)
@@ -169,8 +169,8 @@ Answer outlines in notes and the trust card's sections share one style. The brow
 
 ### 6.5 Tables and code in notes
 
-- **Tables:** `--t-sm`, left-aligned; headers on a 5% `--fg` tint with a stronger bottom rule; hairlines between rows only, no vertical lines. Wide tables scroll inside `.tablewrap`.
-- **Inline code:** `--font-mono`, `.875em`, a faint pill (`--r-sm`, 7% `--fg` tint).
+- **Tables:** `--t-sm`, left-aligned; headers on a 4% `--fg` tint with a stronger bottom rule; hairlines between rows only, no vertical lines. Wide tables scroll inside `.tablewrap`.
+- **Inline code:** `--font-mono`, `.875em`, a faint pill (`--r-sm`, 4% `--fg` tint).
 - **Code blocks:** `--font-mono`, a 4% `--fg` tint over `--bg`, 1px `--line` border, `--r-md`, `--s-3 --s-4` padding, line height 1.55, horizontal scroll.
 - **Horizontal rule:** one `--line` hairline with `--s-6` above and below.
 
