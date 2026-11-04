@@ -14,6 +14,8 @@ const en = {
   back: "← Back",
   toolkitIndex: "Toolkit index",
   unknownTrack: "Unknown track.",
+  notFound: "Page not found",
+  notFoundBody: (home: ReactNode) => <>There is no page at this address. It may have been renamed. Go to the {home} to browse every system and toolkit page.</>,
 
   // Settings menu
   readingSettings: "Reading settings",
@@ -207,6 +209,8 @@ const ptBR: Dict = {
   back: "← Voltar",
   toolkitIndex: "Índice do toolkit",
   unknownTrack: "Trilha desconhecida.",
+  notFound: "Página não encontrada",
+  notFoundBody: (home) => <>Não há página neste endereço. Ela pode ter sido renomeada. Vá para a {home} para ver todos os sistemas e páginas do toolkit.</>,
 
   readingSettings: "Configurações de leitura",
   language: "Idioma",

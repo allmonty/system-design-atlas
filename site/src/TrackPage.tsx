@@ -13,7 +13,7 @@ export function TrackPage({ id }: { id: string }) {
   const { lang } = useSettings();
   const base = tracks.find((x) => x.id === id);
   const track = base && trackIn(base, lang);
-  if (!track) return <main className="home"><p><a href="#">{t.back}</a></p><p>{t.unknownTrack}</p></main>;
+  if (!track) return <main className="home"><p><a href="#">{t.back}</a></p><h1>{t.unknownTrack}</h1></main>;
   const steps = track.steps.map((s) => ({ item: resolveRef(s.ref), why: s.why })).filter((x): x is { item: Item; why: string | undefined } => !!x.item);
   const n = steps.filter((s) => done.includes(s.item.ref)).length;
   const nextIndex = steps.findIndex((s) => !done.includes(s.item.ref));

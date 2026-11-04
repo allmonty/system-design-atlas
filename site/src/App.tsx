@@ -68,8 +68,10 @@ export function App() {
           initialStep={Number.isFinite(Number(params.get("step"))) ? Number(params.get("step")) - 1 : 0}
           initialSection={params.get("section")}
         />
-      ) : (
+      ) : id === "" ? (
         <Home />
+      ) : (
+        <main className="home"><h1>{t.notFound}</h1><p>{t.notFoundBody(<a href="#">{t.homePage}</a>)}</p></main>
       )}
     </>
   );
