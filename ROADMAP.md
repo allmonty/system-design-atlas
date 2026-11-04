@@ -4,6 +4,21 @@ What is left to do, and why it is not done yet. Open work comes first, grouped b
 
 ## Open
 
+### Content: missing interview topics
+
+Found by the 2026-11-03 content review, ranked by value in a senior system-design interview. Each was checked against the atlas with a search before being called missing. The candidate sources are leads that have **not been read yet**; the usual sourcing rules apply when one is written.
+
+| # | Topic | What is missing today | Where it would fit | Candidate primary sources (unverified) |
+|---|---|---|---|---|
+| 1 | Batch vs stream, backfills and CDC | Only note 31 touches the warehouse and OLAP side, and backfills appear only in note 21. No lambda vs kappa, reprocessing, change data capture into a lake or warehouse, or columnar storage. | A new primer, or a section in 31 | Kreps, *Questioning the Lambda Architecture* (O'Reilly, 2014); Akidau et al., *The Dataflow Model* (VLDB 2015); Melnik et al., *Dremel* (VLDB 2010) |
+| 2 | Multi-region writes, geo-partitioning and data residency | P13 covers disaster-recovery strategies, but not active-active conflict resolution, home-region or geo-partitioned data, or residency rules. | A section in P13 or a new primer | Corbett et al., *Spanner* (OSDI 2012); DynamoDB global tables documentation (last-writer-wins); Shapiro et al., *CRDTs* (2011); CockroachDB multi-region documentation |
+| 3 | Schema evolution for stored data and online migrations | Only the schema registry in note 04 and API evolution in P05. No Avro or Protobuf compatibility rules, expand and contract migrations, or online schema changes. | A section in P10 | Confluent Schema Registry compatibility documentation; Protocol Buffers guide, "Updating a message type"; GitHub's gh-ost post |
+| 4 | LLM guardrails and the safety layer | Spread across notes 23, 25, 41 and P06. No input and output classifiers, jailbreak defence, PII redaction or refusal evaluation in one place. | A section in 25 or a new AI primer | Meta, *Llama Guard* (arXiv 2312.06674); Anthropic, *Constitutional Classifiers* (arXiv 2501.18837); OWASP Top 10 for LLM Applications |
+| 5 | Prompt caching and semantic caching | Note 22 covers prefix sharing inside the serving engine; API-level prompt caching (cost, TTL) and semantic caching are absent. | A cost-control section in 22 or 23 | Anthropic prompt caching documentation; vendor docs of other model APIs |
+| 6 | Resilience patterns and distributed tracing | Circuit breakers appear only in notes 09 and 14, tracing only in 30; P07 covers retries. | A section in P07 | Sigelman et al., *Dapper* (Google, 2010); the Google SRE book chapter "Handling Overload" |
+
+Already covered, so not on this list: queues vs logs (note 04's comparison table), data retention and deletion (P17), search ranking (notes 20 and 36).
+
 ### Translations (pt-BR)
 
 UI text (`site/src/i18n.tsx`), track and stage overlays (`site/src/locales/pt-BR/{tracks,stages}.json`), 39 of the 42 systems (01 to 30 and 34 to 42) and 6 toolkit pages (P02, P11, P14, P17, P18, W04) are translated under `locales/pt-BR/`, checked against `schema/glossary.json` by `scripts/validate.ts` and `test/i18n.test.ts`. Still in English:
