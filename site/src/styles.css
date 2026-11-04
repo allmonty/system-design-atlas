@@ -124,12 +124,12 @@ html, body { overflow-x: hidden; overflow-x: clip; } /* clip, not hidden: hidden
 .notes details[open] { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
 .notes details > summary { cursor: pointer; font-weight: 600; }
 .notes details[open] > summary { margin-bottom: var(--s-2); }
-/* One disclosure look for answer outlines and the trust card: a chevron that turns when open. */
-.notes details > summary, .trust details > summary { list-style: none; }
-.notes details > summary::-webkit-details-marker, .trust details > summary::-webkit-details-marker { display: none; }
-.notes details > summary::before, .trust details > summary::before { content: ""; display: inline-block; width: .45em; height: .45em; margin-right: var(--s-3); border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: translateY(-.1em) rotate(-45deg); transition: transform var(--ease); }
-.notes details[open] > summary::before, .trust details[open] > summary::before { transform: translateY(-.25em) rotate(45deg); border-color: var(--accent); }
-@media (prefers-reduced-motion: reduce) { .notes details, .notes details > summary::before, .trust details > summary::before { transition: none; } }
+/* One disclosure look for every <details> on the site: a chevron that turns when open. */
+details > summary { list-style: none; cursor: pointer; }
+details > summary::-webkit-details-marker { display: none; }
+details > summary::before { content: ""; display: inline-block; width: .45em; height: .45em; margin-right: var(--s-3); border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: translateY(-.1em) rotate(-45deg); transition: transform var(--ease); }
+details[open] > summary::before { transform: translateY(-.25em) rotate(45deg); border-color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .notes details, details > summary::before { transition: none; } }
 .glance { border-left: 4px solid var(--accent); padding-left: var(--s-4); }
 
 /* Toolkit pages are single-column reading pages. */

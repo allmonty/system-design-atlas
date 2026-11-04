@@ -165,7 +165,7 @@ Failure-flow buttons use a `--c-spec` border, and a `--c-spec` fill when pressed
 
 ### 6.4 Disclosure (`<details>`)
 
-Answer outlines in notes and the trust card's sections share one style. The browser marker is replaced by a chevron drawn with `::before` that turns from right to down and takes `--accent` when open. Note disclosures have a `--card` background, `--line` border, `--r-md`, are capped at the prose width, and get an accent-tinted border when open. Keep `summary` as a block (not flex): some browsers break toggling on a flex `summary`.
+Every `<details>` on the site (answer outlines, the trust card, the home page's reading guide, the diagram panel) shares one marker. The browser marker is replaced by a chevron drawn with `::before` that turns from right to down and takes `--accent` when open. Note disclosures have a `--card` background, `--line` border, `--r-md`, are capped at the prose width, and get an accent-tinted border when open. Keep `summary` as a block (not flex): some browsers break toggling on a flex `summary`.
 
 ### 6.5 Tables and code in notes
 
