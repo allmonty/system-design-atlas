@@ -54,7 +54,7 @@ When there are no labelled answers yet, Ragas scores a RAG answer from the quest
 - **Answer relevance:** how similar the original question is to questions generated from the answer.
 - **Context relevance:** the share of context sentences needed to answer.
 
-On the authors' WikiEval set (50 Wikipedia pages, two annotators), these matched the human choice in 95%, 78% and 70% of pairwise comparisons, against 72%, 52% and 63% when the model was asked directly for a score. The grader was gpt-3.5-turbo-16k. Details and caveats are in [23 RAG knowledge assistant, section 4b](../systems/23-rag-knowledge-assistant.md).
+On the authors' WikiEval set (50 Wikipedia pages, two annotators), these matched the human choice in 95%, 78% and 70% of pairwise comparisons, against 72%, 52% and 63% when ChatGPT was asked directly for a score. The faithfulness test pitted each answer against one generated with no context, an easy contrast. The grader was gpt-3.5-turbo-16k. Details and caveats are in [23 RAG knowledge assistant, section 4b](../systems/23-rag-knowledge-assistant.md).
 
 ## 5. Grading an agent's run: goal plus per-tool scores `[CONFIRMED]` (AWS Machine Learning Blog, April 2025)
 
@@ -67,7 +67,7 @@ AWS's open-source framework for evaluating Amazon Bedrock Agents shows one way t
 
 The post reports average scores only in a screenshot and states no limitations of the method.
 
-**Verification inside multi-agent systems** `[CONFIRMED]` (Cemri et al., NeurIPS 2025). In MAST's 1,642 annotated traces, task verification failures (premature termination, no or incomplete checks, incorrect checks) made up 23.5% of failures. Their conclusion is that "sole reliance on final-stage, low-level checks is inadequate". Adding a check of the task's high-level objective to one framework raised task success by 15.6%. An LLM judge (o1 with few-shot examples) labelled failure modes with κ = 0.77 against expert annotators. See [25 AI agent platform, section 4d](../systems/25-ai-agent-platform.md).
+**Verification inside multi-agent systems** `[CONFIRMED]` (Cemri et al., NeurIPS 2025). In MAST's 1,642 traces (most labelled by an LLM annotator), task verification failures (premature termination, no or incomplete checks, incorrect checks) made up 23.5% of failures. Their conclusion is that "sole reliance on final-stage, low-level checks is inadequate". In one framework (ChatDev, a 32-task set), a new topology with a check of the task's high-level objective raised task success from 25.0% to 40.6%, which the authors still do not call a substantial improvement. An LLM judge (o1 with few-shot examples) labelled failure modes with κ = 0.77 against expert annotators. See [25 AI agent platform, section 4d](../systems/25-ai-agent-platform.md).
 
 ## 6. When the eval is the problem `[CONFIRMED]` (Anthropic, January 2026)
 
@@ -136,6 +136,6 @@ change (prompt, model, tool, retrieval) ─► offline suite in CI
 - Verified in Anthropic's post: the eval definition, task, trial, grader, transcript, outcome and harness definitions, the flight-booking outcome example, the τ2-bench loophole, the grader table (methods, strengths, weaknesses), the grader-choice sentence, weighted and binary scoring, grading outputs not paths, partial credit, the way out for the judge and one judge per dimension, the per-agent-type advice, capability and regression definitions and graduation, pass@k and pass^k with the 42% example and the k = 10 divergence, 20 to 50 tasks, balanced sets and the web-search example, trial isolation and the git-history example, the two-experts test, the Terminal-Bench path example, 0% pass@100, reference solutions, CORE-Bench 42% to 95%, grader hacking, saturation, reading transcripts, the other evaluation methods and the Swiss cheese comparison.
 - Verified in the Ragas paper: the three metrics and their computation, WikiEval (50 pages, two annotators), Table 1 agreement figures, gpt-3.5-turbo-16k as grader.
 - Verified in the AWS post: the evaluation job workflow, the goal and task-accuracy split, the conditional task metrics, the metric names, the Langfuse trace contents, the multi-agent mapping, trajectories grouped by topic, 56 questions in 21 trajectories, scores shown only in a screenshot.
-- Verified in the MAST paper: 1,642 traces, task verification at 23.5% and its modes, the final-stage checks sentence, the +15.6% intervention, κ = 0.77 for the o1 few-shot judge.
+- Verified in the MAST paper: 1,642 traces, task verification at 23.5% and its modes, the final-stage checks sentence, the ChatDev intervention results (25.0% to 40.6%, 32 tasks) and the authors' caveat, κ = 0.77 for the o1 few-shot judge.
 - Not verified: the AWS post's average scores (an image only) and any behaviour of the Ragas library or the AWS framework beyond what the posts describe.
 - Not sourced (our reasoning): the evaluation pipeline diagram, trace storage, release gates, production sampling and judge recalibration, the evaluation cost formula and the design-discussion checklist.
