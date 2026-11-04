@@ -118,7 +118,7 @@ html, body { overflow-x: hidden; overflow-x: clip; } /* clip, not hidden: hidden
 .glance { border-left: 4px solid var(--accent); padding-left: var(--s-4); }
 
 /* Toolkit pages are single-column reading pages. */
-main.toolkit { max-width: 860px; margin: 0 auto; overflow-wrap: anywhere; }
+main.toolkit { max-width: 860px; margin: 0 auto; overflow-wrap: break-word; } /* break-word, not anywhere: anywhere shrinks table columns to a letter or two */
 
 /* ---- Home: guided study ---- */
 .home { max-width: var(--page-max); }
