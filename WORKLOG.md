@@ -42,7 +42,7 @@ Status: `[ ]` to do · `[x]` done (ticked in the commit that does it) · `[-]` d
 - [x] F2 Confidence tag before a full stop leaves a gap ("S3 [c] .").
 - [x] F3 Contents list and "Jump to" select show raw "[c]" / "[ip]" in heading labels.
 - [x] F4 Wrapped flow-step lines put the number marker beside the last line.
-- [ ] F5 "16 px" readout touches the settings menu border.
+- [x] F5 "16 px" readout touches the settings menu border.
 - [ ] F6 Concept filter input touches the first card at 500px.
 - [ ] F7 Track page: a step with no reading time shows a stray "practice".
 - [ ] F8 Unknown route silently shows the home page.

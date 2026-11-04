@@ -181,7 +181,7 @@ button.study { margin-left: auto; }
 .settings { position: relative; }
 /* Fixed size: the controls must stay usable whatever reading size is chosen. */
 .settings-pop { font-size: 15px; position: absolute; right: 0; top: calc(100% + 8px); z-index: var(--z-pop); width: min(320px, calc(100vw - 32px)); display: flex; flex-direction: column; gap: var(--s-4); padding: var(--s-4); background: var(--card); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-pop); }
-.settings-pop fieldset { border: 0; padding: 0; margin: 0; }
+.settings-pop fieldset { border: 0; padding: 0; margin: 0; min-width: 0; } /* a fieldset defaults to min-content width and would push past the menu */
 .settings-pop legend { font-size: 12px; font-weight: 600; color: var(--muted); padding: 0; margin-bottom: var(--s-2); }
 .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(64px, 1fr)); gap: var(--s-2); }
 .choice { position: relative; display: flex; align-items: center; justify-content: center; padding: var(--s-2) var(--s-2); border: 1px solid var(--line); border-radius: var(--r-md); cursor: pointer; font-size: 13px; text-align: center; background: var(--bg); color: var(--fg); }
@@ -193,7 +193,7 @@ button.study { margin-left: auto; }
 .choice.font-atkinson { font-family: "Atkinson Hyperlegible", sans-serif; } .choice.font-lexend { font-family: "Lexend Variable", sans-serif; } .choice.font-literata { font-family: "Literata Variable", serif; }
 .size-row { display: flex; align-items: center; gap: var(--s-2); }
 .size-row input[type="range"] { flex: 1; min-width: 0; accent-color: var(--accent); }
-.size-row output { min-width: 3.2em; text-align: right; font-variant-numeric: tabular-nums; }
+.size-row output { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .settings-pop .small { font-size: 12px; margin: var(--s-2) 0 0; }
 /* Steps and progress sit at the bottom of every track card, so they line up across cards of different height. */
 .card-foot { align-self: stretch; margin-top: auto; padding-top: var(--s-3); display: flex; flex-direction: column; gap: var(--s-2); }
