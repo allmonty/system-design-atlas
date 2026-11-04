@@ -31,3 +31,9 @@ test("search needs every word and ranks heading and title matches higher", () =>
 test("shortTags turns written tags, with or without backticks, into the short markers", () => {
   assert.equal(shortTags("Option A `[CONFIRMED]` and [INDUSTRY PATTERN] and `[SPECULATIVE]`"), "Option A [c] and [ip] and [s]");
 });
+
+test("section labels drop confidence markers but keep the rest of the heading", () => {
+  const note = "## 4. f4: warm storage `[CONFIRMED]` (OSDI '14)\n\n## 5. Serving photos `[INDUSTRY PATTERN]` unless marked\n";
+  assert.deepEqual(sectionsOf(note).map((s) => s.text), ["4. f4: warm storage (OSDI '14)", "5. Serving photos unless marked"]);
+  assert.deepEqual(sectionsOf(note).map((s) => s.slug), ["4-f4-warm-storage-confirmed-osdi-14", "5-serving-photos-industry-pattern-unless-marked"]);
+});

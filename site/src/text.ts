@@ -2,7 +2,8 @@
 
 const TAG_SHORT: Record<string, string> = { CONFIRMED: "c", "INDUSTRY PATTERN": "ip", SPECULATIVE: "s", "EARLIER PASS": "ep" };
 /** Plain-text form of the markers the site shows in notes: [CONFIRMED] becomes [c]. */
-export const shortTags = (t: string) => t.replace(/`?\[(CONFIRMED|INDUSTRY PATTERN|SPECULATIVE|EARLIER PASS)\]`?/g, (_, k) => `[${TAG_SHORT[k]}]`);
+const TAG_RE = /`?\[(CONFIRMED|INDUSTRY PATTERN|SPECULATIVE|EARLIER PASS)\]`?/g;
+export const shortTags = (t: string) => t.replace(TAG_RE, (_, k) => `[${TAG_SHORT[k]}]`);
 
 export const slugify = (t: string) =>
   t.toLowerCase().replace(/\[([^\]]*)\]\([^)]*\)/g, "$1").replace(/[`*_]/g, "").replace(/[^\p{L}\p{N}\s-]/gu, "").trim().replace(/\s+/g, "-");
@@ -24,7 +25,8 @@ export function sectionsOf(md: string): Section[] {
     if (line.startsWith("```")) { code = !code; return; }
     const m = !code && line.match(/^(#{2,4}) (.+)/);
     if (!m) return;
-    const text = shortTags(m[2]).replace(/\[([^\]]*)\]\([^)]*\)/g, "$1").replace(/[`*]/g, "").trim();
+    // Navigation labels drop the confidence markers: in a contents list "[c]" is noise, the heading itself shows the tag.
+    const text = m[2].replace(TAG_RE, "").replace(/\[([^\]]*)\]\([^)]*\)/g, "$1").replace(/[`*]/g, "").replace(/\s+/g, " ").trim();
     out.push({ slug: unique(slugify(m[2])), text, level: m[1].length, line: i + 1 });
   });
   return out;
