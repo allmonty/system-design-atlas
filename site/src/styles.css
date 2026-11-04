@@ -261,7 +261,7 @@ button.study { margin-left: auto; }
 .step-list li { margin: var(--s-1) 0; } .step-list li.past { color: var(--muted); }
 .step-list li.now { font-weight: 600; } .step-list li.now::marker { color: var(--accent); }
 .stepper.failure .step-list li.now::marker { color: var(--c-spec); }
-.step-list button.linkish { text-align: left; text-decoration: none; color: inherit; font: inherit; }
+.step-list button.linkish { text-align: left; text-decoration: none; color: inherit; font: inherit; vertical-align: top; } /* a wrapped caption keeps its number beside the first line */
 .step-list button.linkish:hover { text-decoration: underline; }
 
 /* ---- Reading comfort ---- */
