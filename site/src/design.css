@@ -100,6 +100,9 @@
   .cards a:hover, .track-cards a:hover, .text-hits a:hover { transform: none; }
 }
 
+/* ---- Focus: one ring for every focusable element, shown for keyboard focus only ---- */
+:where(a, button, select, input, textarea, summary, [tabindex]):focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
 /* ---- Top bar ---- */
 .top-actions { display: flex; align-items: center; gap: var(--s-2); }
 .coffee { display: inline-flex; align-items: center; gap: var(--s-1); padding: var(--s-1) var(--s-3); border: 1px solid var(--line); border-radius: var(--r-pill); background: var(--card); color: var(--fg); text-decoration: none; font-size: var(--t-sm); white-space: nowrap; }

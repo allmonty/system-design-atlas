@@ -239,7 +239,7 @@ button.study { margin-left: auto; }
 
 /* Names in the note that open the matching diagram element (Split view only). */
 .node-ref { border-bottom: 1px dotted var(--accent); cursor: pointer; }
-.node-ref:hover, .node-ref:focus-visible { background: color-mix(in srgb, var(--accent) 18%, transparent); outline: none; }
+.node-ref:hover, .node-ref:focus-visible { background: color-mix(in srgb, var(--accent) 18%, transparent); }
 
 /* ---- Flows ---- */
 .flows button.flow-failure { border-color: var(--c-spec); }
@@ -308,7 +308,7 @@ button.study { margin-left: auto; }
 
 /* ---- Confidence markers: [c] [ip] [s] [ep] in notes, full meaning in a tooltip ---- */
 .conf-tag { position: relative; margin: 0 var(--s-1); font-size: var(--t-xs); font-weight: 600; vertical-align: .1em; cursor: help; opacity: .7; white-space: nowrap; }
-.conf-tag:hover, .conf-tag:focus-visible { opacity: 1; outline: none; }
+.conf-tag:hover, .conf-tag:focus-visible { opacity: 1; }
 .conf-tag::after { content: attr(data-tip); position: absolute; left: 0; bottom: 100%; width: max-content; max-width: 18rem; padding: var(--s-2) var(--s-3); border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); color: var(--fg); box-shadow: var(--shadow-pop); font-weight: 400; white-space: normal; z-index: var(--z-pop); visibility: hidden; opacity: 0; transition: opacity .12s; pointer-events: none; }
 .conf-tag:hover::after, .conf-tag:focus-visible::after { visibility: visible; opacity: 1; }
 .conf-c { color: var(--c-confirmed); } .conf-ip { color: var(--c-pattern); } .conf-s { color: var(--c-spec); } .conf-ep { color: var(--muted); }
