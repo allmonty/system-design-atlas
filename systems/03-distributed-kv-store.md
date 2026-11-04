@@ -155,7 +155,7 @@ Each node has three components: **request coordination**, **membership and failu
 | Topic | Dynamo paper | Cassandra |
 |---|---|---|
 | Conflict handling | Vector clocks, client reconciliation (or LWW per service) | Last-write-wins on a per-mutation timestamp |
-| Consistency knobs | (N,R,W) per instance | Consistency levels `ONE`, `QUORUM`, `ALL`… per request. Strong when `W + R > RF` |
+| Consistency knobs | (N,R,W) per instance | Consistency levels `ONE`, `QUORUM`, `ALL`… per request. With `W + R > RF` the replica sets overlap, giving "all acknowledged writes being visible to subsequent reads"; that is not linearizability (last-write-wins, see [P16](../toolkit/P16-consistency-and-cache-failures.md)). Single-partition compare-and-swap uses lightweight transactions |
 | Write path | Coordinator sends to the N highest-ranked reachable nodes, waits for W | "Write operations are always sent to all replicas, regardless of consistency level" |
 | Repair | Merkle-tree anti-entropy | Merkle trees, plus sub-range and incremental repair, which the docs say the paper does not have |
 | Data model | Opaque key-value | "A storage interface that is more sophisticated" than simple key-value |
@@ -252,7 +252,7 @@ Hinted replicas are delivered first, read repair fixes stale replicas opportunis
 
 *Fact-check, 2026-10-27. The paper text was extracted from the PDF and each quoted claim was located in it.* No claim was changed, and four were softened or scoped (listed last).
 - Verified in the paper: 99.9th-percentile SLA rationale and the 300 ms/500 rps example; "always writeable"; zero-hop DHT; virtual nodes and their three advantages; preference list with distinct physical nodes; R/W definitions and R+W>N; coordinator replicates to N−1 successors; sloppy quorum and hinted handoff mechanics with the A/D example; multi-datacenter preference lists; Merkle trees per key range; read repair; vector-clock rules, the Figure 3 example (re-derived by hand), truncation threshold "say 10"; gossip every second and reconciliation of membership histories; seeds; local failure detection; the three §6 usage modes; (3,2,2); Strategy 3 findings; 99.9995% and "no data loss event"; storage engines and Java implementation; write coordinator choice by fastest previous read.
-- Verified in the Cassandra docs: tokens/vnodes quote; `NetworkTopologyStrategy` advice; `ONE`/`QUORUM`/`ALL`; `W + R > RF`; writes always sent to all replicas; LWW; Merkle trees; sub-range and incremental repair; Phi Accrual failure detector and one-second gossip; the stated differences from the paper.
+- Verified in the Cassandra docs: tokens/vnodes quote; `NetworkTopologyStrategy` advice; `ONE`/`QUORUM`/`ALL`; `W + R > RF` as overlapping replica sets (acknowledged writes visible to later reads), lightweight transactions for single-partition compare-and-swap; writes always sent to all replicas; LWW; Merkle trees; sub-range and incremental repair; Phi Accrual failure detector and one-second gossip; the stated differences from the paper.
 - Verified in the ATC '22 abstract: DynamoDB launched in 2012.
 - Softened: any statement on how DynamoDB's internals differ from Dynamo was **not made**, because the abstract does not say.
 - Softened: the Figure 4 latency chart was **not quoted numerically**, since only the caption was read, not the plotted values.
