@@ -26,7 +26,7 @@ Status: `[ ]` to do · `[x]` done (ticked in the commit that does it) · `[-]` d
 ## D. Roadmap
 - [x] D1 Clean and restructure ROADMAP.md (open items first, done items condensed).
 - [x] D2 Add the missing content topics (ranked by the content review).
-- [ ] D3 Add design items 5-7 (split-view diagram and stepper, chrome above the note, home cards) plus the reviewers' quick wins and bigger ideas.
+- [x] D3 Add design items 5-7 (split-view diagram and stepper, chrome above the note, home cards) plus the reviewers' quick wins and bigger ideas.
 
 ## E. Final check
 - [ ] E1 Full browser sweep (`npm run sweep`), English and pt-BR, all themes.

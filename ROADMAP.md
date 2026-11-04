@@ -19,6 +19,34 @@ Found by the 2026-11-03 content review, ranked by value in a senior system-desig
 
 Already covered, so not on this list: queues vs logs (note 04's comparison table), data retention and deletion (P17), search ranking (notes 20 and 36).
 
+### Design: larger changes and quick wins
+
+From the 2026-11-03 design review (screenshots of notes 01 and 07, a toolkit page, a track page, the concept index and the settings menu, light, warm and dark, 1280px and 500px). Its items 1 to 4 and 8 to 10 are done (see Done). Rules for any of these: [`DESIGN.md`](DESIGN.md).
+
+| # | Change | What the review saw | Proposed change | Effort |
+|---|---|---|---|---|
+| 1 | Split view: a readable diagram and a visible stepper | At 1280px, fitting the whole diagram into a 46vh canvas renders node text at about 5px; the current step's edge is a faint dashed line; the step caption and Back and Next sit below the fold; six flow buttons take about 250px. | When a flow is active, zoom to the current step's nodes (`fitView` on those nodes, padding .3, max zoom 1) in `DiagramView.tsx`; let the canvas take the free height (`flex: 1`) instead of `46vh`; pin the step caption and Back and Next as an overlay at the bottom of the canvas (`--z-tools`); show the flows as one horizontally scrolling chip row. | M |
+| 2 | Less chrome above the note | On system pages the breadcrumbs, title, eight legend chips and the legend sentence take about 230px, then the trust card pushes the note's first line to about y=850. | Move the legend into a "Legend" disclosure inside the canvas; put "Mark as studied" on the breadcrumb row; collapse the trust card into a one-line bar (freshness, tag tallies, quotes found, "Details") with its four sections behind it; hide the note's repeated title (`h2.note-title`) on system pages but keep it for print. | M |
+| 3 | Home cards: less empty space, even rows | System cards are 170px tall with about 40% empty (a number and a title), so the page is about 6000px tall; five track columns at 1100px wrap titles onto three lines; "Continue" falls onto its own row; stage subtitles are indented while cards are flush left. | Lower the card `min-height` to about 112px or add a one-line description; track cards `minmax(min(200px, 100%), 1fr)` with title line height 1.3; a separate "Resume" strip; align stage subtitles with the cards. | S |
+
+**Quick wins** (small, each its own commit):
+- Wrapped flow-step lines put the number marker beside the last line: `.step-list button.linkish { vertical-align: top }`.
+- The "16 px" readout in the settings menu touches the right border: drop `min-width: 3.2em` on `.size-row output`.
+- On the concept index at 500px, the filter input touches the first card: give it a bottom margin of `--s-3`.
+- A confidence tag before a full stop leaves a gap ("S3 [c] ."): `.conf-tag { margin: 0 0 0 var(--s-1) }`.
+- The contents list and the "Jump to" select show raw "[c]" and "[ip]" in heading labels: strip them or render them as tags.
+- Diagram edge labels collide ("upl write derivativesent", note 07 graph view in dark), and edges are faint in dark: `.react-flow__edge-path { stroke: var(--muted) }` and label placement.
+- On a track page, a step with no reading time shows a stray "practice" at body size.
+- An unknown route such as `#toolkit/P18` silently shows the home page: show a "page not found" line with a link.
+- In dark, cards (`#1b1b20`) barely stand out from the page (`#111114`): try `--card: #1d1d23` and `--line: #383842`, then re-run the contrast sweep.
+- The trust card says "1 days ago": use the singular for one day (English and pt-BR).
+- Toolkit pages keep a full-width top bar while their column is 860px: consider lining the bar up with the column, as on the home page.
+
+**Bigger ideas** (not planned; each changes how the site feels, so decide first):
+1. **Docs-style three-column system page:** stage or system navigation on the left, the note in the centre, the contents and a compact trust summary on the right, the diagram as a sticky panel you can toggle (the Stripe and Tailwind docs pattern). Much easier to keep your place; a large `SystemPage` refactor that gives the diagram less room in Split.
+2. **Reading-first default:** open notes in Text view with a small diagram thumbnail that opens Graph, and use Literata for note text only while the interface stays sans. Calmer for long sessions; hides the diagram, which is the site's distinctive feature.
+3. **Denser home index:** keep cards for the five tracks, but show the 42 systems and the toolkit as a compact table per stage (number, title, kind, minutes, progress tick). Much faster to scan; loses some visual charm.
+
 ### Translations (pt-BR)
 
 UI text (`site/src/i18n.tsx`), track and stage overlays (`site/src/locales/pt-BR/{tracks,stages}.json`), 39 of the 42 systems (01 to 30 and 34 to 42) and 6 toolkit pages (P02, P11, P14, P17, P18, W04) are translated under `locales/pt-BR/`, checked against `schema/glossary.json` by `scripts/validate.ts` and `test/i18n.test.ts`. Still in English:
