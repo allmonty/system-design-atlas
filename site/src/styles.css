@@ -108,7 +108,7 @@ html, body { overflow-x: hidden; overflow-x: clip; } /* clip, not hidden: hidden
 .split.mode-graph { grid-template-columns: minmax(0, 1fr); }
 .split.mode-graph .canvas { height: 62vh; }
 .split.mode-text { grid-template-columns: minmax(0, 1fr); }
-.split.mode-text .notes { max-width: 960px; margin: 0 auto; }
+.split.mode-text .notes { width: 100%; max-width: 960px; margin: 0 auto; } /* width: auto margins on a grid item would size it to its widest child */
 .notes.hidden { display: none; }
 .legend[hidden] { display: none; }
 

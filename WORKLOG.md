@@ -12,7 +12,7 @@ Status: `[ ]` to do · `[x]` done (ticked in the commit that does it) · `[-]` d
 - [x] A3 tracks.json: W05 reason calls 22 to 31 "AI systems"; 29 to 31 are streaming and observability. Fix English and pt-BR overlay.
 
 ## B. Design fixes (design review items 1-4 and 8-10)
-- [ ] B1 Item 1: mobile text view clips sideways (`.split.mode-text .notes` auto margins on a grid item).
+- [x] B1 Item 1: mobile text view clips sideways (`.split.mode-text .notes` auto margins on a grid item).
 - [ ] B2 Item 4: toolkit tables wrap one letter per line (`overflow-wrap: anywhere` on `main.toolkit`).
 - [ ] B3 Item 2: text mode scrolls an inner box plus the page; scroll-spy offset disagrees with `scroll-margin-top`.
 - [ ] B4 Item 3: note typography (heading scale, hr, mono font token for code, tables).
