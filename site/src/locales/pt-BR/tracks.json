@@ -23,7 +23,7 @@
       "P07": "SLOs, error budgets e como conter uma falha em cascata.",
       "W03": "Exercícios de estimativa com soluções resolvidas, para a aritmética virar automática.",
       "W02": "Treine para encontrar falhas em designs plausíveis. Alguns cenários vêm de incidentes (C01 a C03) e de notas de IA fora desta trilha; pule-os ou leia-os antes.",
-      "W05": "Flashcards dos sistemas de IA (22 a 31), dos primers e do casebook de incidentes. Eles acrescentam fatos além dos sistemas acima em vez de repeti-los.",
+      "W05": "Flashcards dos sistemas de IA, streaming e observabilidade (22 a 31), dos primers e do casebook de incidentes. Eles acrescentam fatos além dos sistemas acima em vez de repeti-los.",
       "W04": "Cenários abertos para praticar enunciar uma decisão e seus trade-offs. Termine rodando três sessões simuladas cronometradas a partir do primeiro passo."
     }
   },
