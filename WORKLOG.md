@@ -24,7 +24,7 @@ Status: `[ ]` to do · `[x]` done (ticked in the commit that does it) · `[-]` d
 - [x] C1 Write `DESIGN.md` (palette per theme, diagram palette, spacing, radii, type scale and fonts, headings, layout and positions, layers, components, motion, accessibility, how to add a component). Point `design.css` header and CLAUDE.md to it.
 
 ## D. Roadmap
-- [ ] D1 Clean and restructure ROADMAP.md (open items first, done items condensed).
+- [x] D1 Clean and restructure ROADMAP.md (open items first, done items condensed).
 - [ ] D2 Add the missing content topics (ranked by the content review).
 - [ ] D3 Add design items 5-7 (split-view diagram and stepper, chrome above the note, home cards) plus the reviewers' quick wins and bigger ideas.
 

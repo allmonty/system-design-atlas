@@ -1,96 +1,56 @@
 # Roadmap
 
-What is left after the 42 systems, the toolkit and the site. Each item says what is missing and why it was not done. Status is as of 2026-11-01.
+What is left to do, and why it is not done yet. Open work comes first, grouped by kind; finished work is summarised at the end with its date. Status as of 2026-11-04.
 
-| # | Item | Status |
-|---|---|---|
-| 1 | Browser testing beyond headless Chrome | Partly done: `npm run sweep` (see below), plus hand checks of the study checkboxes, progress, PNG export and print styles. A real phone, a screen reader and a real print dialog are still untested. |
-| 2 | Check the whole site in the new design | Done: `npm run sweep` opens every page (800 checks on 2026-11-01: every page in 3 themes at 2 widths, then again in pt-BR at 2 widths, with the text and graph views at 1280px only) with 0 console errors and 0 failures; it also checks the sticky top bar (brand, coffee link, settings) on every page. |
-| 3 | Fresh independent source review of all the content | Done on 2026-10-27 by four fresh read-only reviewers (notes 01-12, 13-23, 24-35, and the toolkit with the workbook and site data). About 25 findings were verified and fixed; the rest are listed under "Review follow-ups" below. |
-| 4 | Find a primary source for "dispatch optimization" in note 15 | Resolved: no primary source gives the expansion (Uber's InfoQ page and slides use the name DISCO only), so note 15 attributes it to HighScalability's summary. |
-| 5 | Confidence tags on diagram edges | Deferred. Needs a schema change and hand-tagging a few hundred edges. |
-| 6 | Per-element alias for clickable names in the note | Deferred. Names are matched by text, so an ambiguous name can occasionally link to the wrong element. |
-| 7 | One source for the learning order | Done: `site/src/stages.json` is the order; a test checks it against the atlas track and the README. |
-| 8 | Content not yet written | Done on 2026-11-01: primers P11 to P17 and systems 36 to 42 (P18 added on 2026-11-03) (typeahead, job scheduler, CDN, maps and ETA, video conferencing, moderation and fraud ML, authorization and identity) are written, each in English and pt-BR. See below for sources that could not be fetched. |
-| 9 | Switch Pages to GitHub Actions and delete `docs/` | Done on 2026-10-31: Pages source set to GitHub Actions, the workflow deployed green, and the stale `docs/` build was deleted. |
-| 10 | Portuguese (pt-BR) translation of notes, toolkit and diagrams | In progress: UI text, track/stage overlays and notes 01 to 30 and 34 to 42 and toolkit pages P02, P11, P14, P17, P18 and W04 are done and verified against the glossary; notes 31 to 33, the other 24 toolkit pages (including the new P15, P16 and W06) and diagram JSON remain. |
-| 11 | Agent and crawler access | Done: `llms.txt`, `llms-full.txt` and raw Markdown copies are generated at build (`scripts/build-llms.ts`), plus meta tags, `robots.txt` and the MIT / CC BY 4.0 licenses. Not done: static pre-rendering (routes are hash-based, so each page has no URL of its own), an MCP server, a `SKILL.md`, and a PR-review rules layer. They came from an external review and were judged out of scope for now. That review (2026-10-29, AI-written without access to the site) was checked claim by claim on 2026-10-31: most of its content gaps were already covered (P16, P03, P05, notes 04, 11, 22 to 28); the two real ones were fixed (tail latency under fan-out in P07, idle consumers beyond the partition count in note 04). |
+## Open
 
-## 1 and 2: what the browser sweep covers and what it cannot
+### Translations (pt-BR)
 
-`npm run sweep` (`scripts/browser-sweep.mjs`, start instructions in its header) drives headless Chrome over its DevTools protocol. For every system, toolkit page, track, the concept index and the home page it checks console errors, sideways scroll, clipped cards, empty pages, a missing trust card or diagram, one h1 per page, and text contrast (WCAG AA) across light, warm and dark at 1280px and 500px. A pt-BR pass repeats the layout checks in Portuguese and checks that `<html lang>` switched and that a note shows the not-translated notice exactly when it has no mirror.
+UI text (`site/src/i18n.tsx`), track and stage overlays (`site/src/locales/pt-BR/{tracks,stages}.json`), 39 of the 42 systems (01 to 30 and 34 to 42) and 6 toolkit pages (P02, P11, P14, P17, P18, W04) are translated under `locales/pt-BR/`, checked against `schema/glossary.json` by `scripts/validate.ts` and `test/i18n.test.ts`. Still in English:
 
-It found, and the commits fixed: two h1 headings on every system page (the note's own title is now a second-level heading) and a favicon 404 on every load. The dark-theme "lighter = component" legend chip is flagged by the contrast check but is a false positive (gradient background), and is excluded.
+- **Systems (3):** 31 Ad click aggregation, 32 Distributed cache (Memcache at Facebook), 33 Coordination, locks and leader election.
+- **Primers (13):** P01 Estimation, P03 Distributed transactions, P04 Load balancing, P05 API design, P06 Security for architects, P07 SLOs and incidents, P08 Cost as a design input, P09 Decisions and design docs, P10 Changing systems safely, P12 Event sourcing and CQRS, P13 Disaster recovery and multi-region, P15 Effective review, P16 Consistency and cache failures.
+- **Casebook (6):** C01 Amazon S3 2017, C02 Cloudflare 2019, C03 GitHub 2018, C04 Facebook 2021, C05 Knight Capital 2012, C06 AWS Kinesis 2020.
+- **Workbook (5):** W01 Mock interview protocol, W02 Find the flaw, W03 Estimation drills, W05 Flashcards, W06 Review an API.
+- **Diagram JSON (42):** node labels, descriptions and flow captions. Needs schema support or localised JSON files first.
 
-It cannot replace a real phone, a screen reader or the print dialog; those stay open. Print was checked only with print-media emulation, and the PNG export, study checkboxes and progress saved across reloads were checked by hand in headless Chrome.
+### Review findings not yet verified
 
-## 8. Content not yet written
+Each of these needs its source re-read before the note changes; none changes a headline number.
 
-Done. Systems 36 to 42 and primer P17 were written on 2026-10-31 and 2026-11-01 from primary sources, with pt-BR mirrors. Primer P18 (evaluating LLM and agent systems) followed on 2026-11-03, with additions to notes 23 (Ragas) and 25 (multi-agent coordination failures).
+- **From the 2026-10-27 review, diagrams:** note 31's batch reconciliation reads the joined log, not the raw log, so a click lost before the joined log cannot be found (add a raw-log edge); note 21 omits the Open Match backend (FetchMatches and the evaluator return route through it); note 11's read flow ranks before hydrating while the note hydrates first, and the 2017 timeline service and 2023 Home Mixer are one node; several edge labels do not match their flow captions (notes 25, 28, 33, 34, 08 server-crash, 18 gw-bob); note 13's `c-ix` edge and note 21's `no-server` wording; the failure flags on `chat-rejected`, `duplicate` and `late` are debatable.
+- **From the 2026-10-27 review, notes:** 01 (Squid collapsed forwarding, the RFC 9110 section cited for 302, an unsourced "1 unused" bit and the 100:1 read ratio); 02 (the Envoy recommendation wording, the Redis pattern blend, the IETF draft status); 04 (edge direction, KIP-848 source); 05 (a table figure read from an image); 09 (the Semaphore node, an unlabelled order of publish and store); 10 (APNs 30-day storage, queue edges); 12 (YouTube resumable upload documented for the Data API); 15 (O(1) parent lookup attribution); 17 (cancel in the processing state for some payment methods); 19 ("exactly-once" wording, snapshot fallback in gap recovery); 20 (RFC 9309 30-day and cached-copy rules); 21 (the 1.7M figure reference); 22 (binary units in one calculation); 23 (permission pre-filter trade-off); 24 (the effect of ef on memory); 26 (Table 3 unit wording); 29 (IVS latency wording, the 6 s draft attribution); 30 (Gorilla and Prometheus blend); 33 (an inference tagged CONFIRMED, an unsourced etcd/Consul line).
+- **From the 2026-10-27 review, toolkit and site:** P11 to P14 small attribution items (the P14 stamps pattern page was not read); C01 "approved playbook" (the post says established); C05 two details not in the SEC order; casebook logs have no "Not ..." bullets, so the trust card shows only the "Not read" line; tracks (the W02 step omits C06, the W05 step says primers but has no P11 to P14 cards, the architect track summary order); README wording on what `npm test` covers.
+- **From the 2026-10-29 re-read of notes 16 and 07:** how a concurrent insert behaves while the first transaction is uncommitted (note 16; not stated in the pages read), and Facebook's current photo architecture (note 07).
+- **Not covered by the 2026-11-03 content review:** it sampled about 9 of 66 pages. Not checked: notes 15 (H3 figures) and 19 (LMAX and Disruptor figures), DistServe's 7.4x and 12.6x in note 22, the concept matrix row by row, the `stages.json` reasons, and every diagram except note 25's. Wording slips like the one fixed in note 03 may exist in pages it did not open.
 
-Sources that could not be fetched so far: the Count-Min Sketch paper (note 34), the Instagram engineering post on IDs (note 35, read from an Internet Archive copy only where noted), *The Akamai Network* (2010, note 38; the 2015 Akamai algorithms paper is used instead), Meta's Transparency Center pages (note 41; rendered by script) and the GDPR text on EUR-Lex (P17; Article 25 is cited through the EDPB guidelines).
+### Sources that could not be fetched
 
-## 10. Missing translations (pt-BR)
+The Count-Min Sketch paper (note 34), the Instagram engineering post on IDs (note 35, read from an Internet Archive copy only where noted), *The Akamai Network* (2010, note 38; the 2015 Akamai algorithms paper is used instead), Meta's Transparency Center pages (note 41; rendered by script) and the GDPR text on EUR-Lex (P17; Article 25 is cited through the EDPB guidelines).
 
-The site supports English and Brazilian Portuguese (`pt-BR`). UI strings (`site/src/i18n.tsx`), study tracks and stage overlays (`site/src/locales/pt-BR/{tracks,stages}.json`), 39 of the 42 systems (`01-url-shortener.md` through `30-metrics-monitoring-alerting.md`, plus `34-top-k-leaderboard.md` through `42-authorization-identity.md`) and 6 toolkit pages (P02, P11, P14, P17, P18, W04) under `locales/pt-BR/` are translated, verified against `schema/glossary.json`, and tested by `scripts/validate.ts` and `test/i18n.test.ts`.
+### Testing gaps
 
-The following items remain to be translated:
+`npm run sweep` (`scripts/browser-sweep.mjs`, start instructions in its header) drives headless Chrome over its DevTools protocol. For the home page, every system, toolkit page and track, and the concept index, it checks console errors, sideways scroll, clipped cards, empty pages, a missing trust card or diagram, one h1 per page, the sticky top bar and text contrast (WCAG AA) in light, warm and dark at 1280px and 500px. A pt-BR pass repeats the layout checks and checks `<html lang>` and the not-translated notice. The dark-theme "lighter = component" legend chip is a known contrast false positive (gradient background) and is excluded.
 
-### Systems (3 notes)
+Still untested: a real phone, a screen reader and a real print dialog. Print was checked only with print-media emulation; the PNG export, study checkboxes and progress saved across reloads were checked by hand in headless Chrome.
 
-- `systems/31-ad-click-aggregation.md` (Ad click aggregation)
-- `systems/32-distributed-cache.md` (Distributed cache / Memcache at Facebook)
-- `systems/33-distributed-coordination-locks.md` (Coordination, locks and leader election)
+### Deferred by decision
 
-### Toolkit: Primers (13 notes)
+- **Confidence tags on diagram edges.** Needs a schema change and hand-tagging a few hundred edges.
+- **Per-element alias for clickable names in the note.** Names are matched by text, so an ambiguous name can occasionally link to the wrong element.
+- **More agent access.** Static pre-rendering (routes are hash-based, so pages have no URL of their own), an MCP server, a `SKILL.md` and a PR-review rules layer. They came from an external review (2026-10-29, AI-written without access to the site) and were judged out of scope for now.
 
-- `toolkit/P01-estimation.md` (Back-of-the-envelope estimation)
-- `toolkit/P03-distributed-transactions.md` (Distributed transactions: 2PC, sagas, outbox)
-- `toolkit/P04-load-balancing.md` (Load balancing)
-- `toolkit/P05-api-design.md` (API design: pagination, idempotency, evolution)
-- `toolkit/P06-security-threat-modeling.md` (Security for architects)
-- `toolkit/P07-slos-and-incidents.md` (SLOs, error budgets, cascading failures, postmortems)
-- `toolkit/P08-cost-as-a-design-input.md` (Cost as a design input)
-- `toolkit/P09-decisions-and-design-docs.md` (Decisions: ADRs, design docs, boring technology)
-- `toolkit/P10-changing-systems-safely.md` (Changing systems safely)
-- `toolkit/P12-event-sourcing-cqrs.md` (Event sourcing and CQRS)
-- `toolkit/P13-multi-region-disaster-recovery.md` (Disaster recovery and multi-region design)
-- `toolkit/P15-effective-review.md` (Reviewing code and designs effectively)
-- `toolkit/P16-consistency-and-cache-failures.md` (CAP, PACELC, quorums, fallacies, cache failure modes)
+## Done
 
-### Toolkit: Casebook (6 notes)
-
-- `toolkit/C01-aws-s3-2017.md` (Amazon S3, February 2017)
-- `toolkit/C02-cloudflare-2019.md` (Cloudflare, July 2019)
-- `toolkit/C03-github-2018.md` (GitHub, October 2018)
-- `toolkit/C04-facebook-2021.md` (Facebook, October 2021)
-- `toolkit/C05-knight-capital-2012.md` (Knight Capital, August 2012)
-- `toolkit/C06-aws-kinesis-2020.md` (AWS Kinesis, November 2020)
-
-### Toolkit: Practice Workbook (5 notes)
-
-- `toolkit/W01-mock-interview-protocol.md` (Mock interview protocol and rubric)
-- `toolkit/W02-find-the-flaw.md` (Find the flaw)
-- `toolkit/W03-estimation-drills.md` (Estimation drills)
-- `toolkit/W05-flashcards.md` (Flashcards)
-- `toolkit/W06-review-an-api.md` (Review an API)
-
-### Diagram JSON (42 diagrams)
-
-- Diagram nodes, labels, and flow step text in `systems/*.diagram.json` currently remain in English. Localizing diagrams will require schema support or localized JSON files so node labels, descriptions, and flow step text can be presented in Portuguese.
-
-## Review of notes 16 and 07 (2026-10-29)
-
-Both notes were re-read against fresh copies of their primary sources. Note 16: the `CREATE TABLE ... EXCLUDE` page is now read (partial constraint syntax and constraint timing quoted), PostgreSQL 18's `UNIQUE ... WITHOUT OVERLAPS` added, the parking example now names its `btree_gist` prerequisite, Stripe rules scoped to API v1, Redis `SET NX PX` quoted. Note 07: a quotation that was not verbatim now quotes the f4 paper, the presigned-URL expiry follows the current AWS page, and the abandoned multipart upload advice cites S3's lifecycle rule. Every number in note 07 was re-checked. Still open for both: how a concurrent insert behaves while the first transaction is uncommitted (note 16, not stated in the pages read), and Facebook's current photo architecture (note 07).
-
-## Review follow-ups (2026-10-27)
-
-Fixed after being checked against the sources: Twitch Create Clip timeout (60 s, note 29); Llama 3 table inconsistency and the GPU share (27); S-LoRA 4x condition (28); Dropbox streaming sync (06); Stripe 429/503 (02); Argos (12); S3 shards and zones (05); Dynamo example (03); peak rate (08); Spotify loudness and codec lines (14); expired holds vs the exclusion constraint (16); crawler connections (20), TP2 (18), multipart URLs (07), WhatsApp group limit tag (08); 26 diagram nodes retagged INDUSTRY PATTERN because they mixed sourced facts with our design; composite diagrams 26 and 27 name each part's source; toolkit wording (P11 to P14, C02, W02, W03, matrix row).
-
-Still open (low priority, from the reviewers' reports, not yet verified one by one):
-
-- Diagrams: note 31 batch reconciliation reads the joined log, not the raw log, so a click lost before the joined log cannot be found (add a raw-log edge); note 21 omits the Open Match backend (FetchMatches and the evaluator return route through it); note 11's read flow ranks before hydrating while the note hydrates first, and the 2017 timeline service and 2023 Home Mixer are one node; several edge labels do not match their flow captions (notes 25, 28, 33, 34, 08 server-crash, 18 gw-bob); note 13's `c-ix` edge and note 21's `no-server` wording; failure flags on `chat-rejected`, `duplicate` and `late` are debatable.
-- Notes: note 01 (Squid collapsed forwarding, the RFC 9110 section cited for 302, an unsourced "1 unused" bit and 100:1 read ratio); note 02 (the Envoy recommendation wording, the Redis pattern blend, the IETF draft status); note 04 (edge direction, KIP-848 source); note 05 (a table figure from an image); note 09 (the Semaphore node, an unlabelled order of publish and store); note 10 (APNs 30-day storage, queue edges); note 15 (O(1) parent lookup attribution); note 17 (cancel in the processing state for some payment methods); note 19 ("exactly-once" wording, snapshot fallback in gap recovery); note 20 (RFC 9309 30-day and cached-copy rules); note 21 (the 1.7M figure reference); note 22 (binary units in one calculation); note 23 (permission pre-filter trade-off); note 24 (the effect of ef on memory); note 26 (Table 3 unit wording); note 29 (IVS latency wording, the 6 s draft attribution); note 30 (Gorilla and Prometheus blend); note 33 (inference tagged CONFIRMED, an unsourced etcd/Consul line); note 12 (YouTube resumable upload documented for the Data API).
-- Toolkit: P11 to P14 small attribution items (the P14 stamps pattern page was not read); C01 "approved playbook" (the post says established); C05 two details not in the SEC order; casebook logs have no "Not ..." bullets so the trust card shows only the "Not read" line; tracks (the W02 step omits C06, the W05 step says primers but has no P11 to P14 cards, the architect track summary order); README wording on what `npm test` covers.
-
-Each of these needs the source re-read before changing the note; none changes a headline number.
+| When | What |
+|---|---|
+| 2026-11-04 | Follow-ups from the 2026-11-03 reviews: wording fixes in notes 03, 23 and 25, P16, P18 and the tracks; design fixes (mobile text view, toolkit tables, page scroll in text view, note typography, focus ring, disclosures, top bar); [`DESIGN.md`](DESIGN.md) documents the design system. |
+| 2026-11-03 | Primer P18 (evaluating LLM and agent systems) and additions to notes 23 (Ragas) and 25 (multi-agent coordination failures), with pt-BR mirrors. Two read-only reviews (content, design) found the items above. |
+| 2026-11-01 | Systems 36 to 42 (typeahead, job scheduler, CDN, maps and ETA, video conferencing, moderation and fraud ML, authorization and identity) and primers P11 to P17, each in English and pt-BR. |
+| 2026-11-01 | Whole site checked in the new design: `npm run sweep`, 800 checks (every page in 3 themes at 2 widths, then in pt-BR at 2 widths, text and graph views at 1280px only), 0 console errors and 0 failures. It had found and the commits fixed two h1 headings on every system page and a favicon 404. |
+| 2026-10-31 | Pages deployed by GitHub Actions; the stale `docs/` build deleted. |
+| 2026-10-31 | Agent and crawler access: `llms.txt`, `llms-full.txt` and raw Markdown copies generated at build (`scripts/build-llms.ts`), meta tags, `robots.txt`, the MIT and CC BY 4.0 licenses. The external review behind it was checked claim by claim: most of its content gaps were already covered (P16, P03, P05, notes 04, 11, 22 to 28); the two real ones were fixed (tail latency under fan-out in P07, idle consumers beyond the partition count in note 04). |
+| 2026-10-29 | Notes 16 and 07 re-read against fresh copies of their sources. Note 16: the `CREATE TABLE ... EXCLUDE` page read (partial constraint syntax and constraint timing quoted), PostgreSQL 18's `UNIQUE ... WITHOUT OVERLAPS` added, the parking example names its `btree_gist` prerequisite, Stripe rules scoped to API v1, Redis `SET NX PX` quoted. Note 07: a non-verbatim quotation now quotes the f4 paper, the presigned-URL expiry follows the current AWS page, the abandoned multipart upload advice cites S3's lifecycle rule, and every number was re-checked. |
+| 2026-10-27 | Fresh source review of all content by four read-only reviewers (notes 01-12, 13-23, 24-35, and the toolkit with workbook and site data). About 25 findings fixed: Twitch Create Clip timeout (29); Llama 3 table and GPU share (27); S-LoRA 4x condition (28); Dropbox streaming sync (06); Stripe 429/503 (02); Argos (12); S3 shards and zones (05); Dynamo example (03); peak rate (08); Spotify loudness and codec lines (14); expired holds vs the exclusion constraint (16); crawler connections (20), TP2 (18), multipart URLs (07), WhatsApp group limit tag (08); 26 diagram nodes retagged INDUSTRY PATTERN; composite diagrams 26 and 27 name each part's source; toolkit wording (P11 to P14, C02, W02, W03, a matrix row). The rest are under "Review findings not yet verified". |
+| — | One source for the learning order: `site/src/stages.json`, checked by a test against the atlas track and the README. |
+| — | Note 15's "dispatch optimization": no primary source gives the expansion (Uber's InfoQ page and slides use the name DISCO only), so the note attributes it to HighScalability's summary. |
