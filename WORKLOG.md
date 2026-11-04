@@ -47,6 +47,6 @@ Status: `[ ]` to do · `[x]` done (ticked in the commit that does it) · `[-]` d
 - [x] F7 Track page: a step with no reading time shows a stray "practice".
 - [x] F8 Unknown route silently shows the home page.
 - [x] F9 Diagram edges faint in dark; edge labels collide.
-- [ ] F10 Dark cards barely stand out from the page.
+- [x] F10 Dark cards barely stand out from the page.
 - [ ] F11 Toolkit top bar not aligned with the 860px column.
 - [ ] F12 Full sweep, then move the quick wins to Done in ROADMAP.md.

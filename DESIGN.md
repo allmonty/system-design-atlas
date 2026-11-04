@@ -28,8 +28,8 @@ Themes are set on `<html data-theme="light|warm|dark">`. With no attribute (the 
 | `--bg` | page background | `#fafafa` | `#f4ecd8` | `#111114` |
 | `--fg` | body text, headings | `#1c1c1e` | `#3b3226` | `#ececf0` |
 | `--muted` | secondary text, captions, inactive items | `#6b6b70` | `#6b5f4f` | `#9a9aa3` |
-| `--card` | solid surfaces: menus, inputs, buttons, disclosures | `#fff` | `#fbf6e9` | `#1b1b20` |
-| `--line` | every border and divider | `#d8d8de` | `#dccfb4` | `#33333b` |
+| `--card` | solid surfaces: menus, inputs, buttons, disclosures | `#fff` | `#fbf6e9` | `#1d1d23` |
+| `--line` | every border and divider | `#d8d8de` | `#dccfb4` | `#383842` |
 | `--accent` | links, primary actions, current item, focus ring | `#2563eb` | `#1f5f8b` | `#60a5fa` |
 | `--on-accent` | text on an accent background | `#fff` | `#fff` | `#0b1220` |
 | `--c-confirmed` | `[CONFIRMED]`, "real system", fresh sources, progress | `#15803d` | `#3d6b27` | `#4ade80` |
