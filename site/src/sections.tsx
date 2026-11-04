@@ -67,7 +67,8 @@ function useActiveSection(slugs: string[], deps: unknown[]) {
     let raf = 0;
     const run = () => {
       raf = 0;
-      const top = (root?.getBoundingClientRect().top ?? 0) + 24;
+      // A jump puts a heading scroll-margin-top below the top, so count it as current from there (plus a little slack).
+      const top = (root?.getBoundingClientRect().top ?? 0) + (parseFloat(getComputedStyle(first).scrollMarginTop) || 0) + 8;
       let cur: string | null = null;
       for (const s of slugs) { const el = document.getElementById(s); if (el && el.getBoundingClientRect().top <= top) cur = s; }
       setActive(cur);

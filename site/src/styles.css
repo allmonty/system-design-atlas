@@ -107,7 +107,8 @@ html, body { overflow-x: hidden; overflow-x: clip; } /* clip, not hidden: hidden
 .modes button:first-child { border-radius: var(--r-sm) 0 0 var(--r-sm); } .modes button:last-child { border-radius: 0 var(--r-sm) var(--r-sm) 0; }
 .split.mode-graph { grid-template-columns: minmax(0, 1fr); }
 .split.mode-graph .canvas { height: 62vh; }
-.split.mode-text { grid-template-columns: minmax(0, 1fr); }
+.split.mode-text { grid-template-columns: minmax(0, 1fr); height: auto; } /* text mode reads with the page scroll, not an inner box */
+.split.mode-text > .left, .split.mode-text > .right { overflow: visible; }
 .split.mode-text .notes { width: 100%; max-width: 960px; margin: 0 auto; } /* width: auto margins on a grid item would size it to its widest child */
 .notes.hidden { display: none; }
 .legend[hidden] { display: none; }
