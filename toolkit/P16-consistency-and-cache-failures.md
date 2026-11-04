@@ -28,7 +28,7 @@ Abadi restates CAP as: if there is a partition (P), trade availability against c
 
 The Dynamo paper says that setting R and W so that R + W > N yields a quorum-like system, and that R and W are usually set below N for better latency. It also says that a traditional quorum would make the system unavailable during failures, so Dynamo uses a sloppy quorum and hinted handoff: operations go to the first N healthy nodes, which may not be the usual replicas. Conflicts are resolved by vector clocks and the application, or by a simple policy such as last write wins.
 
-Abadi states the consequence: these systems "cannot achieve full consistency as defined by Gilbert and Lynch, even if R + W > N". So a quorum inequality is a tuning knob, not a guarantee. Linearizable reads need a consensus-based or single-leader design (see [33 Coordination and locks](../systems/33-distributed-coordination-locks.md)).
+Abadi states the consequence: these systems "cannot achieve full consistency as defined by Gilbert and Lynch, even if R + W > N". So a quorum inequality is a tuning knob, not a guarantee. Linearizable reads need consensus, or a single leader that confirms it still holds leadership before it answers (a lease or a quorum check). A single leader alone is not enough: a replaced leader that has not noticed, or a follower that replicates asynchronously, can serve stale data `[INDUSTRY PATTERN]` (see [33 Coordination and locks](../systems/33-distributed-coordination-locks.md)).
 
 ## 4. The Eight Fallacies `[CONFIRMED]` (Deutsch)
 

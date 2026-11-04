@@ -8,7 +8,7 @@ Status: `[ ]` to do · `[x]` done (ticked in the commit that does it) · `[-]` d
 
 ## A. Wording errors (content review)
 - [x] A1 Note 03: Cassandra "Strong when W + R > RF" contradicts P16 (quorum overlap is not linearizable). Fix note and pt-BR mirror.
-- [ ] A2 P16: "consensus-based or single-leader design" for linearizable reads; single leader needs leadership confirmation (lease or read-index).
+- [x] A2 P16: "consensus-based or single-leader design" for linearizable reads; single leader needs leadership confirmation (lease or read-index).
 - [ ] A3 tracks.json: W05 reason calls 22 to 31 "AI systems"; 29 to 31 are streaming and observability. Fix English and pt-BR overlay.
 
 ## B. Design fixes (design review items 1-4 and 8-10)
