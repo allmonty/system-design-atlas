@@ -1,0 +1,114 @@
+[
+  {
+    "quote": "give an AI an input, then apply grading logic to its output to measure success",
+    "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "because model outputs vary between runs",
+    "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "the outcome is whether a reservation exists in the environment's SQL database",
+    "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "can propagate and compound",
+    "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "requires calibration with human graders for accuracy",
+    "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "We recommend choosing deterministic graders where possible, LLM graders where necessary or for additional flexibility, and using human graders judiciously for additional validation.",
+    "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "grade each dimension with an isolated LLM-as-judge rather than using one to grade all dimensions",
+    "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "should start at a low pass rate",
+    "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "should have a nearly 100% pass rate",
+    "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "20-50 simple tasks drawn from real failures is a great start",
+    "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "if the claims that are made in the answer can be inferred from the context",
+    "url": "https://arxiv.org/pdf/2309.15217",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The task accuracy metrics are only evaluated when the corresponding tool is used to answer the question.",
+    "url": "https://aws.amazon.com/blogs/machine-learning/evaluate-amazon-bedrock-agents-with-ragas-and-llm-as-a-judge/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "to simulate how a user might interact with the agent",
+    "url": "https://aws.amazon.com/blogs/machine-learning/evaluate-amazon-bedrock-agents-with-ragas-and-llm-as-a-judge/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "sole reliance on final-stage, low-level checks is inadequate",
+    "url": "https://arxiv.org/pdf/2503.13657",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "A good task is one where two domain experts would independently reach the same pass/fail verdict.",
+    "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "is most often a signal of a broken task, not an incapable agent",
+    "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  }
+]
