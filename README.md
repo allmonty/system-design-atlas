@@ -1,3 +1,5 @@
+![System Design Atlas — Worked Architectures Backed by Primary Sources](site/public/social-preview.png)
+
 # System Design Atlas
 
 **42 system-design case studies with interactive diagrams, an incident casebook, primers and a practice workbook, for senior engineers preparing for interviews or an architect role. Available in English and Brazilian Portuguese (pt-BR). Every claim says how well it is sourced.**
