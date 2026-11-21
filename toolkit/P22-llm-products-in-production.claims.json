@@ -49,6 +49,27 @@
     "status": "confirmed"
   },
   {
+    "quote": "The memory tool operates client-side: Claude requests file operations, and your application runs them.",
+    "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Memory lives entirely in your application.",
+    "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Long-term memory in LangGraph allows systems to retain information across different conversations or sessions",
+    "url": "https://docs.langchain.com/oss/python/langgraph/memory",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
     "quote": "a later agent instance would look around, see that progress had been made, and declare the job done.",
     "url": "https://www.anthropic.com/research/effective-harnesses-for-long-running-agents",
     "via": "direct",
@@ -217,8 +238,57 @@
     "status": "confirmed"
   },
   {
+    "quote": "once an LLM agent has ingested untrusted input",
+    "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "must be constrained so that it is impossible for that input to trigger any consequential actions",
+    "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The Privileged LLM only ever sees those variable names.",
+    "url": "https://simonwillison.net/2023/Apr/25/dual-llm-pattern/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
     "quote": "To guard against infinite tool-call loops, set iteration limits",
     "url": "https://learn.microsoft.com/azure/architecture/ai-ml/guide/ai-agent-design-patterns",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Prompt caching covers the full prefix",
+    "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "By default, the cache has a 5-minute lifetime.",
+    "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Modifying tool definitions (names, descriptions, parameters) invalidates the entire cache",
+    "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Prompt caching is enabled by default for supported OpenAI models.",
+    "url": "https://developers.openai.com/api/docs/guides/prompt-caching",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
