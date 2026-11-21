@@ -1,9 +1,9 @@
-import { Activity, Bell, BookOpen, Blocks, BrainCircuit, Compass, Database, Film, Library, ListChecks, Map, MapPin, MessagesSquare, PencilRuler, Puzzle, Radio, Scale, Siren, Sparkles, Sprout, Target, type LucideIcon } from "lucide-react";
+import { Activity, Bell, BookOpen, Blocks, BrainCircuit, Compass, Database, Film, Library, ListChecks, Map, MapPin, MessagesSquare, PencilRuler, Puzzle, Radio, Scale, Siren, Sparkles, Sprout, Target, Workflow, type LucideIcon } from "lucide-react";
 
 // Icons for tracks, learning stages and home sections. Colours come from the C4 palette in styles.css (.tone-*).
 type Entry = [LucideIcon, string];
 const TRACK: Record<string, Entry> = {
-  interview: [MessagesSquare, "service"], foundations: [Blocks, "edge"], architect: [Compass, "data"], ai: [BrainCircuit, "client"], atlas: [Map, "queue"],
+  interview: [MessagesSquare, "service"], foundations: [Blocks, "edge"], architect: [Compass, "data"], ai: [BrainCircuit, "client"], "ai-apps": [Workflow, "service"], atlas: [Map, "queue"],
 };
 const NAMED: Record<string, Entry> = {
   "Foundations": [Sprout, "edge"], "Building blocks": [Puzzle, "service"], "Storage and data infrastructure": [Database, "data"],
