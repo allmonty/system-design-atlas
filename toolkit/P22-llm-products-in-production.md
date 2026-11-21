@@ -5,7 +5,7 @@
 ## At a glance
 
 - Most production failures are not the model lacking ability. They are context that is too long or missing, a run that dies halfway with no way to resume, a tool that invites mistakes, untrusted text treated as instructions, or a loop with no limit.
-- **Context is a budget.** Anthropic's advice is to find "the smallest possible set of high-signal tokens that maximize the likelihood of some desired outcome". Compaction, notes outside the context and sub-agents that return summaries are the main tools.
+- **Context is a budget.** Anthropic's advice is to find "the smallest possible set of high-signal tokens that maximize the likelihood of some desired outcome". Compaction (summarising old context to free space), notes kept outside the context and sub-agents that return summaries are the main tools.
 - **Agents are long-running stateful processes.** Treat them like workflows: checkpoint after each step, resume instead of restarting, deploy new versions without killing running ones.
 - **Security rule of thumb:** an agent that reads untrusted input, can reach private data and can act or send externally can be turned against its user. Meta's "Rule of Two" says to allow at most two of the three without a human check.
 - **Bound everything:** steps, time, tokens, money, retries, handoffs. Every loop in [P19](P19-llm-workflow-patterns.md) and [P20](P20-agent-and-multi-agent-architectures.md) needs a cap and a defined behaviour at the cap.
@@ -15,7 +15,7 @@
 
 ## 1. Context engineering `[CONFIRMED]` (Anthropic, September 2025)
 
-**Context engineering** "refers to the set of strategies for curating and maintaining the optimal set of tokens (information) during LLM inference". It is the successor to prompt engineering: it covers the system prompt, tool definitions, retrieved data and the history of the run, not only the instructions.
+**Context engineering** "refers to the set of strategies for curating and maintaining the optimal set of tokens (information) during LLM inference" (inference: running the model to produce output). It is the successor to prompt engineering: it covers the system prompt, tool definitions, retrieved data and the history of the run, not only the instructions.
 
 Why it matters: as the context grows, the model recalls less of it (the post calls this context rot), so "Context, therefore, must be treated as a finite resource with diminishing marginal returns." and "Every new token introduced depletes this budget by some amount".
 
@@ -93,7 +93,7 @@ Microsoft's guide: "To guard against infinite tool-call loops, set iteration lim
 | Handoffs or sub-agents per run | Agents bouncing a request between them | Escalate to a human or a general agent |
 | Retries per tool | Hammering a failing dependency | Circuit breaker, then a fallback path ([P07](P07-slos-and-incidents.md)) |
 
-Cost reasoning: Anthropic's numbers give the scale. Its multi-agent research system used about 15 times the tokens of a chat ([P20](P20-agent-and-multi-agent-architectures.md)); its March 2026 harness post compares a solo run of about 20 minutes and $9 with a full harness run of about 6 hours and $200 on the same prompt. Budget per task, not per call, and route easy work to cheaper models ([P08](P08-cost-as-a-design-input.md)).
+Cost reasoning: Anthropic's numbers give the scale. Its multi-agent research system used several times the tokens of a single agent ([P20](P20-agent-and-multi-agent-architectures.md), section 5a); its March 2026 harness post compares a solo run of about 20 minutes and $9 with a full harness run of about 6 hours and $200 on the same prompt. Budget per task, not per call, and route easy work to cheaper models ([P08](P08-cost-as-a-design-input.md)).
 
 ## 7. Observability and release `[CONFIRMED]` for the conventions; the rest our reasoning
 
