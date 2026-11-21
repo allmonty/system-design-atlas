@@ -161,6 +161,20 @@
     "status": "confirmed"
   },
   {
+    "quote": "seem comparable in terms of tokens per vulnerability found",
+    "url": "https://www.anthropic.com/research/multiagent-systems",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "only by hardly working together at all",
+    "url": "https://www.anthropic.com/research/multiagent-systems",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
     "quote": "0.769 versus 0.754, p = 0.80, despite using 1.8 times more evaluation calls",
     "url": "https://arxiv.org/abs/2609.04217",
     "via": "direct",
