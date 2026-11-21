@@ -14,9 +14,16 @@
 
 ## 1. Words used on this page
 
+The definitions below are our plain-language explanations unless tagged. Two facts matter more than any term, so they come first.
+
+- **The model keeps no memory between calls.** Each call is independent, like a stateless HTTP request. To hold a conversation, the full history (instructions, earlier messages, tool results) is sent again on every call, either by your code or by a provider service that stores it for you. That is why the context grows during a run, why each step costs more than the last, and why "memory" in an LLM product is always something your system stores.
+- **The same input can give different outputs.** Models pick each next word with some randomness (**sampling**), so two runs of one prompt can differ. You therefore test with several runs, can take several samples and vote (section 5), and should validate every output your code depends on.
+
 - **LLM** (large language model): a model that takes text (and sometimes images) in and produces text out. One request and its response is an **LLM call**.
-- **Prompt:** the instructions and data sent in a call. The **context window** is the maximum amount of text, counted in **tokens** (pieces of words), that a call can hold. Cost and latency grow with tokens.
+- **Prompt:** the instructions and data sent in a call. The **system prompt** is the standing part (role, rules, tool descriptions) sent first on every call; **prompt engineering** is the craft of writing prompts that work. The **context window** is the maximum amount of text, counted in **tokens** (pieces of words), that a call can hold. Cost and latency grow with tokens.
 - **Tool call** (function calling): the model returns a structured request such as `search(query="...")`; your code runs it and sends the result back in the next call. The model never runs anything itself.
+- **Eval** (evaluation): an automated test suite for model behaviour: tasks with checkable success criteria, graders that score each output, and several runs per task because outputs vary. It is how you show that a change helped. See [P18](P18-evaluating-llm-and-agent-systems.md).
+- **Harness:** the code around the model that runs the loop, assembles each prompt, executes tool calls and decides when to stop. In an agent product, most of the engineering is in the harness.
 - **Retrieval**, or RAG (retrieval-augmented generation): your code finds relevant documents and puts them in the prompt. See [23 RAG knowledge assistant](../systems/23-rag-knowledge-assistant.md).
 - **Workflow** and **agent** `[CONFIRMED]` (Anthropic, December 2024): workflows are systems where LLMs and tools are "orchestrated through predefined code paths"; agents are systems where LLMs "dynamically direct their own processes and tool usage". Anthropic describes agents as "typically just LLMs using tools based on environmental feedback in a loop." The same distinction is the core of [25 AI agent platform](../systems/25-ai-agent-platform.md).
 
@@ -31,7 +38,7 @@
 
 Anthropic's advice matches: find "the simplest solution possible, and only increasing complexity when needed", and add complexity "only when it demonstrably improves outcomes" `[CONFIRMED]`. Measuring "demonstrably" needs an evaluation suite, see [P18](P18-evaluating-llm-and-agent-systems.md).
 
-**The building block** `[CONFIRMED]` (Anthropic): every pattern below is built from what Anthropic calls the augmented LLM: "an LLM enhanced with augmentations such as retrieval, tools, and memory." The post names the Model Context Protocol as one way to connect those augmentations (see [P21](P21-agent-frameworks-and-protocols-2026.md)).
+**The building block** `[CONFIRMED]` (Anthropic): every pattern below is built from what Anthropic calls the augmented LLM: "an LLM enhanced with augmentations such as retrieval, tools, and memory." The post names the Model Context Protocol (MCP, a standard protocol for plugging tools and data sources into an LLM application) as one way to connect those augmentations (see [P21](P21-agent-frameworks-and-protocols-2026.md)).
 
 ## 3. Prompt chaining: a pipeline of calls
 
@@ -80,7 +87,7 @@ Anthropic's advice matches: find "the simplest solution possible, and only incre
 
 **What it is** `[CONFIRMED]` (Anthropic): one call produces an answer, another evaluates it and gives feedback, in a loop. It is "particularly effective when we have clear evaluation criteria" and when feedback measurably improves the answer. Examples: literary translation with a critic; search where the evaluator decides whether more searching is needed. Microsoft lists the same idea as the **maker-checker** loop and warns: "Set an iteration cap to prevent infinite refinement loops, and define fallback behavior for when the cap is reached." `[CONFIRMED]`
 
-**Why a separate checker** `[CONFIRMED]` (Anthropic, March 2026): in a later post on long-running coding harnesses, Anthropic found that "agents reliably skew positive when grading their own work", and that "Separating the agent doing the work from the agent judging it proves to be a strong lever to address this issue." The same post says that out of the box Claude made a poor QA agent and needed tuning; the checker is a component to evaluate in its own right.
+**Why a separate checker** `[CONFIRMED]` (Anthropic, March 2026): in a later post on harnesses for coding tasks that run for hours, Anthropic found that "agents reliably skew positive when grading their own work", and that "Separating the agent doing the work from the agent judging it proves to be a strong lever to address this issue." The same post says that out of the box Claude made a poor QA agent and needed tuning; the checker is a component to evaluate in its own right.
 
 **Classic analogue** (our reasoning): a retry loop with validation, or code review before merge. A code check (tests pass, schema valid) is the cheapest and strictest evaluator; use a model as evaluator only where the criteria are not checkable by code.
 
