@@ -14,6 +14,27 @@
     "status": "confirmed"
   },
   {
+    "quote": "servers that need cross call state use explicit server minted handles passed as ordinary tool arguments",
+    "url": "https://modelcontextprotocol.io/specification/2026-07-28/changelog",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "a single long lived post response stream",
+    "url": "https://modelcontextprotocol.io/specification/2026-07-28/changelog",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "a broken response stream loses the in flight request clients must re issue it as a new request",
+    "url": "https://modelcontextprotocol.io/specification/2026-07-28/changelog",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
     "quote": "an anti-pattern where an MCP server accepts tokens from an MCP client without validating",
     "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/security_best_practices",
     "via": "direct",
