@@ -165,7 +165,7 @@ It becomes multi-agent when workers run their own tool loops and decide their ow
 
 *Fact-check, 2026-11-21, by reading each source. Quotations are confirmed by `npm run verify`.*
 - Verified in Anthropic's December 2024 post: the workflow and agent definitions, the augmented LLM, the five workflow patterns with their examples, the simplicity advice and the framework advice.
-- Verified in the Azure guide: the complexity ladder (direct call, single agent, multi-agent) and its three quotations, the sequential, concurrent and maker-checker definitions, the handoff avoid-when condition, and the avoid-when lists for sequential and concurrent.
+- Verified in the Azure guide: the complexity ladder (direct call, single agent, multi-agent) and its three quotations, the sequential, concurrent and maker-checker definitions, the handoff avoid-when condition, and the avoid-when lists for sequential and concurrent (re-checked after review in the verifier's full copy of the page, in its opening sections).
 - Verified in the Anthropic and OpenAI structured-outputs docs: constrained decoding to a JSON Schema (Anthropic), schema adherence versus JSON mode (OpenAI), supported subsets of JSON Schema and cases where output may not match (both, partly from the summarised parts of the pages).
 - Verified in Anthropic's March 2026 post: self-grading skews positive, separating worker and judge, the untuned QA agent.
 - Not verified: the Azure guide's text past the first two thirds of the page, which was read only through a summary; nothing on this page relies on it.
