@@ -331,10 +331,6 @@
           "why": "The platform under an agent: tools, MCP, sandboxes, state and budgets, with a coding agent as the worked example."
         },
         {
-          "ref": "P21",
-          "why": "A dated snapshot of the frameworks and protocols (MCP, A2A, LangGraph, the vendor SDKs), what changed in 2026 and how to choose."
-        },
-        {
           "ref": "P22",
           "why": "What breaks in production: context limits, long runs, tool design, prompt injection and the Rule of Two, budgets and tracing."
         },
@@ -353,6 +349,10 @@
         {
           "ref": "W04",
           "why": "Practise writing the decision down as an ADR, for example workflow versus agent or one agent versus several."
+        },
+        {
+          "ref": "P21",
+          "why": "Reference, for when you pick a stack: a dated snapshot of the frameworks and protocols (MCP, A2A, LangGraph, the vendor SDKs), what changed in 2026 and how to choose."
         }
       ]
     },
