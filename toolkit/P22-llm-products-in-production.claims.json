@@ -1,63 +1,63 @@
 [
   {
     "quote": "the smallest possible set of high-signal tokens that maximize the likelihood of some desired outcome",
-    "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "refers to the set of strategies for curating and maintaining the optimal set of tokens (information) during LLM inference",
-    "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "Context, therefore, must be treated as a finite resource with diminishing marginal returns.",
-    "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "Every new token introduced depletes this budget by some amount",
-    "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "Compaction is the practice of taking a conversation nearing the context window limit, summarizing its contents",
-    "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "the agent regularly writes notes persisted to memory outside of the context window",
-    "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "returns only a condensed, distilled summary of its work",
-    "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "a later agent instance would look around, see that progress had been made, and declare the job done.",
-    "url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+    "url": "https://www.anthropic.com/research/effective-harnesses-for-long-running-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "the model is less likely to inappropriately change or overwrite JSON files",
-    "url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+    "url": "https://www.anthropic.com/research/effective-harnesses-for-long-running-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
@@ -85,21 +85,21 @@
   },
   {
     "quote": "Agents are stateful and errors compound.",
-    "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    "url": "https://www.anthropic.com/research/multi-agent-research-system",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "Instead, we built systems that can resume from where the agent was when the errors occurred.",
-    "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    "url": "https://www.anthropic.com/research/multi-agent-research-system",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "to avoid disrupting running agents, by gradually shifting traffic from old to new versions",
-    "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    "url": "https://www.anthropic.com/research/multi-agent-research-system",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
@@ -120,28 +120,28 @@
   },
   {
     "quote": "plan to invest just as much effort in creating good agent-computer interfaces",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "Poka-yoke your tools. Change the arguments so that it is harder to make mistakes.",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "Namespacing tools to define clear boundaries in functionality",
-    "url": "https://www.anthropic.com/engineering/writing-tools-for-agents",
+    "url": "https://www.anthropic.com/research/writing-tools-for-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "Optimizing tool responses for token efficiency",
-    "url": "https://www.anthropic.com/engineering/writing-tools-for-agents",
+    "url": "https://www.anthropic.com/research/writing-tools-for-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"

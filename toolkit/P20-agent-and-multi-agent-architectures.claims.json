@@ -85,49 +85,49 @@
   },
   {
     "quote": "outperformed single-agent Claude Opus 4 by 90.2% on our internal research eval",
-    "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    "url": "https://www.anthropic.com/research/multi-agent-research-system",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "three factors explained 95% of the performance variance",
-    "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    "url": "https://www.anthropic.com/research/multi-agent-research-system",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "token usage by itself explains 80% of the variance",
-    "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    "url": "https://www.anthropic.com/research/multi-agent-research-system",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "multi-agent systems use about 15× more tokens than chats",
-    "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    "url": "https://www.anthropic.com/research/multi-agent-research-system",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "some domains that require all agents to share the same context",
-    "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    "url": "https://www.anthropic.com/research/multi-agent-research-system",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "most coding tasks involve fewer truly parallelizable tasks than research",
-    "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    "url": "https://www.anthropic.com/research/multi-agent-research-system",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "our lead agents execute subagents synchronously, waiting for each set of subagents to complete",
-    "url": "https://www.anthropic.com/engineering/multi-agent-research-system",
+    "url": "https://www.anthropic.com/research/multi-agent-research-system",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"

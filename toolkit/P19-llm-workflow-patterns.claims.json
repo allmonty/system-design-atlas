@@ -1,7 +1,7 @@
 [
   {
     "quote": "Building effective agents",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
@@ -15,21 +15,21 @@
   },
   {
     "quote": "orchestrated through predefined code paths",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "dynamically direct their own processes and tool usage",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "typically just LLMs using tools based on environmental feedback in a loop.",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
@@ -64,28 +64,28 @@
   },
   {
     "quote": "the simplest solution possible, and only increasing complexity when needed",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "only when it demonstrably improves outcomes",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "an LLM enhanced with augmentations such as retrieval, tools, and memory.",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "The main goal is to trade off latency for higher accuracy, by making each LLM call an easier task.",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
@@ -99,7 +99,7 @@
   },
   {
     "quote": "Routing works well for complex tasks where there are distinct categories that are better handled separately",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
@@ -113,14 +113,14 @@
   },
   {
     "quote": "Breaking a task into independent subtasks run in parallel.",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "Running the same task multiple times to get diverse outputs.",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
@@ -134,14 +134,14 @@
   },
   {
     "quote": "subtasks aren't pre-defined, but determined by the orchestrator based on the specific input",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "particularly effective when we have clear evaluation criteria",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
@@ -169,21 +169,21 @@
   },
   {
     "quote": "the most successful implementations weren't using complex frameworks or specialized libraries",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "developers start by using LLM APIs directly: many patterns can be implemented in a few lines of code",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
   },
   {
     "quote": "often create extra layers of abstraction that can obscure the underlying prompts and responses",
-    "url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
