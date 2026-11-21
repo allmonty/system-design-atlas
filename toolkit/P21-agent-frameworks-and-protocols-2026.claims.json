@@ -1,0 +1,114 @@
+[
+  {
+    "quote": "the current protocol version, which is ready for use and may continue to receive backwards compatible changes.",
+    "url": "https://modelcontextprotocol.io/specification/versioning",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "out of the core protocol and into an official extension",
+    "url": "https://modelcontextprotocol.io/specification/2026-07-28/changelog",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "an anti-pattern where an MCP server accepts tokens from an MCP client without validating",
+    "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/security_best_practices",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "founding contributions of three leading projects",
+    "url": "https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "An open protocol enabling communication and interoperability between opaque agentic applications.",
+    "url": "https://a2a-protocol.org/latest/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "MCP connects an agent to tools, APIs, and data. A2A connects it to other agents.",
+    "url": "https://a2a-protocol.org/latest/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "a low-level orchestration framework for building, managing, and deploying long-running, stateful agents",
+    "url": "https://pypi.org/project/langgraph/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The ADK 2.0 release introduces the Workflow Runtime, transitioning ADK from a hierarchical agent executor to a graph-based execution engine.",
+    "url": "https://adk.dev/2.0/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "the direct successor, created by the same teams",
+    "url": "https://learn.microsoft.com/agent-framework/overview/agent-framework-overview",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "New users should start with Microsoft Agent Framework.",
+    "url": "https://github.com/microsoft/autogen",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The backbone of your AI application",
+    "url": "https://docs.crewai.com/en/introduction",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The units of work within your Flow",
+    "url": "https://docs.crewai.com/en/introduction",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Build production AI agents with Claude Code as a library",
+    "url": "https://code.claude.com/docs/en/agent-sdk/overview",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "was officially sunset on August 26, 2026, and is no longer available.",
+    "url": "https://developers.openai.com/api/docs/assistants/migration",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "have moved to the OpenTelemetry GenAI semantic conventions repository",
+    "url": "https://opentelemetry.io/docs/specs/semconv/gen-ai/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "joins the Agentic AI Foundation",
+    "url": "https://a2a-protocol.org/latest/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  }
+]
