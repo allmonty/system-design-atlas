@@ -105,7 +105,7 @@
     "status": "confirmed"
   },
   {
-    "quote": "multi-agent systems use about 15× more tokens than chats",
+    "quote": "agents typically use about 4× more tokens than chat interactions and multi-agent systems use about 15× more tokens than chats",
     "url": "https://www.anthropic.com/research/multi-agent-research-system",
     "via": "direct",
     "sourceClass": "primary",
@@ -168,7 +168,21 @@
     "status": "confirmed"
   },
   {
+    "quote": "the two methods are largely complementary there were only 12 vulnerabilities in common",
+    "url": "https://www.anthropic.com/research/multiagent-systems",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
     "quote": "only by hardly working together at all",
+    "url": "https://www.anthropic.com/research/multiagent-systems",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "it was only our most recent model sonnet 5 that worked on shared resources",
     "url": "https://www.anthropic.com/research/multiagent-systems",
     "via": "direct",
     "sourceClass": "primary",
