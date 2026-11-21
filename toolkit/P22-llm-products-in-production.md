@@ -75,7 +75,7 @@ Our reasoning: tool errors should be messages the model can act on (`date must b
 OWASP also published a *Top 10 for Agentic Applications for 2026* (9 December 2025); we read only its landing page, not the list.
 
 Design moves (our reasoning, building on [P06](P06-security-threat-modeling.md)):
-- Split agents along the Rule of Two: the agent that reads the web has no credentials; the agent with credentials reads only trusted, structured input ([P20](P20-agent-and-multi-agent-architectures.md), section 7).
+- Split agents along the Rule of Two: the agent that reads the web has no credentials; the agent with credentials reads only trusted, structured input ([P20](P20-agent-and-multi-agent-architectures.md), section 4).
 - Use the end user's narrow, short-lived credentials, never one powerful service account; check permissions in the tool, not in the prompt.
 - Require approval for irreversible or external actions (payments, emails, deletes), and show the exact action to the approver.
 - Mark tool results as data in the prompt, and do not let a tool result change which tools are available.
@@ -108,7 +108,7 @@ Release changes to prompts, tools, models and harness code like code: an offline
 | Agent says it is done, work is incomplete | "Done" decided by the model | An external check (tests, feature list) decides |
 | Quality falls on long runs | Context rot, or compaction dropped key facts | Notes outside context, better compaction, sub-agents |
 | Same tool called again and again | No progress signal, vague tool errors | Step cap, actionable error messages |
-| Sub-agents produce inconsistent parts | Implicit decisions not shared ([P20](P20-agent-and-multi-agent-architectures.md), section 5) | Share decisions explicitly, or use one agent |
+| Sub-agents produce inconsistent parts | Implicit decisions not shared ([P20](P20-agent-and-multi-agent-architectures.md), section 5b) | Share decisions explicitly, or use one agent |
 | Data sent somewhere it should not go | All three Rule of Two properties in one session | Split agents, approvals, narrow credentials |
 | Cost spike from one tenant | No per-run or per-tenant budget | Budgets with hard stops |
 | A deploy breaks runs in progress | Runs pinned to nothing | Versioned runs, rainbow deploys |

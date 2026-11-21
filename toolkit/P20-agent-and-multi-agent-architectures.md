@@ -21,10 +21,23 @@ user goal ─► [model] ─► tool call? ──yes──► run tool (your cod
                  no ─► final answer        stop also on: step cap, time, token budget, human approval
 ```
 
-The mechanics (tool definitions, the ReAct loop, sandboxes, budgets) are in [25 AI agent platform](../systems/25-ai-agent-platform.md). Two terms used below:
+One run, as the messages your code sends and receives (illustrative; real APIs wrap these in JSON). Each call resends everything above it, because the model keeps no memory between calls ([P19](P19-llm-workflow-patterns.md), section 1):
+
+```
+call 1  → system: "You are a support agent. Tools: get_order(id), refund(id, amount)."
+          user:   "Order 812 arrived broken, I want my money back."
+        ← model:  tool call get_order(id=812)
+call 2  → (everything above) + tool result: {"id": 812, "total": 40.00, "status": "delivered"}
+        ← model:  tool call refund(id=812, amount=40.00)      ← a risky action: approval step here
+call 3  → (everything above) + tool result: {"refund": "ok"}
+        ← model:  "Done: 40.00 refunded to your card."      ← no tool call, so the loop ends
+```
+
+The mechanics (tool definitions, the ReAct loop of reasoning then acting, sandboxes, budgets) are in [25 AI agent platform](../systems/25-ai-agent-platform.md). Terms used below:
 
 - **Context:** everything the model sees in one call (instructions, conversation, tool results). It is limited and costly, so what each agent sees is a design decision (see [P22](P22-llm-products-in-production.md)).
-- **Handoff** and **agent as tool:** the two ways one agent can involve another. As a tool, the other agent runs a subtask and returns a result; the caller keeps control. In a handoff, the other agent takes over the conversation.
+- **Handoff** and **agent as tool:** the two ways one agent can involve another. As a tool, the other agent runs a subtask and returns a result; the caller keeps control. In a handoff, the other agent takes over the conversation. **Subagent**, **worker** and **agent as tool** name the same idea in different sources.
+- **Thread:** one conversation history. In a group chat, every agent reads and appends to the same thread.
 
 ## 2. Topologies `[CONFIRMED]` (framework documentation, read November 2026)
 
@@ -56,39 +69,9 @@ The frameworks name the same few shapes in different words.
 | Group chat | A shared blackboard or a meeting | Flexible; hard to bound, so cap turns and participants |
 | Planner with ledger | A job scheduler with a persisted plan | The ledger is state: persist it, version it, let people read it |
 
-The analogy has one weak point: a service has a typed interface, an agent receives text. A handoff that drops context, or a sub-agent that misreads its brief, fails silently, which is why the next two sections matter.
+The analogy has one weak point: a service has a typed interface, an agent receives text. A handoff that drops context, or a sub-agent that misreads its brief, fails silently. The last rule of section 4 is there to catch it.
 
-## 4. When several agents help `[CONFIRMED]` (Anthropic, June 2025)
-
-Anthropic's Research feature uses a lead agent that plans and starts subagents in parallel, each searching with its own tools and context, and a final step that attributes citations. Published results, on its own internal research eval, with Claude Opus 4 as lead and Claude Sonnet 4 as subagents:
-
-- The system "outperformed single-agent Claude Opus 4 by 90.2% on our internal research eval".
-- On BrowseComp, "three factors explained 95% of the performance variance", and "token usage by itself explains 80% of the variance". Part of the gain is simply spending more tokens in parallel.
-- Cost: "agents typically use about 4× more tokens than chat interactions and multi-agent systems use about 15× more tokens than chats". Against a single agent, that is roughly 3.75 times the tokens, the comparison that matters when you decide.
-- Limits: the post says multi-agent fits poorly in "some domains that require all agents to share the same context", or with many dependencies between agents, and that "most coding tasks involve fewer truly parallelizable tasks than research".
-- A production constraint: "our lead agents execute subagents synchronously, waiting for each set of subagents to complete", so the slowest subagent sets the latency.
-
-The coordination failures that appear when agents act as peers (and the MAST failure taxonomy) are summarised in [25 AI agent platform, section 4d](../systems/25-ai-agent-platform.md).
-
-## 5. The case against `[CONFIRMED]` (Cognition, June 2025)
-
-Cognition, which builds a coding agent, argued two principles: "Share context, and share full agent traces, not just individual messages", and "Actions carry implicit decisions, and conflicting decisions carry bad results". Its example: two subagents building parts of a game made incompatible style choices, because "The actions subagent 1 took and the actions subagent 2 took were based on conflicting assumptions not prescribed upfront." Its recommendation: "The simplest way to follow the principles is to just use a single-threaded linear agent", and compress history when the context overflows. The post is an argument from experience, not a measurement.
-
-The two posts agree more than their titles suggest (our reading): parallel agents work when the parts are independent (separate searches), and have mostly failed so far when they must agree on decisions nobody wrote down (shared code, a shared style).
-
-**A 2026 measurement of the same split** `[CONFIRMED]` (Anthropic Frontier Red Team, August 2026): on independent work, a coordinating swarm searching open-source projects for vulnerabilities found 266 in a 27-million-token run, against 21 in 6.5 million tokens for independent agents with fixed assignments. Restricted to the code both searched, the two methods "seem comparable in terms of tokens per vulnerability found", so the swarm's gain came mostly from covering more ground; the post adds that "the two methods are largely complementary there were only 12 vulnerabilities in common". On shared code, swarms building one game for 12 hours struggled to merge their work. Two newer models merged most of it "only by hardly working together at all", each agent keeping to its own files, and "it was only our most recent model sonnet 5 that worked on shared resources" while still merging at a high rate. So the failure on shared work is real but shrinking with newer models. All experiments used Claude models in test environments the authors built. More findings (conformity, trust, conflicting goals) are in [25, section 4d](../systems/25-ai-agent-platform.md).
-
-## 6. What 2026 studies found at equal cost `[CONFIRMED]` as the papers' own results; preprints, not peer reviewed
-
-Many multi-agent wins compare a team against one agent that got less compute. Three 2026 arXiv preprints control for that, with different methods:
-
-- **Equal budget for prompt optimisation** (arXiv 2609.04217, June 2026): the study tunes the prompts of a planner, executor and critic team and of a single agent under the same number of model calls, on one frozen 7B model (a small open model whose weights are not changed), on ALFWorld and WebShop (benchmarks of household and shopping tasks in a simulated environment). Evaluating the tuned team still costs more calls. The team reached "0.769 versus 0.754, p = 0.80, despite using 1.8 times more evaluation calls", and the planner and critic prompts evolved to near-empty. The authors' conclusion: "Under equal inference cost, multi-agent structure adds cost without clear benefit."
-- **Equal thinking budget per step** (arXiv 2610.06069, October 2026): on a long ledger-reconciliation task, a model of attention and handoff costs predicted decomposition would win at depths of 20 to 100 steps, and "The decomposed system won at every depth, as predicted." The authors note "the runs test the winner past the crossover and not the crossing itself".
-- **One call against three, with a three-sample control** (arXiv 2610.27488, October 2026): on 300 synthetic credit memos checked against six requirements, with four models, a three-call team caught more defects but "raises more false alarms on all four", used 2.2 to 2.4 times the tokens, and "Balanced accuracy, an exploratory measure, changes by 0.02 or less" (balanced accuracy weighs missed defects and false alarms equally). In an exploratory comparison on the two Claude models, sampling the single agent three times and flagging on any draw gave higher balanced accuracy than the team.
-
-Our reading: decomposition pays when one context would be overloaded (long, stateful tasks, information beyond one window); on tasks that fit in one context, a single agent with more samples is a strong baseline. Always compare at equal cost.
-
-## 7. Deciding `[INDUSTRY PATTERN]` (our reasoning)
+## 4. Deciding `[INDUSTRY PATTERN]` (our reasoning)
 
 Add a second agent only if you can name one of these reasons and measure it:
 
@@ -98,6 +81,40 @@ Add a second agent only if you can name one of these reasons and measure it:
 4. **Ownership:** different teams own different specialists and deploy them separately (agent-to-agent protocols in [P21](P21-agent-frameworks-and-protocols-2026.md)).
 
 Then pick the topology: a supervisor if one answer must come out and you need control; handoffs if the user talks to one specialist at a time; a pipeline or fan-out if the steps are known (that is a workflow, [P19](P19-llm-workflow-patterns.md)). For every agent boundary, write down what context crosses it, in what format, and who checks the result.
+
+## 5. The evidence: when do several agents beat one?
+
+In short: several agents in parallel did better when the work split into independent parts, at a much higher token cost. When the parts had to agree on shared decisions, or when the single agent was given the same budget, the advantage mostly went away, except on one long task that overflowed a single context. The rest of this section gives the sources, for readers who want the detail.
+
+### 5a. Anthropic's research system `[CONFIRMED]` (Anthropic, June 2025)
+
+Anthropic's Research feature uses a lead agent that plans and starts subagents in parallel, each searching with its own tools and context, and a final step that attributes citations. Published results, on its own internal research eval, with Claude Opus 4 as lead and Claude Sonnet 4 as subagents:
+
+- The system "outperformed single-agent Claude Opus 4 by 90.2% on our internal research eval".
+- On BrowseComp (a benchmark of hard web-research questions), "three factors explained 95% of the performance variance", and "token usage by itself explains 80% of the variance". Part of the gain is simply spending more tokens in parallel.
+- Cost: "agents typically use about 4× more tokens than chat interactions and multi-agent systems use about 15× more tokens than chats". Against a single agent, that is roughly 3.75 times the tokens, the comparison that matters when you decide.
+- Limits: the post says multi-agent fits poorly in "some domains that require all agents to share the same context", or with many dependencies between agents, and that "most coding tasks involve fewer truly parallelizable tasks than research".
+- A production constraint: "our lead agents execute subagents synchronously, waiting for each set of subagents to complete", so the slowest subagent sets the latency.
+
+The coordination failures that appear when agents act as peers (and the MAST failure taxonomy) are summarised in [25 AI agent platform, section 4d](../systems/25-ai-agent-platform.md).
+
+### 5b. The case against `[CONFIRMED]` (Cognition, June 2025)
+
+Cognition, which builds a coding agent, argued two principles: "Share context, and share full agent traces, not just individual messages", and "Actions carry implicit decisions, and conflicting decisions carry bad results". Its example: two subagents building parts of a game made incompatible style choices, because "The actions subagent 1 took and the actions subagent 2 took were based on conflicting assumptions not prescribed upfront." Its recommendation: "The simplest way to follow the principles is to just use a single-threaded linear agent", and compress history when the context overflows. The post is an argument from experience, not a measurement.
+
+The two posts agree more than their titles suggest (our reading): parallel agents work when the parts are independent (separate searches), and have mostly failed so far when they must agree on decisions nobody wrote down (shared code, a shared style).
+
+**A 2026 measurement of the same split** `[CONFIRMED]` (Anthropic Frontier Red Team, August 2026): on independent work, a coordinating swarm searching open-source projects for vulnerabilities found 266 in a 27-million-token run, against 21 in 6.5 million tokens for independent agents with fixed assignments. Restricted to the code both searched, the two methods "seem comparable in terms of tokens per vulnerability found", so the swarm's gain came mostly from covering more ground; the post adds that "the two methods are largely complementary there were only 12 vulnerabilities in common". On shared code, swarms building one game for 12 hours struggled to merge their work. Two newer models merged most of it "only by hardly working together at all", each agent keeping to its own files, and "it was only our most recent model sonnet 5 that worked on shared resources" while still merging at a high rate. So the failure on shared work is real but shrinking with newer models. All experiments used Claude models in test environments the authors built. More findings (conformity, trust, conflicting goals) are in [25, section 4d](../systems/25-ai-agent-platform.md).
+
+### 5c. 2026 studies at equal cost `[CONFIRMED]` as the papers' own results; preprints, not peer reviewed
+
+Many multi-agent wins compare a team against one agent that got less compute. Three 2026 arXiv preprints control for that, with different methods:
+
+- **Equal budget for prompt optimisation** (arXiv 2609.04217, June 2026): the study tunes the prompts of a planner, executor and critic team and of a single agent under the same number of model calls, on one frozen 7B model (a small open model whose weights are not changed), on ALFWorld and WebShop (benchmarks of household and shopping tasks in a simulated environment). Evaluating the tuned team still costs more calls. The team reached "0.769 versus 0.754, p = 0.80, despite using 1.8 times more evaluation calls", and the planner and critic prompts evolved to near-empty. The authors' conclusion: "Under equal inference cost, multi-agent structure adds cost without clear benefit."
+- **Equal thinking budget per step** (arXiv 2610.06069, October 2026): on a long ledger-reconciliation task, the authors' model (accuracy falls as one context grows, and each handoff loses a little) predicted decomposition would win at depths of 20 to 100 steps, and "The decomposed system won at every depth, as predicted." The authors note "the runs test the winner past the crossover and not the crossing itself".
+- **One call against three, with a three-sample control** (arXiv 2610.27488, October 2026): on 300 synthetic credit memos checked against six requirements, with four models, a three-call team caught more defects but "raises more false alarms on all four", used 2.2 to 2.4 times the tokens, and "Balanced accuracy, an exploratory measure, changes by 0.02 or less" (balanced accuracy weighs missed defects and false alarms equally). In an exploratory comparison on the two Claude models, sampling the single agent three times and flagging on any draw gave higher balanced accuracy than the team.
+
+Our reading: decomposition pays when one context would be overloaded (long, stateful tasks, information beyond one window); on tasks that fit in one context, a single agent with more samples is a strong baseline. Always compare at equal cost.
 
 ---
 

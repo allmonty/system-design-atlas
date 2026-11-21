@@ -84,6 +84,20 @@
     "status": "confirmed"
   },
   {
+    "quote": "Multi-agent patterns are particularly valuable when a single agent has too many",
+    "url": "https://docs.langchain.com/oss/python/langchain/multi-agent",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "not every complex task requires this approach",
+    "url": "https://docs.langchain.com/oss/python/langchain/multi-agent",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
     "quote": "outperformed single-agent Claude Opus 4 by 90.2% on our internal research eval",
     "url": "https://www.anthropic.com/research/multi-agent-research-system",
     "via": "direct",
@@ -226,20 +240,6 @@
   {
     "quote": "Balanced accuracy, an exploratory measure, changes by 0.02 or less",
     "url": "https://arxiv.org/abs/2610.27488",
-    "via": "direct",
-    "sourceClass": "primary",
-    "status": "confirmed"
-  },
-  {
-    "quote": "Multi-agent patterns are particularly valuable when a single agent has too many",
-    "url": "https://docs.langchain.com/oss/python/langchain/multi-agent",
-    "via": "direct",
-    "sourceClass": "primary",
-    "status": "confirmed"
-  },
-  {
-    "quote": "not every complex task requires this approach",
-    "url": "https://docs.langchain.com/oss/python/langchain/multi-agent",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
