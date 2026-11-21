@@ -141,6 +141,38 @@ Release changes to prompts, tools, models and harness code like code: an offline
 4. Set budgets for a customer-facing research agent: per run, per user per day, per tenant per month. What happens at each limit?
 5. A prompt change passed the offline evals and broke 2% of production runs that were already in progress. What in your release process should have caught it?
 
+**Answer outlines** (our reasoning, not sourced claims; try the questions first):
+
+<details><summary>Q1, the state store</summary>
+
+Each checkpoint holds the run id, versions of prompt, model and tools, the plan or step, tool calls with idempotency keys and results, and the pending approval if any. A resumed tool call is safe when it carries the same idempotency key, so the tool returns the recorded result instead of acting twice. The approval wait is a paused workflow resumed by an event (section 3).
+
+</details>
+
+<details><summary>Q2, the email assistant</summary>
+
+Incoming mail is untrusted input [A], documents are private data [B], sending mail is external communication [C]: all three. Drop one: require approval for every outgoing mail, or split into a reader that summarises without send rights and a sender that only acts on what the user confirms, with the summary treated as untrusted. The user loses fully automatic replies (section 5).
+
+</details>
+
+<details><summary>Q3, quality falls after 80 tool calls</summary>
+
+Context rot (test by replaying with compaction or a fresh context at step 60), compaction dropping key facts (inspect the summaries), or a step loop with no progress signal (look for repeated tool calls in traces). Each hypothesis gets an eval on long tasks before and after the fix (sections 1, 2 and 8).
+
+</details>
+
+<details><summary>Q4, budgets</summary>
+
+Per run: a step and token cap, then stop with a partial answer. Per user per day: a quota, then a clear message or a cheaper mode. Per tenant per month: a contract limit with alerts at thresholds and a hard stop or overage approval. All are enforced in code before each model call (section 6).
+
+</details>
+
+<details><summary>Q5, runs broken mid-flight</summary>
+
+Offline evals test new runs, not runs that started on the old version. Pin each run to its prompt, model and tool versions, keep old versions serving in-flight runs (rainbow deploys), and canary the change on new runs only (sections 3 and 7).
+
+</details>
+
 **Related:** [25 AI agent platform](../systems/25-ai-agent-platform.md), [P18 Evaluating LLM and agent systems](P18-evaluating-llm-and-agent-systems.md), [P06 Security for architects](P06-security-threat-modeling.md), [P03 Distributed transactions](P03-distributed-transactions.md), [P07 SLOs and incidents](P07-slos-and-incidents.md), [P08 Cost as a design input](P08-cost-as-a-design-input.md), [P17 Privacy by design](P17-privacy-by-design.md), [P21 Frameworks and protocols](P21-agent-frameworks-and-protocols-2026.md).
 
 ## Sources and provenance

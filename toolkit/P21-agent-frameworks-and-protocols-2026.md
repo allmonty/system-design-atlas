@@ -107,6 +107,38 @@ The GenAI semantic conventions moved out of the main OpenTelemetry semantic conv
 4. A framework you depend on is archived tomorrow. Which parts of your system should not have to change?
 5. Why might you adopt OpenTelemetry GenAI attribute names while they are still in Development status?
 
+**Answer outlines** (our reasoning, not sourced claims; try the questions first):
+
+<details><summary>Q1, session state on an MCP server</summary>
+
+The start-up handshake and session id are gone, so per-session state on the server has nowhere to live. Return explicit handles (an id the client passes back as a tool argument) and keep the state they point to in a shared store, so any replica can serve any request behind a plain load balancer. Make tools idempotent, because clients reissue calls whose stream broke (section 2).
+
+</details>
+
+<details><summary>Q2, A2A or a sub-agent as a tool</summary>
+
+A2A: the other agent belongs to another team or company, is deployed and versioned separately, and you only see its tasks and messages. Sub-agent as a tool: the same codebase and deploy, where a function call is simpler, cheaper and easier to trace (section 2).
+
+</details>
+
+<details><summary>Q3, 40-minute runs with day-long waits</summary>
+
+You need checkpointed state, resume after a crash, a pause that waits for an approval event and versioned runs. A graph runtime with checkpoints gives you that, or you can run the agent loop as steps of a durable workflow engine you already operate (sections 3 and 6, and P22 section 3).
+
+</details>
+
+<details><summary>Q4, an archived framework</summary>
+
+Prompts, tool definitions (ideally as MCP servers), eval suites, traces and stored run data should not change; only the orchestration code should. That is the exit-cost rule in section 6.
+
+</details>
+
+<details><summary>Q5, Development-status conventions</summary>
+
+Shared names let your traces work in other tools now, and renaming attributes later is cheaper than mapping a home-made scheme. Pin the convention version and expect renames (section 5).
+
+</details>
+
 **Related:** [25 AI agent platform](../systems/25-ai-agent-platform.md), [P19 Workflow patterns](P19-llm-workflow-patterns.md), [P20 Agent and multi-agent architectures](P20-agent-and-multi-agent-architectures.md), [P22 LLM products in production](P22-llm-products-in-production.md), [P09 Decisions and design docs](P09-decisions-and-design-docs.md) (boring technology), [P10 Changing systems safely](P10-changing-systems-safely.md).
 
 ## Sources and provenance

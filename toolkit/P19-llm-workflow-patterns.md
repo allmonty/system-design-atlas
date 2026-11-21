@@ -119,6 +119,38 @@ Patterns combine: a router can send hard cases to an orchestrator whose workers 
 4. Design an evaluator-optimizer loop for SQL generation. What is the evaluator, what is the cap, and what happens at the cap?
 5. Where does orchestrator-workers stop being a workflow and start being a multi-agent system? What changes in cost and testing?
 
+**Answer outlines** (our reasoning, not sourced claims; try the questions first):
+
+<details><summary>Q1, support tickets</summary>
+
+One call per ticket with structured output (summary, priority from a fixed list) is the first rung. Move up only if an eval shows a need: a router if ticket types need different instructions, a chain if you must extract fields first, an agent only if the summary needs lookups whose order you cannot predict (section 2).
+
+</details>
+
+<details><summary>Q2, the 3% misroute</summary>
+
+Find it by logging every route with its input and sampling routes for grading, plus an eval set of labelled refund requests. Fix the classifier prompt or examples, add an unsure class that goes to a general path, or route by a structured field when one exists (section 4).
+
+</details>
+
+<details><summary>Q3, three parallel reviewers</summary>
+
+For a safety check, any flag wins: one credible injection finding blocks or escalates to a person, because a missed vulnerability costs far more than a false alarm. Style is a matter of taste, where a majority is fine. The three reviewers also share a model, so two safe votes are weaker evidence than they look (section 5).
+
+</details>
+
+<details><summary>Q4, SQL evaluator-optimizer</summary>
+
+The evaluator is code first: parse the query, run it against a sandboxed copy or EXPLAIN it, check the result shape and a test case. A model judge only checks intent. Cap at two or three rounds; at the cap return the best attempt marked unverified, or ask a person, never loop on (section 7).
+
+</details>
+
+<details><summary>Q5, where workflows end</summary>
+
+It becomes multi-agent when workers run their own tool loops and decide their own steps. Cost grows with tokens per worker, and testing moves from checking each fixed step to evaluating whole runs over several trials (sections 6 and 8, then P20).
+
+</details>
+
 **Related:** [P20 Agent and multi-agent architectures](P20-agent-and-multi-agent-architectures.md), [25 AI agent platform](../systems/25-ai-agent-platform.md), [23 RAG knowledge assistant](../systems/23-rag-knowledge-assistant.md), [P18 Evaluating LLM and agent systems](P18-evaluating-llm-and-agent-systems.md), [P03 Distributed transactions](P03-distributed-transactions.md), [P08 Cost as a design input](P08-cost-as-a-design-input.md).
 
 ## Sources and provenance

@@ -123,8 +123,40 @@ Our reading: decomposition pays when one context would be overloaded (long, stat
 1. A bank wants a chat assistant covering cards, loans and fraud. Supervisor or handoffs? What does the user experience look like in each when the question spans two domains?
 2. Your supervisor calls five research subagents in parallel and the p95 latency is 90 seconds. Where does the time go and what are your options?
 3. A colleague shows a multi-agent prototype that scores 15 points higher than the single agent. What do you ask before believing it?
-4. Map a handoff-based support system to choreography. Which classic failure (lost message, loop, no owner) shows up, and how do you detect it?
+4. In a handoff-based support system, which classic failure of call transfers and routing slips (lost context, loops, no owner) shows up, and how do you detect it?
 5. Two coding subagents edit different files of the same feature and the result does not compile. Which of Cognition's principles was broken, and how would you redesign?
+
+**Answer outlines** (our reasoning, not sourced claims; try the questions first):
+
+<details><summary>Q1, the bank assistant</summary>
+
+Handoffs suit one domain at a time: the user talks to the cards specialist, then is transferred to loans, and context must cross each handoff. A supervisor suits questions that span domains: it asks both specialists as tools and writes one answer, at the cost of an extra layer of latency. Fraud, which holds sensitive data, may deserve its own boundary (sections 2 and 4).
+
+</details>
+
+<details><summary>Q2, 90 seconds at p95</summary>
+
+Subagents run synchronously, so each round waits for the slowest one, and the lead then reads all results. Options: cap and time out subagents, return partial results, stream progress to the user, give subagents tighter briefs and smaller outputs, or run fewer rounds (section 5a).
+
+</details>
+
+<details><summary>Q3, the 15-point gain</summary>
+
+Was it compared at equal cost (tokens, calls, samples)? On how many tasks and trials, with what variance? Does a single agent sampled several times close the gap? Does the task really split into independent parts? (section 5c and P18)
+
+</details>
+
+<details><summary>Q4, handoff failures</summary>
+
+A handoff is a call transfer with one owner at a time, so the classic failures are a loop (agents passing the request back and forth) and a lost context (the receiver lacks what the sender knew). Detect them with a handoff counter and cap per run, and traces that show each transfer and what crossed it (sections 2 and 3).
+
+</details>
+
+<details><summary>Q5, code that does not compile</summary>
+
+Actions carry implicit decisions: each subagent made design choices (interfaces, names) the other never saw. Redesign with one agent for tightly coupled code, or have the lead write the shared interface first and give it to both, then run the build as a check (section 5b).
+
+</details>
 
 **Related:** [P19 Workflow patterns](P19-llm-workflow-patterns.md), [25 AI agent platform](../systems/25-ai-agent-platform.md), [P03 Distributed transactions](P03-distributed-transactions.md), [P18 Evaluating LLM and agent systems](P18-evaluating-llm-and-agent-systems.md), [P21 Frameworks and protocols](P21-agent-frameworks-and-protocols-2026.md), [P22 LLM products in production](P22-llm-products-in-production.md).
 
