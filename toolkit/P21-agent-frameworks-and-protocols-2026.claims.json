@@ -1,5 +1,12 @@
 [
   {
+    "quote": "Much of the tooling landscape described in this post has changed since December 2024",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
     "quote": "the current protocol version, which is ready for use and may continue to receive backwards compatible changes.",
     "url": "https://modelcontextprotocol.io/specification/versioning",
     "via": "direct",

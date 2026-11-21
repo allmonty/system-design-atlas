@@ -6,7 +6,7 @@
 
 - An **agent** is a model calling tools in a loop until it decides it is done or hits a limit. A **multi-agent system** is several such loops, each with its own instructions, tools and context, connected by a topology.
 - Four topologies cover most designs: **supervisor** (one agent calls others as tools and owns the answer), **handoff** (control moves to a specialist, which then talks to the user), **pipeline** (agents in a fixed order) and **group chat** (agents share one conversation and a manager picks who speaks). Section 2 adds two variants: fan-out (agents in parallel) and a supervisor that keeps a written plan.
-- In microservice terms, a supervisor is **orchestration** and handoffs are closer to **choreography**: easier to extend, harder to see and stop. See [P03](P03-distributed-transactions.md) for the same trade-off in sagas.
+- In microservice terms, a supervisor is **orchestration**. A handoff is like a call transfer or a routing slip: one owner at a time, passed along by the current owner, with no central view of the flow, which it shares with **choreography**: easier to extend, harder to see and stop. See [P03](P03-distributed-transactions.md) for the same trade-off in sagas.
 - Several agents help most when the work splits into **independent parts that do not fit one context window**. Anthropic's research system beat a single agent by 90.2% on its internal eval, and used about 15 times the tokens of a chat. When parts depend on each other the advantage shrinks. At equal cost it disappeared in two 2026 studies of tasks that fit one context, and held in a third on a long task that carries state from step to step.
 - Default to one agent with good tools. Add agents for a measured reason: context isolation, parallelism, a security boundary or separate teams.
 
@@ -50,7 +50,7 @@ The frameworks name the same few shapes in different words.
 | Agent topology | Microservice analogue | What carries over |
 |---|---|---|
 | Supervisor | Orchestration (an orchestrated saga, a workflow engine) | One place to see the plan, set budgets and stop; a bottleneck and single point of failure |
-| Handoff | Choreography (services react to events) | Easy to add a specialist; hard to see the whole flow; loops and lost requests are the typical bugs |
+| Handoff | A call transfer or routing slip; shares choreography's lack of a central view | Easy to add a specialist; hard to see the whole flow; loops and lost requests are the typical bugs |
 | Pipeline | ETL or a stream-processing DAG | Predictable; errors flow downstream unless you gate them |
 | Fan-out | Scatter-gather | Latency of the slowest branch; needs a merge rule |
 | Group chat | A shared blackboard or a meeting | Flexible; hard to bound, so cap turns and participants |

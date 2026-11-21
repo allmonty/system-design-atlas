@@ -47,7 +47,7 @@ Anthropic's advice matches: find "the simplest solution possible, and only incre
 
 **What it is** `[CONFIRMED]` (Anthropic): classify the input, then send it to a specialised prompt, tool set or model. "Routing works well for complex tasks where there are distinct categories that are better handled separately", provided the classification is accurate, by an LLM or by a traditional classifier. The post's examples: send customer-service queries to general, refund or technical flows; send easy questions to a smaller, cheaper model and hard ones to a larger one.
 
-**Classic analogue** (our reasoning): an API gateway or load balancer that routes by path or header ([P04 Load balancing](P04-load-balancing.md)), except the routing key is inferred from text.
+**Classic analogue** (our reasoning): an API gateway or layer-7 router that sends requests by path or header ([P04 Load balancing](P04-load-balancing.md), content-based routing), except the routing key is inferred from text.
 
 **Fits:** support triage, model tiering for cost control ([P08](P08-cost-as-a-design-input.md)), sending sensitive requests to a stricter path.
 
@@ -60,7 +60,7 @@ Anthropic's advice matches: find "the simplest solution possible, and only incre
 
 **What it is** `[CONFIRMED]` (Anthropic): two variants. **Sectioning** means "Breaking a task into independent subtasks run in parallel." **Voting** means "Running the same task multiple times to get diverse outputs." Examples in the post: one call answers the user while another screens the input for inappropriate content; several prompts review the same code for vulnerabilities. Microsoft's **concurrent** pattern is the multi-agent version: "Agents operate independently and don't hand off results to each other."
 
-**Classic analogue** (our reasoning): scatter-gather or map-reduce; voting is like reading from several replicas and taking a quorum ([03 Distributed key-value store](../systems/03-distributed-kv-store.md)).
+**Classic analogue** (our reasoning): scatter-gather or map-reduce for sectioning. Voting is closer to N-version programming (several implementations of one function, a vote on the result) than to a quorum read: replicas hold the same value, while model answers can be wrong in correlated ways. Several samples from the same model are not independent opinions, as note [25](../systems/25-ai-agent-platform.md) shows for agents that pick the same branch name.
 
 **Fits:** lower latency on independent subtasks, guardrails that run beside the main call, higher confidence through several reviews.
 
