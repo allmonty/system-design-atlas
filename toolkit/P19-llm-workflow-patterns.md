@@ -1,6 +1,6 @@
 # P19 — Workflow patterns for LLM features
 
-*A primer on the building blocks of products that call a large language model: the complexity ladder from one call to an agent, the five workflow patterns in Anthropic's "Building effective agents" (December 2024, the essay that named them, so foundational rather than recent) and the matching patterns in Microsoft's Azure Architecture Center guide (February 2026, updated September 2026). Each pattern gets the classic system-design idea it resembles, the use cases it fits and the ways it fails. Multi-agent designs are in P20, frameworks in P21, production lessons in P22. Statements from the sources are tagged; the analogies and advice are our reasoning and are labelled.*
+*A primer on the building blocks of products that call a large language model: the complexity ladder from one call to an agent, the five workflow patterns in Anthropic's "Building effective agents" (December 2024, the essay that named them, so foundational rather than recent) and the matching patterns in Microsoft's Azure Architecture Center guide (February 2026, updated September 2026). Each pattern gets the classic system-design idea it resembles, the use cases it fits and the ways it fails. Multi-agent designs are in [P20](P20-agent-and-multi-agent-architectures.md), frameworks in [P21](P21-agent-frameworks-and-protocols-2026.md), production lessons in [P22](P22-llm-products-in-production.md). Statements from the sources are tagged; the analogies and advice are our reasoning and are labelled.*
 
 ## At a glance
 
@@ -27,11 +27,11 @@
 | One model call (with a good prompt, maybe retrieval) | The task is one transformation: summarise, classify, extract, draft. "If prompt engineering can solve the problem, you don't need an agent." | Nothing extra |
 | Fixed workflow (sections 3 to 7) | The steps are known in advance | Code to write and test, but each step is simple |
 | One agent with tools | The steps depend on what the model finds. The guide calls this "Often the right default for enterprise use cases." | Unpredictable step count; needs limits: "To guard against infinite tool-call loops, set iteration limits." |
-| Several agents (P20) | Separate domains, separate security boundaries, or work that runs in parallel | The guide's warning: it "Adds coordination overhead, latency, and failure modes." |
+| Several agents ([P20](P20-agent-and-multi-agent-architectures.md)) | Separate domains, separate security boundaries, or work that runs in parallel | The guide's warning: it "Adds coordination overhead, latency, and failure modes." |
 
 Anthropic's advice matches: find "the simplest solution possible, and only increasing complexity when needed", and add complexity "only when it demonstrably improves outcomes" `[CONFIRMED]`. Measuring "demonstrably" needs an evaluation suite, see [P18](P18-evaluating-llm-and-agent-systems.md).
 
-**The building block** `[CONFIRMED]` (Anthropic): every pattern below is built from what Anthropic calls the augmented LLM: "an LLM enhanced with augmentations such as retrieval, tools, and memory." The post names the Model Context Protocol as one way to connect those augmentations (see P21).
+**The building block** `[CONFIRMED]` (Anthropic): every pattern below is built from what Anthropic calls the augmented LLM: "an LLM enhanced with augmentations such as retrieval, tools, and memory." The post names the Model Context Protocol as one way to connect those augmentations (see [P21](P21-agent-frameworks-and-protocols-2026.md)).
 
 ## 3. Prompt chaining: a pipeline of calls
 
@@ -74,7 +74,7 @@ Anthropic's advice matches: find "the simplest solution possible, and only incre
 
 **Fits:** tasks of variable shape: research, multi-file edits, report assembly.
 
-**Detail and edge cases** (our reasoning): this is the bridge to agents. If workers themselves run tool loops, you have the multi-agent orchestrator of P20, with its token cost. Cap the number of workers per request, give each worker a clear task description and output format, and make the combining step check for gaps and duplicates.
+**Detail and edge cases** (our reasoning): this is the bridge to agents. If workers themselves run tool loops, you have the multi-agent orchestrator of [P20](P20-agent-and-multi-agent-architectures.md), with its token cost. Cap the number of workers per request, give each worker a clear task description and output format, and make the combining step check for gaps and duplicates.
 
 ## 7. Evaluator-optimizer: generate, check, revise
 
@@ -94,11 +94,11 @@ Anthropic's advice matches: find "the simplest solution possible, and only incre
 | has independent parts, or needs several opinions | parallelisation | merge rule, cost × N |
 | has parts you only know at run time | orchestrator-workers | worker count, gaps in the combined result |
 | has checkable quality criteria | evaluator-optimizer | iteration cap, lenient checker |
-| has steps that depend on what it finds | one agent with tools ([25](../systems/25-ai-agent-platform.md)) | loop limits, tool safety (P22) |
+| has steps that depend on what it finds | one agent with tools ([25](../systems/25-ai-agent-platform.md)) | loop limits, tool safety ([P22](P22-llm-products-in-production.md)) |
 
 Patterns combine: a router can send hard cases to an orchestrator whose workers run chains. Keep each combination justified by an eval result, not by how the diagram looks.
 
-**On frameworks** `[CONFIRMED]` (Anthropic, December 2024): the post reports that "the most successful implementations weren't using complex frameworks or specialized libraries", and suggests "developers start by using LLM APIs directly: many patterns can be implemented in a few lines of code", because frameworks "often create extra layers of abstraction that can obscure the underlying prompts and responses". The frameworks have changed a lot since then; see P21 for what they offer now, mostly durable state and tracing rather than the patterns themselves.
+**On frameworks** `[CONFIRMED]` (Anthropic, December 2024): the post reports that "the most successful implementations weren't using complex frameworks or specialized libraries", and suggests "developers start by using LLM APIs directly: many patterns can be implemented in a few lines of code", because frameworks "often create extra layers of abstraction that can obscure the underlying prompts and responses". The frameworks have changed a lot since then; see [P21](P21-agent-frameworks-and-protocols-2026.md) for what they offer now, mostly durable state and tracing rather than the patterns themselves.
 
 ---
 
@@ -110,7 +110,7 @@ Patterns combine: a router can send hard cases to an orchestrator whose workers 
 4. Design an evaluator-optimizer loop for SQL generation. What is the evaluator, what is the cap, and what happens at the cap?
 5. Where does orchestrator-workers stop being a workflow and start being a multi-agent system? What changes in cost and testing?
 
-**Related:** P20 Agent and multi-agent architectures, [25 AI agent platform](../systems/25-ai-agent-platform.md), [23 RAG knowledge assistant](../systems/23-rag-knowledge-assistant.md), [P18 Evaluating LLM and agent systems](P18-evaluating-llm-and-agent-systems.md), [P03 Distributed transactions](P03-distributed-transactions.md), [P08 Cost as a design input](P08-cost-as-a-design-input.md).
+**Related:** [P20 Agent and multi-agent architectures](P20-agent-and-multi-agent-architectures.md), [25 AI agent platform](../systems/25-ai-agent-platform.md), [23 RAG knowledge assistant](../systems/23-rag-knowledge-assistant.md), [P18 Evaluating LLM and agent systems](P18-evaluating-llm-and-agent-systems.md), [P03 Distributed transactions](P03-distributed-transactions.md), [P08 Cost as a design input](P08-cost-as-a-design-input.md).
 
 ## Sources and provenance
 

@@ -22,7 +22,7 @@
 | Framework runtime | Loops, retries, state, approvals and tracing written by hand | A workflow engine (step functions, durable execution) plus an RPC library |
 | Tracing conventions | Every tool logs agent runs differently | OpenTelemetry semantic conventions for HTTP and databases |
 
-Anthropic's 2024 advice still applies: start with the model API directly and understand the code under any framework ([P19](P19-llm-workflow-patterns.md), section 8). What frameworks add in 2026 is mostly operational: checkpointing, resuming, approvals and traces (P22).
+Anthropic's 2024 advice still applies: start with the model API directly and understand the code under any framework ([P19](P19-llm-workflow-patterns.md), section 8). What frameworks add in 2026 is mostly operational: checkpointing, resuming, approvals and traces ([P22](P22-llm-products-in-production.md)).
 
 ## 2. Protocols `[CONFIRMED]` (checked 2026-11-21)
 
@@ -31,7 +31,7 @@ Anthropic's 2024 advice still applies: start with the model API directly and und
 - **Status:** revision 2026-07-28 is marked current. The versioning page defines current as "the current protocol version, which is ready for use and may continue to receive backwards compatible changes." The previous revision was 2025-11-25; note [25](../systems/25-ai-agent-platform.md) describes 2025-06-18.
 - **Main changes in 2026-07-28** (changelog): "Make MCP stateless: remove the `initialize`/`notifications/initialized` handshake"; "Remove protocol-level sessions and the `Mcp-Session-Id` header from the Streamable HTTP transport"; servers must answer a new `server/discover` request; requests from server to client (sampling, elicitation) become multi-round-trip requests; tasks moved "out of the core protocol and into an official extension"; roots, sampling, logging and the old HTTP+SSE transport are deprecated; authorisation tightened (clients must validate the RFC 9207 `iss` parameter).
 - **Why stateless matters** (our reasoning): an MCP server can now sit behind an ordinary load balancer with no sticky sessions, like any stateless HTTP service. State the tool needs (a long task, a subscription) moves into explicit extensions.
-- **Security:** the specification's security best practices page lists confused-deputy attacks through proxy servers, **token passthrough** ("an anti-pattern where an MCP server accepts tokens from an MCP client without validating" them), SSRF, session hijacking, compromised local servers and scope minimisation. See P22.
+- **Security:** the specification's security best practices page lists confused-deputy attacks through proxy servers, **token passthrough** ("an anti-pattern where an MCP server accepts tokens from an MCP client without validating" them), SSRF, session hijacking, compromised local servers and scope minimisation. See [P22](P22-llm-products-in-production.md).
 - **Governance:** the Linux Foundation announced the Agentic AI Foundation on 9 December 2025 with "founding contributions of three leading projects": Anthropic's MCP, Block's goose and OpenAI's AGENTS.md.
 
 ### A2A, Agent2Agent
@@ -55,7 +55,7 @@ Anthropic's 2024 advice still applies: start with the model API directly and und
 **Reading the table** (our reasoning):
 - Version numbers below 1.0 (OpenAI Agents SDK, Claude Agent SDK) mean the API may still change between minor versions; pin versions and read changelogs on upgrade.
 - Several projects release more than once a week. Treat a framework as a fast-moving dependency: lock files, an upgrade test suite and the eval gate from [P18](P18-evaluating-llm-and-agent-systems.md).
-- The convergence on graphs with checkpointed state is the useful signal: it is the workflow-engine model (P22, section 3), applied to agents.
+- The convergence on graphs with checkpointed state is the useful signal: it is the workflow-engine model ([P22](P22-llm-products-in-production.md), section 3), applied to agents.
 
 ## 4. Retired or replaced `[CONFIRMED]`
 
@@ -90,7 +90,7 @@ The GenAI semantic conventions moved out of the main OpenTelemetry semantic conv
 4. A framework you depend on is archived tomorrow. Which parts of your system should not have to change?
 5. Why might you adopt OpenTelemetry GenAI attribute names while they are still in Development status?
 
-**Related:** [25 AI agent platform](../systems/25-ai-agent-platform.md), [P19 Workflow patterns](P19-llm-workflow-patterns.md), [P20 Agent and multi-agent architectures](P20-agent-and-multi-agent-architectures.md), P22 LLM products in production, [P09 Decisions and design docs](P09-decisions-and-design-docs.md) (boring technology), [P10 Changing systems safely](P10-changing-systems-safely.md).
+**Related:** [25 AI agent platform](../systems/25-ai-agent-platform.md), [P19 Workflow patterns](P19-llm-workflow-patterns.md), [P20 Agent and multi-agent architectures](P20-agent-and-multi-agent-architectures.md), [P22 LLM products in production](P22-llm-products-in-production.md), [P09 Decisions and design docs](P09-decisions-and-design-docs.md) (boring technology), [P10 Changing systems safely](P10-changing-systems-safely.md).
 
 ## Sources and provenance
 

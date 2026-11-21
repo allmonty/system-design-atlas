@@ -23,7 +23,7 @@ user goal ─► [model] ─► tool call? ──yes──► run tool (your cod
 
 The mechanics (tool definitions, the ReAct loop, sandboxes, budgets) are in [25 AI agent platform](../systems/25-ai-agent-platform.md). Two terms used below:
 
-- **Context:** everything the model sees in one call (instructions, conversation, tool results). It is limited and costly, so what each agent sees is a design decision (see P22).
+- **Context:** everything the model sees in one call (instructions, conversation, tool results). It is limited and costly, so what each agent sees is a design decision (see [P22](P22-llm-products-in-production.md)).
 - **Handoff** and **agent as tool:** the two ways one agent can involve another. As a tool, the other agent runs a subtask and returns a result; the caller keeps control. In a handoff, the other agent takes over the conversation.
 
 ## 2. Topologies `[CONFIRMED]` (framework documentation, read November 2026)
@@ -92,8 +92,8 @@ Add a second agent only if you can name one of these reasons and measure it:
 
 1. **Context isolation:** the work needs more material than fits in one context, or one agent has too many tools. LangChain's docs give the same reason ("Multi-agent patterns are particularly valuable when a single agent has too many" tools) and add that "not every complex task requires this approach" `[CONFIRMED]`.
 2. **Parallelism:** independent subtasks where latency matters more than tokens.
-3. **A security boundary:** one agent reads untrusted content, another holds credentials (P22, the Rule of Two).
-4. **Ownership:** different teams own different specialists and deploy them separately (agent-to-agent protocols in P21).
+3. **A security boundary:** one agent reads untrusted content, another holds credentials ([P22](P22-llm-products-in-production.md), the Rule of Two).
+4. **Ownership:** different teams own different specialists and deploy them separately (agent-to-agent protocols in [P21](P21-agent-frameworks-and-protocols-2026.md)).
 
 Then pick the topology: a supervisor if one answer must come out and you need control; handoffs if the user talks to one specialist at a time; a pipeline or fan-out if the steps are known (that is a workflow, [P19](P19-llm-workflow-patterns.md)). For every agent boundary, write down what context crosses it, in what format, and who checks the result.
 
@@ -107,12 +107,12 @@ Then pick the topology: a supervisor if one answer must come out and you need co
 4. Map a handoff-based support system to choreography. Which classic failure (lost message, loop, no owner) shows up, and how do you detect it?
 5. Two coding subagents edit different files of the same feature and the result does not compile. Which of Cognition's principles was broken, and how would you redesign?
 
-**Related:** [P19 Workflow patterns](P19-llm-workflow-patterns.md), [25 AI agent platform](../systems/25-ai-agent-platform.md), [P03 Distributed transactions](P03-distributed-transactions.md), [P18 Evaluating LLM and agent systems](P18-evaluating-llm-and-agent-systems.md), P21 Frameworks and protocols, P22 LLM products in production.
+**Related:** [P19 Workflow patterns](P19-llm-workflow-patterns.md), [25 AI agent platform](../systems/25-ai-agent-platform.md), [P03 Distributed transactions](P03-distributed-transactions.md), [P18 Evaluating LLM and agent systems](P18-evaluating-llm-and-agent-systems.md), [P21 Frameworks and protocols](P21-agent-frameworks-and-protocols-2026.md), [P22 LLM products in production](P22-llm-products-in-production.md).
 
 ## Sources and provenance
 
 > **Sources read on 2026-11-21:** OpenAI Agents SDK documentation, [*Agent orchestration*](https://openai.github.io/openai-agents-python/multi_agent/) and [*Handoffs*](https://openai.github.io/openai-agents-python/handoffs/) (openai-agents 0.25.0, released 18 November 2026) · LangChain documentation, [*Multi-agent*](https://docs.langchain.com/oss/python/langchain/multi-agent) · Google, [*Welcome to ADK 2.0*](https://adk.dev/2.0/) and [*Multi-agent patterns*](https://adk.dev/workflows/patterns/) (ADK Python 2.0 GA 19 May 2026; the patterns page read partly through a summary) · Microsoft, Azure Architecture Center, [*AI agent orchestration patterns*](https://learn.microsoft.com/azure/architecture/ai-ml/guide/ai-agent-design-patterns) (12 February 2026, updated 21 September 2026) · Hadfield et al., Anthropic, [*How we built our multi-agent research system*](https://www.anthropic.com/engineering/multi-agent-research-system) (13 June 2025; foundational) · Yan, Cognition, [*Don't Build Multi-Agents*](https://cognition.com/blog/dont-build-multi-agents) (12 June 2025; foundational counterpoint) · Dylan et al., [*At Equal Inference Cost, Multi-Agent Structure Does Not Beat a Single Frozen Agent*](https://arxiv.org/abs/2609.04217) (arXiv, v1 dated 25 June 2026) · Anchan and Sen, [*Attention Tax, Handoff Tax*](https://arxiv.org/abs/2610.06069) (arXiv, 5 October 2026; [HTML v1](https://arxiv.org/html/2610.06069v1)) · Liu, [*The More the Better? A Comparison of Single- and Multi-Agent LLM Setups on a Financial Review Task*](https://arxiv.org/abs/2610.27488) (arXiv, 20 October 2026).
-> **Dated material:** the Anthropic figures were measured with Claude Opus 4 and Sonnet 4 in 2025 on Anthropic's own eval and on BrowseComp. The preprints used a frozen 7B model on ALFWorld and WebShop (2609.04217), gpt-oss-20b (2610.06069) and Qwen3.5 9B and 27B, Haiku 5.5 and Sonnet 5.5 (2610.27488). None has been peer reviewed as far as we know. Framework names and classes change often; check P21.
+> **Dated material:** the Anthropic figures were measured with Claude Opus 4 and Sonnet 4 in 2025 on Anthropic's own eval and on BrowseComp. The preprints used a frozen 7B model on ALFWorld and WebShop (2609.04217), gpt-oss-20b (2610.06069) and Qwen3.5 9B and 27B, Haiku 5.5 and Sonnet 5.5 (2610.27488). None has been peer reviewed as far as we know. Framework names and classes change often; check [P21](P21-agent-frameworks-and-protocols-2026.md).
 > **Not read:** the full text of the three preprints (each was read in its abstract and about the first 40,000 characters of its HTML version; later sections only through a summary); ADK's graph and collaboration pages beyond the collaboration modes; the Cognition follow-up posts, if any.
 > **Tags:** `[CONFIRMED]` stated by a primary source · `[INDUSTRY PATTERN]` standard practice · `[SPECULATIVE]` plausible or illustrative. Anything not tagged `[CONFIRMED]` is our reasoning.
 
