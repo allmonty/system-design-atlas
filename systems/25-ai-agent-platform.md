@@ -95,6 +95,8 @@ ReAct has the model generate "reasoning traces and task-specific actions in an i
 
 ## 4. Tools as a protocol: MCP `[CONFIRMED]` (specification version 2025-06-18)
 
+> **Newer revision.** This section describes MCP as of revision 2025-06-18. Revision 2026-07-28 removed the session and the start-up handshake described below, so servers no longer keep per-session state; see [P21 Agent frameworks and protocols](../toolkit/P21-agent-frameworks-and-protocols-2026.md), section 2.
+
 **Architecture.** MCP "follows a client-host-server architecture where each host can run multiple client instances". The **host** creates and manages clients, enforces security policy and consent, and coordinates LLM integration. Each **client** keeps one stateful session with one server. **Servers** expose resources, tools and prompts, and can be local processes or remote services. The protocol is built on JSON-RPC.
 
 **Isolation principle.** Servers "should not be able to read the whole conversation, nor 'see into' other servers": the full conversation stays with the host.
