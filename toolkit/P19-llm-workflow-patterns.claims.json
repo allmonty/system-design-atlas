@@ -98,6 +98,20 @@
     "status": "confirmed"
   },
   {
+    "quote": "Structured outputs guarantee schema-compliant responses through constrained decoding",
+    "url": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "While both ensure valid JSON is produced, only Structured Outputs ensure schema adherence.",
+    "url": "https://developers.openai.com/api/docs/guides/structured-outputs",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
     "quote": "Routing works well for complex tasks where there are distinct categories that are better handled separately",
     "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
