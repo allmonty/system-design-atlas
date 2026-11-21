@@ -49,6 +49,13 @@
     "status": "confirmed"
   },
   {
+    "quote": "designed to be model-controlled, meaning that the language model can discover and invoke tools automatically.",
+    "url": "https://modelcontextprotocol.io/specification/2026-07-28/server/tools",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
     "quote": "founding contributions of three leading projects",
     "url": "https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation",
     "via": "direct",
@@ -70,8 +77,43 @@
     "status": "confirmed"
   },
   {
+    "quote": "A simple, open format for guiding coding agents",
+    "url": "https://agents.md",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "used by over 60k open-source projects",
+    "url": "https://agents.md",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "is now stewarded by the Agentic AI Foundation under the Linux Foundation.",
+    "url": "https://agents.md",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "a lightweight, open format for extending AI agent capabilities",
+    "url": "https://agentskills.io/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
     "quote": "a low-level orchestration framework for building, managing, and deploying long-running, stateful agents",
     "url": "https://pypi.org/project/langgraph/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Run specialists inside real isolated workspaces.",
+    "url": "https://openai.github.io/openai-agents-python/",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
@@ -114,6 +156,41 @@
   {
     "quote": "Build production AI agents with Claude Code as a library",
     "url": "https://code.claude.com/docs/en/agent-sdk/overview",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Pre-built, configurable agent harness that runs in managed infrastructure",
+    "url": "https://platform.claude.com/docs/en/managed-agents/overview",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "a session (the append-only log of everything that happened), a harness (the loop that calls Claude and routes Claude's tool calls to the relevant infrastructure), and a sandbox",
+    "url": "https://www.anthropic.com/research/managed-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The harness is never made aware of any credentials.",
+    "url": "https://www.anthropic.com/research/managed-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Each session runs in an isolated microVM with filesystem and shell access",
+    "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "intercept every tool call before execution",
+    "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"
