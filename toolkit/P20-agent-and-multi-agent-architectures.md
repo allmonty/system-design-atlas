@@ -14,23 +14,42 @@
 
 ## 1. The single agent loop
 
+The loop in words: the model reads the goal and either asks for a tool or answers. If it asks for a tool, your code runs the tool and sends the result back to the model, and the loop repeats. It also stops on a step cap, a time limit, a token budget or a human approval step.
+
 ```
-user goal ─► [model] ─► tool call? ──yes──► run tool (your code) ─► result back to model ─┐
-                 ▲                                                                       │
-                 └───────────────────────────────────────────────────────────────────────┘
-                 no ─► final answer        stop also on: step cap, time, token budget, human approval
+ user goal
+     │
+     ▼
+ ┌─► model ── no tool call ──► final answer
+ │     │
+ │     │ tool call
+ │     ▼
+ │   run the tool (your code)
+ │     │
+ └─────┘ result back to the model
+
+ also stops on: step cap, time, token budget,
+ or a human approval step
 ```
 
 One run, as the messages your code sends and receives (illustrative; real APIs wrap these in JSON). Each call resends everything above it, because the model keeps no memory between calls ([P19](P19-llm-workflow-patterns.md), section 1):
 
 ```
-call 1  → system: "You are a support agent. Tools: get_order(id), refund(id, amount)."
-          user:   "Order 812 arrived broken, I want my money back."
-        ← model:  tool call get_order(id=812)
-call 2  → (everything above) + tool result: {"id": 812, "total": 40.00, "status": "delivered"}
-        ← model:  tool call refund(id=812, amount=40.00)      ← a risky action: approval step here
-call 3  → (everything above) + tool result: {"refund": "ok"}
-        ← model:  "Done: 40.00 refunded to your card."      ← no tool call, so the loop ends
+call 1 → system: You are a support agent.
+                 Tools: get_order(id), refund(id, amount)
+         user:   Order 812 arrived broken, I want
+                 my money back.
+       ← model:  get_order(id=812)
+
+call 2 → (everything above)
+         + result: {id: 812, total: 40.00,
+                    status: delivered}
+       ← model:  refund(id=812, amount=40.00)
+                 (a risky action: approval step here)
+
+call 3 → (everything above) + result: {refund: ok}
+       ← model:  Done: 40.00 refunded to your card.
+                 (no tool call, so the loop ends)
 ```
 
 The mechanics (tool definitions, the ReAct loop of reasoning then acting, sandboxes, budgets) are in [25 AI agent platform](../systems/25-ai-agent-platform.md). Terms used below:
