@@ -43,6 +43,7 @@ Short sourced explainers for topics that recur across the atlas. Each ends with 
 | P20 | [Agent and multi-agent architectures](P20-agent-and-multi-agent-architectures.md) | OpenAI Agents SDK, LangChain and Google ADK docs, Anthropic, Cognition, three 2026 preprints |
 | P21 | [Agent frameworks and protocols, status November 2026](P21-agent-frameworks-and-protocols-2026.md) | MCP and A2A specifications, framework docs, changelogs and package indexes |
 | P22 | [LLM products in production](P22-llm-products-in-production.md) | Anthropic engineering posts, OWASP, Meta's Rule of Two, MCP security best practices, OpenTelemetry |
+| P23 | [Reinforcement learning in production systems](P23-reinforcement-learning-in-production.md) | Papers and posts from Microsoft, YouTube, DeepMind, DeepSeek, Sony AI and EA; Dulac-Arnold et al. on real-world RL |
 
 ## Workbook: practice with feedback (`W`)
 
