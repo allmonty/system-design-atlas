@@ -1,0 +1,296 @@
+[
+  {
+    "quote": "the smallest possible set of high-signal tokens that maximize the likelihood of some desired outcome",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "refers to the set of strategies for curating and maintaining the optimal set of tokens (information) during LLM inference",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Context, therefore, must be treated as a finite resource with diminishing marginal returns.",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Every new token introduced depletes this budget by some amount",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Compaction is the practice of taking a conversation nearing the context window limit, summarizing its contents",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "the agent regularly writes notes persisted to memory outside of the context window",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "returns only a condensed, distilled summary of its work",
+    "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The memory tool operates client-side: Claude requests file operations, and your application runs them.",
+    "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Memory lives entirely in your application.",
+    "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Long-term memory in LangGraph allows systems to retain information across different conversations or sessions",
+    "url": "https://docs.langchain.com/oss/python/langgraph/memory",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "a later agent instance would look around, see that progress had been made, and declare the job done.",
+    "url": "https://www.anthropic.com/research/effective-harnesses-for-long-running-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "the model is less likely to inappropriately change or overwrite JSON files",
+    "url": "https://www.anthropic.com/research/effective-harnesses-for-long-running-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "models tend to lose coherence on lengthy tasks as the context window fills",
+    "url": "https://www.anthropic.com/research/harness-design-long-running-apps",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "they begin wrapping up work prematurely as they approach what they believe is their context limit",
+    "url": "https://www.anthropic.com/research/harness-design-long-running-apps",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "about 4 hours and $124 in token costs",
+    "url": "https://www.anthropic.com/research/harness-design-long-running-apps",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Agents are stateful and errors compound.",
+    "url": "https://www.anthropic.com/research/multi-agent-research-system",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Instead, we built systems that can resume from where the agent was when the errors occurred.",
+    "url": "https://www.anthropic.com/research/multi-agent-research-system",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "to avoid disrupting running agents, by gradually shifting traffic from old to new versions",
+    "url": "https://www.anthropic.com/research/multi-agent-research-system",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Checkpoint state and resume after failures or pauses.",
+    "url": "https://docs.langchain.com/oss/python/langgraph/overview",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Pause execution, inspect or edit state, then continue.",
+    "url": "https://docs.langchain.com/oss/python/langgraph/overview",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "plan to invest just as much effort in creating good agent-computer interfaces",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Poka-yoke your tools. Change the arguments so that it is harder to make mistakes.",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Namespacing tools to define clear boundaries in functionality",
+    "url": "https://www.anthropic.com/research/writing-tools-for-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Optimizing tool responses for token efficiency",
+    "url": "https://www.anthropic.com/research/writing-tools-for-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "A Prompt Injection Vulnerability occurs when user prompts alter the LLM's behavior or output in unintended ways.",
+    "url": "https://genai.owasp.org/llmrisk/llm01-prompt-injection/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Access to your private data",
+    "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Exposure to untrusted content",
+    "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The ability to externally communicate in a way that could be used to steal your data",
+    "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "An agent can process untrustworthy inputs",
+    "url": "https://ai.meta.com/blog/practical-ai-agent-security/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "An agent can have access to sensitive systems or private data",
+    "url": "https://ai.meta.com/blog/practical-ai-agent-security/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "An agent can change state or communicate externally",
+    "url": "https://ai.meta.com/blog/practical-ai-agent-security/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "must satisfy no more than two of the following three properties within a session",
+    "url": "https://ai.meta.com/blog/practical-ai-agent-security/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "at a minimum requires supervision",
+    "url": "https://ai.meta.com/blog/practical-ai-agent-security/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "MUST NOT accept any tokens that were not explicitly",
+    "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/security_best_practices",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "once an LLM agent has ingested untrusted input",
+    "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "must be constrained so that it is impossible for that input to trigger any consequential actions",
+    "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The Privileged LLM only ever sees those variable names.",
+    "url": "https://simonwillison.net/2023/Apr/25/dual-llm-pattern/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "To guard against infinite tool-call loops, set iteration limits",
+    "url": "https://learn.microsoft.com/azure/architecture/ai-ml/guide/ai-agent-design-patterns",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Prompt caching covers the full prefix",
+    "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "By default, the cache has a 5-minute lifetime.",
+    "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Modifying tool definitions (names, descriptions, parameters) invalidates the entire cache",
+    "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Prompt caching is enabled by default for supported OpenAI models.",
+    "url": "https://developers.openai.com/api/docs/guides/prompt-caching",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  }
+]

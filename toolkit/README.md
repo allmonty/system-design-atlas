@@ -39,6 +39,10 @@ Short sourced explainers for topics that recur across the atlas. Each ends with 
 | P16 | [Consistency claims done right, and how caches fail](P16-consistency-and-cache-failures.md) | Brewer, Abadi, the Dynamo paper, Deutsch, AWS Builders' Library |
 | P17 | [Privacy by design for system architects](P17-privacy-by-design.md) | EDPB Guidelines 4/2019, NIST Privacy Framework, Meta Privacy Aware Infrastructure |
 | P18 | [Evaluating LLM and agent systems](P18-evaluating-llm-and-agent-systems.md) | Anthropic's guide to agent evals, the Ragas paper, AWS Machine Learning Blog, MAST |
+| P19 | [Workflow patterns for LLM features](P19-llm-workflow-patterns.md) | Anthropic, *Building effective agents*; Azure Architecture Center orchestration patterns |
+| P20 | [Agent and multi-agent architectures](P20-agent-and-multi-agent-architectures.md) | OpenAI Agents SDK, LangChain and Google ADK docs, Anthropic, Cognition, three 2026 preprints |
+| P21 | [Agent frameworks and protocols, status November 2026](P21-agent-frameworks-and-protocols-2026.md) | MCP and A2A specifications, framework docs, changelogs and package indexes |
+| P22 | [LLM products in production](P22-llm-products-in-production.md) | Anthropic engineering posts, OWASP, Meta's Rule of Two, MCP security best practices, OpenTelemetry |
 
 ## Workbook: practice with feedback (`W`)
 

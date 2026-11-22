@@ -1,0 +1,205 @@
+[
+  {
+    "quote": "Building effective agents",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Use the lowest level of complexity that reliably meets your requirements.",
+    "url": "https://learn.microsoft.com/azure/architecture/ai-ml/guide/ai-agent-design-patterns",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "orchestrated through predefined code paths",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "dynamically direct their own processes and tool usage",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "typically just LLMs using tools based on environmental feedback in a loop.",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "If prompt engineering can solve the problem, you don't need an agent.",
+    "url": "https://learn.microsoft.com/azure/architecture/ai-ml/guide/ai-agent-design-patterns",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Often the right default for enterprise use cases.",
+    "url": "https://learn.microsoft.com/azure/architecture/ai-ml/guide/ai-agent-design-patterns",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "To guard against infinite tool-call loops, set iteration limits.",
+    "url": "https://learn.microsoft.com/azure/architecture/ai-ml/guide/ai-agent-design-patterns",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Adds coordination overhead, latency, and failure modes.",
+    "url": "https://learn.microsoft.com/azure/architecture/ai-ml/guide/ai-agent-design-patterns",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "the simplest solution possible, and only increasing complexity when needed",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "only when it demonstrably improves outcomes",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "an LLM enhanced with augmentations such as retrieval, tools, and memory.",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The main goal is to trade off latency for higher accuracy, by making each LLM call an easier task.",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The choice of which agent gets invoked next is deterministically defined as part of the workflow and isn't a choice given to agents in the process.",
+    "url": "https://learn.microsoft.com/azure/architecture/ai-ml/guide/ai-agent-design-patterns",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Structured outputs guarantee schema-compliant responses through constrained decoding",
+    "url": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "While both ensure valid JSON is produced, only Structured Outputs ensure schema adherence.",
+    "url": "https://developers.openai.com/api/docs/guides/structured-outputs",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Routing works well for complex tasks where there are distinct categories that are better handled separately",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "is identifiable from the initial input",
+    "url": "https://learn.microsoft.com/azure/architecture/ai-ml/guide/ai-agent-design-patterns",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Breaking a task into independent subtasks run in parallel.",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Running the same task multiple times to get diverse outputs.",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Agents operate independently and don't hand off results to each other.",
+    "url": "https://learn.microsoft.com/azure/architecture/ai-ml/guide/ai-agent-design-patterns",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "subtasks aren't pre-defined, but determined by the orchestrator based on the specific input",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "particularly effective when we have clear evaluation criteria",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Set an iteration cap to prevent infinite refinement loops, and define fallback behavior for when the cap is reached.",
+    "url": "https://learn.microsoft.com/azure/architecture/ai-ml/guide/ai-agent-design-patterns",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "agents reliably skew positive when grading their own work",
+    "url": "https://www.anthropic.com/research/harness-design-long-running-apps",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Separating the agent doing the work from the agent judging it proves to be a strong lever to address this issue.",
+    "url": "https://www.anthropic.com/research/harness-design-long-running-apps",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "the most successful implementations weren't using complex frameworks or specialized libraries",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "developers start by using LLM APIs directly: many patterns can be implemented in a few lines of code",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "often create extra layers of abstraction that can obscure the underlying prompts and responses",
+    "url": "https://www.anthropic.com/research/building-effective-agents",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  }
+]

@@ -213,8 +213,8 @@ Every page uses the same frame: `--s-5` top, `--page-pad` sides, `--s-7` bottom.
 | Width | What changes |
 |---|---|
 | ≤ 520px | the coffee link shows its icon only (the label stays for screen readers) |
-| ≤ 560px | the home headline drops to `--t-xl`, the hero art is hidden, home cards get a smaller minimum width |
-| ≤ 760px | the home hero becomes one column |
+| ≤ 560px | the home headline drops to `--t-xl`, the hero art is hidden, home cards get a smaller minimum width, track cards go to one column |
+| ≤ 760px | the home hero becomes one column, track cards go from three columns to two |
 | ≤ 860px | system pages stack (diagram above the note), everything scrolls with the page, the flow panel becomes one column |
 | ≥ 1250px | text view shows the contents list in the margin |
 

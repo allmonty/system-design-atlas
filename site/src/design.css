@@ -82,7 +82,11 @@
 .cards, .track-cards, .method, .text-hits, .concept-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-4); }
 .text-hits, .concept-list { gap: var(--s-3); }
 .cards { grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr)); grid-auto-rows: 1fr; }
-.track-cards, .method { grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); }
+.method { grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); }
+/* Track cards: a fixed 3 by 2 grid for the six tracks, 2 columns on tablets, 1 on phones. */
+.track-cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 760px) { .track-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .track-cards { grid-template-columns: minmax(0, 1fr); } }
 .cards li, .track-cards li { display: flex; }
 
 /* ---- Surface: the one card look. Every card-like element on the site is listed here. ---- */

@@ -63,7 +63,7 @@ export function Home() {
       <section className="hero">
         <div className="hero-text">
           <h1>{t.heroA}<span className="grad">{t.heroB}</span></h1>
-          <p className="lede">{t.lede(systems.length)}</p>
+          <p className="lede">{t.lede(systems.length, toolkitPages.filter((p) => p.id.startsWith("P")).length)}</p>
           <div className="hero-actions">
             <a className="button primary" href="#track/interview">{t.startInterview}</a>
             <a className="button" href="#track/architect">{t.becomeArchitect}</a>

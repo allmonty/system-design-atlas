@@ -275,6 +275,10 @@
           "why": "Agents: workflows versus loops, tools, sandboxes and budgets."
         },
         {
+          "ref": "P20",
+          "why": "When one agent becomes several: supervisor, handoff and pipeline topologies, and what the evidence says about multi-agent gains at equal cost."
+        },
+        {
           "ref": "28",
           "why": "Improving a model: adapters, preference tuning, evaluation gates and rollout."
         },
@@ -301,6 +305,54 @@
         {
           "ref": "W04",
           "why": "Scenario 6 asks for an AI feature design with safety and evaluation."
+        }
+      ]
+    },
+    {
+      "id": "ai-apps",
+      "title": "AI application architect",
+      "audience": "You design products on top of LLM APIs and want to know which pattern fits, and how it fails in production.",
+      "summary": "From one model call to workflows, agents and multi-agent systems, then the frameworks, production engineering, evaluation, security and cost around them.",
+      "steps": [
+        {
+          "ref": "P19",
+          "why": "The complexity ladder and the five workflow patterns (chaining, routing, parallelisation, orchestrator-workers, evaluator-optimizer), each mapped to a classic design."
+        },
+        {
+          "ref": "23",
+          "why": "Retrieval as a system: the most common way to give a model your data, with chunking, hybrid search and permissions."
+        },
+        {
+          "ref": "P20",
+          "why": "Agents and multi-agent topologies (supervisor, handoff, pipeline, group chat), mapped to orchestration and choreography, and when several agents beat one."
+        },
+        {
+          "ref": "25",
+          "why": "The platform under an agent: tools, MCP, sandboxes, state and budgets, with a coding agent as the worked example."
+        },
+        {
+          "ref": "P22",
+          "why": "What breaks in production: context limits, long runs, tool design, prompt injection and the Rule of Two, budgets and tracing."
+        },
+        {
+          "ref": "P18",
+          "why": "How to tell whether a change made it better: graders, regression versus capability suites, pass@k versus pass^k."
+        },
+        {
+          "ref": "P06",
+          "why": "Threat modelling for the trust boundaries an agent adds: tool results, credentials and external actions."
+        },
+        {
+          "ref": "P08",
+          "why": "Cost as a design input: tokens per task, model tiering and budgets."
+        },
+        {
+          "ref": "W04",
+          "why": "Practise writing the decision down as an ADR, for example workflow versus agent or one agent versus several."
+        },
+        {
+          "ref": "P21",
+          "why": "Reference, for when you pick a stack: a dated snapshot of the frameworks and protocols (MCP, A2A, LangGraph, the vendor SDKs), what changed in 2026 and how to choose."
         }
       ]
     },

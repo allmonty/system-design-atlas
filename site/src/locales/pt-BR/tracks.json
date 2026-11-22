@@ -92,7 +92,25 @@
       "27": "Treinamento em larga escala: paralelismo, checkpoints e falhas.",
       "P06": "Threat modeling, que importa mais para tools e texto recuperado.",
       "P08": "Tokens e horas de GPU como os fatores de custo.",
-      "W04": "O cenário 6 pede o design de uma funcionalidade de IA com segurança e avaliação."
+      "W04": "O cenário 6 pede o design de uma funcionalidade de IA com segurança e avaliação.",
+      "P20": "Quando um agent vira vários: topologias supervisor, handoff e pipeline, e o que a evidência diz sobre os ganhos de multi-agent a custo igual."
+    }
+  },
+  "ai-apps": {
+    "title": "Arquiteto de aplicações de IA",
+    "audience": "Você projeta produtos sobre APIs de LLM e quer saber qual padrão serve e como ele falha em produção.",
+    "summary": "De uma chamada ao modelo a workflows, agents e sistemas multi-agent, e depois os frameworks, a engenharia de produção, a avaliação, a segurança e o custo em volta deles.",
+    "why": {
+      "P19": "A escada de complexidade e os cinco padrões de workflow (chaining, routing, paralelização, orchestrator-workers, evaluator-optimizer), cada um ligado a um design clássico.",
+      "23": "Retrieval como sistema: a forma mais comum de dar seus dados a um modelo, com chunking, hybrid search e permissões.",
+      "P20": "Agents e topologias multi-agent (supervisor, handoff, pipeline, group chat), ligadas a orquestração e coreografia, e quando vários agents superam um.",
+      "25": "A plataforma sob um agent: tools, MCP, sandboxes, estado e orçamentos, com um coding agent como exemplo.",
+      "P21": "Referência, para quando você escolher a stack: um retrato datado dos frameworks e protocolos (MCP, A2A, LangGraph, os SDKs dos fornecedores), o que mudou em 2026 e como escolher.",
+      "P22": "O que quebra em produção: limites de contexto, execuções longas, design de tools, prompt injection e a Rule of Two, orçamentos e tracing.",
+      "P18": "Como saber se uma mudança melhorou: avaliadores, suítes de regressão versus de capacidade, pass@k versus pass^k.",
+      "P06": "Threat modeling para as fronteiras de confiança que um agent acrescenta: resultados de tools, credenciais e ações externas.",
+      "P08": "Custo como entrada do design: tokens por tarefa, escolha de modelo por nível e orçamentos.",
+      "W04": "Pratique registrar a decisão como ADR, por exemplo workflow versus agent, ou um agent versus vários."
     }
   },
   "atlas": {

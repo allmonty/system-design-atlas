@@ -18,7 +18,7 @@ const toolkit = readdirSync(`${ROOT}/toolkit`).filter((f) => f.endsWith(".md")).
 // route names of the notes that have a pt-BR mirror, e.g. "sys-08" and "toolkit-P02"
 const mirrored = new Set([...readdirSync(`${ROOT}/locales/pt-BR/systems`).map((f) => `sys-${f.slice(0, 2)}`), ...readdirSync(`${ROOT}/locales/pt-BR/toolkit`).map((f) => `toolkit-${f.slice(0, 3)}`)]);
 const routes = [
-  ["home", ""], ["concepts", "concepts"], ...["interview", "foundations", "architect", "ai", "atlas"].map((t) => [`track-${t}`, `track/${t}`]),
+  ["home", ""], ["concepts", "concepts"], ...["interview", "foundations", "architect", "ai", "ai-apps", "atlas"].map((t) => [`track-${t}`, `track/${t}`]),
   ...toolkit.map((t) => [`toolkit-${t.slice(0, 3)}`, `toolkit/${t}`]),
   ...systems.flatMap((s) => [[`sys-${s.slice(0, 2)}-split`, `${s}?view=split`], [`sys-${s.slice(0, 2)}-text`, `${s}?view=text`], [`sys-${s.slice(0, 2)}-graph`, `${s}?view=graph`]]),
 ];

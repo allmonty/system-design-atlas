@@ -11,7 +11,7 @@
       "summary": "Submits a task and watches progress; may cancel.",
       "confidence": "INDUSTRY PATTERN",
       "sources": [
-        "https://www.anthropic.com/engineering/building-effective-agents"
+        "https://www.anthropic.com/research/building-effective-agents"
       ]
     },
     {
@@ -23,7 +23,7 @@
       "confidence": "CONFIRMED",
       "sources": [
         "https://modelcontextprotocol.io/specification/2025-06-18/server/tools",
-        "https://www.anthropic.com/engineering/building-effective-agents"
+        "https://www.anthropic.com/research/building-effective-agents"
       ]
     },
     {
@@ -34,7 +34,7 @@
       "summary": "Chooses the next step from the history and the tool descriptions. See note 22 for serving.",
       "confidence": "CONFIRMED",
       "sources": [
-        "https://www.anthropic.com/engineering/building-effective-agents",
+        "https://www.anthropic.com/research/building-effective-agents",
         "https://arxiv.org/pdf/2210.03629"
       ]
     },
@@ -59,7 +59,7 @@
       "summary": "Accepts tasks, streams progress, handles cancel, approvals and trace fetch. Industry practice.",
       "confidence": "INDUSTRY PATTERN",
       "sources": [
-        "https://www.anthropic.com/engineering/building-effective-agents"
+        "https://www.anthropic.com/research/building-effective-agents"
       ]
     },
     {
@@ -70,7 +70,7 @@
       "summary": "Runs the agent loop for each run: ask the model, call tools, observe, repeat until done or stopped. Persists each step so another worker can resume.",
       "confidence": "INDUSTRY PATTERN",
       "sources": [
-        "https://www.anthropic.com/engineering/building-effective-agents",
+        "https://www.anthropic.com/research/building-effective-agents",
         "https://arxiv.org/pdf/2210.03629"
       ],
       "group": "Orchestrator"
@@ -83,7 +83,7 @@
       "summary": "LLMs using tools based on environmental feedback in a loop; ReAct interleaves reasoning, action and observation.",
       "confidence": "CONFIRMED",
       "sources": [
-        "https://www.anthropic.com/engineering/building-effective-agents",
+        "https://www.anthropic.com/research/building-effective-agents",
         "https://arxiv.org/pdf/2210.03629"
       ],
       "parent": "orch",
@@ -97,7 +97,7 @@
       "summary": "Caps steps, tokens, time and money, and detects repeated identical actions. Anthropic notes stopping conditions such as a maximum number of iterations; ReAct documents repetition loops. The exact guard is our design.",
       "confidence": "INDUSTRY PATTERN",
       "sources": [
-        "https://www.anthropic.com/engineering/building-effective-agents",
+        "https://www.anthropic.com/research/building-effective-agents",
         "https://arxiv.org/pdf/2210.03629"
       ],
       "parent": "orch",
@@ -123,7 +123,7 @@
       "summary": "Isolated, short-lived environments where model-written code or commands run: no platform secrets, restricted network, resource limits. Firecracker documents the isolation technology (KVM micro-VMs, under 5 MB overhead, boot under 125 ms); the agent-specific policy is our design. Anthropic recommends extensive testing in sandboxed environments.",
       "confidence": "INDUSTRY PATTERN",
       "sources": [
-        "https://www.anthropic.com/engineering/building-effective-agents",
+        "https://www.anthropic.com/research/building-effective-agents",
         "https://www.usenix.org/system/files/nsdi20-paper-agache.pdf"
       ]
     },
@@ -135,7 +135,7 @@
       "summary": "Messages, tool results and checkpoints per run, so a crashed run resumes from its last step. Industry practice.",
       "confidence": "INDUSTRY PATTERN",
       "sources": [
-        "https://www.anthropic.com/engineering/building-effective-agents"
+        "https://www.anthropic.com/research/building-effective-agents"
       ]
     },
     {
@@ -146,7 +146,7 @@
       "summary": "Holds a pending risky action until a human approves or denies it. Anthropic notes agents can pause for human feedback at checkpoints.",
       "confidence": "INDUSTRY PATTERN",
       "sources": [
-        "https://www.anthropic.com/engineering/building-effective-agents",
+        "https://www.anthropic.com/research/building-effective-agents",
         "https://modelcontextprotocol.io/specification/2025-06-18/server/tools"
       ]
     },
@@ -169,7 +169,7 @@
       "summary": "Runs a task suite with automatic success checks (tests for coding) before models, prompts or tools change. Anthropic stresses measuring performance and iterating.",
       "confidence": "INDUSTRY PATTERN",
       "sources": [
-        "https://www.anthropic.com/engineering/building-effective-agents"
+        "https://www.anthropic.com/research/building-effective-agents"
       ]
     },
     {
@@ -180,7 +180,7 @@
       "summary": "When the steps are known, use prompt chaining, routing, parallelization, orchestrator-workers or evaluator-optimizer instead of a free-running agent: more predictable and cheaper.",
       "confidence": "CONFIRMED",
       "sources": [
-        "https://www.anthropic.com/engineering/building-effective-agents"
+        "https://www.anthropic.com/research/building-effective-agents"
       ]
     }
   ],
