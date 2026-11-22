@@ -117,7 +117,7 @@ html, body { overflow-x: hidden; overflow-x: clip; } /* clip, not hidden: hidden
 .split.mode-graph .canvas { height: 62vh; }
 .split.mode-text { grid-template-columns: minmax(0, 1fr); height: auto; } /* text mode reads with the page scroll, not an inner box */
 .split.mode-text > .left, .split.mode-text > .right { overflow: visible; }
-.split.mode-text .notes { width: 100%; max-width: 960px; margin: 0 auto; } /* width: auto margins on a grid item would size it to its widest child */
+.split.mode-text .notes { width: 100%; max-width: var(--prose-max); margin: 0 auto; } /* width: auto margins on a grid item would size it to its widest child */
 .notes.hidden { display: none; }
 .legend[hidden] { display: none; }
 
@@ -238,7 +238,7 @@ button.study { margin-left: auto; }
 .outline-select select { flex: 1; min-width: 0; font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: var(--r-sm); padding: var(--s-1) var(--s-2); }
 .side-outline { display: none; }
 @media (min-width: 1250px) {
-  .split.mode-text { grid-template-columns: minmax(0, 960px) 240px; justify-content: center; }
+  .split.mode-text { grid-template-columns: minmax(0, var(--prose-max)) 240px; justify-content: center; }
   .split.mode-text > .right { order: 1; } .split.mode-text > .side-outline { order: 2; }
   .split.mode-text .outline-select { display: none; }
   .side-outline { display: block; position: sticky; top: 12px; align-self: start; max-height: calc(100vh - 40px); overflow: auto; font-size: var(--t-sm); }

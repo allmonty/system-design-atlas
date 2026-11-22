@@ -193,9 +193,9 @@ One ring for every focusable element: `outline: 2px solid var(--accent); outline
 | Token or rule | Value | What |
 |---|---|---|
 | `--page-max` | 1100px | home, track and concept pages |
-| `--read-max` | 860px | toolkit reading pages (`main.toolkit`) |
+| `--read-max` | `--prose-max` + 2 × `--page-pad` | toolkit reading pages (`main.toolkit`): one centred column at the measure; wider tables and code scroll inside their own box |
 | `.system` | 1800px | system pages (diagram and note side by side) |
-| `.split.mode-text .notes` | 960px | the note column in text view |
+| `.split.mode-text .notes` | `--prose-max` | the note column in text view (centred, with the contents list beside it at 1250px and wider) |
 | `--prose-max` | 33rem | paragraphs, list items, quotes and disclosures in notes, and the home introduction: about 66 characters a line in every reading font (45 to 75 is the usual range; `ch`, the width of "0", varies too much by font) |
 | `.side-outline` | 240px | the contents list beside a note (1250px and wider) |
 
