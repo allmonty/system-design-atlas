@@ -26,7 +26,7 @@ That loop (observe the situation, act, receive a reward, learn, act again) is re
 
 | Term | Meaning | In the news example |
 |---|---|---|
-| **Agent** | The part that chooses actions | The ranking service |
+| **Agent** | The part that chooses actions. Not the same as an LLM agent (a model calling tools in a loop, [P20](P20-agent-and-multi-agent-architectures.md)), although an LLM agent can be trained with RL (section 4.4) | The ranking service |
 | **Environment** | Everything the agent acts on and observes | Visitors and the page |
 | **State** or **context** | What the agent knows when it decides | Visitor's country, device, time, recent reads |
 | **Action** | One choice | Which article goes in the slot |
