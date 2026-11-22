@@ -36,7 +36,7 @@ Use it as questions to ask of any atlas design:
 | Identity | How is every caller (user, service, job) authenticated? Are service credentials short-lived and narrowly scoped? |
 | Authorization | Is it enforced at the data layer or only in the UI? Can one tenant ever see another's data (see [23 RAG assistant](../systems/23-rag-knowledge-assistant.md) for permission filtering)? |
 | Data | What is stored, for how long, encrypted how, with whose keys? What is the blast radius of a database leak (see [08 Chat](../systems/08-chat-whatsapp.md) on end-to-end encryption)? |
-| Untrusted execution | Does the system run code or content from users or models? Isolate it (see [25 AI agent platform](../systems/25-ai-agent-platform.md): sandboxes and prompt injection). |
+| Untrusted execution | Does the system run code or content from users or models? Isolate it (see [25 AI agent platform](../systems/25-ai-agent-platform.md): sandboxes and prompt injection; [P22](P22-llm-products-in-production.md), section 5: the Rule of Two for LLM agents). |
 | Abuse | Rate limits, quotas, bot defence (see [02 Rate limiter](../systems/02-rate-limiter.md)). |
 | Operations | Who can change production, and how is that audited? Can responders still get in when something breaks (see [C02 Cloudflare 2019](C02-cloudflare-2019.md), where credentials had timed out)? |
 | Failure of controls | What happens when the auth service or key store is down: fail open or closed, and who decided? |

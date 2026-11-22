@@ -60,7 +60,7 @@ Imagine um **estagiário muito capaz trabalhando num escritório com uma sala de
 
 ## 2. Workflows versus agents `[CONFIRMED]` (Anthropic, December 2024)
 
-O post "Building effective agents" da Anthropic agrupa os dois sob **sistemas agênticos**, mas os autores "draw an important architectural distinction" entre workflows e agents. O conselho é encontrar "the simplest solution possible, and only increasing complexity when needed", o que "might mean not building agentic systems at all", e que para muitas aplicações "optimizing single LLM calls with retrieval and in-context examples is usually enough".
+O post "Building effective agents" da Anthropic agrupa os dois sob **sistemas agênticos**, mas os autores "draw an important architectural distinction" entre workflows e agents. O conselho é encontrar "the simplest solution possible, and only increasing complexity when needed", o que "might mean not building agentic systems at all", e que para muitas aplicações "optimizing single LLM calls with retrieval and in-context examples is usually enough". Os cinco padrões de workflow são ensinados um a um, com seus análogos clássicos, no [P19](../toolkit/P19-llm-workflow-patterns.md).
 
 **O bloco de construção** é o *augmented LLM*: um modelo com retrieval, tools e memória.
 
@@ -121,7 +121,7 @@ O que isso dá a uma resposta de entrevista: uma razão concreta para pôr códi
 
 ## 4c. Lessons from a production multi-agent system `[CONFIRMED]` (Anthropic, June 2025)
 
-O post de engenharia da Anthropic sobre seu sistema de pesquisa multi-agent acrescenta detalhes de produção à seção 2. Ele usa um padrão **orchestrator-worker**: um lead agent planeja, salva seu plano na memória e dispara subagents que buscam em paralelo com suas próprias janelas de contexto e devolvem achados condensados. Pontos relatados que importam para o design de plataforma:
+O post de engenharia da Anthropic sobre seu sistema de pesquisa multi-agent acrescenta detalhes de produção à seção 2. Ele usa um padrão **orchestrator-worker**: um lead agent planeja, salva seu plano na memória e dispara subagents que buscam em paralelo com suas próprias janelas de contexto e devolvem achados condensados. Pontos relatados que importam para o design de plataforma (as topologias multi-agent e a evidência sobre quando vários agents ajudam estão no [P20](../toolkit/P20-agent-and-multi-agent-architectures.md)):
 - **Custo:** "agents typically use about 4× more tokens than chat interactions, and multi-agent systems use about 15× more tokens than chats", então a tarefa precisa valer o bastante para pagar por isso. O uso de tokens sozinho explicou 80% da variância num benchmark de navegação (BrowseComp).
 - **Qualidade:** um sistema multi-agent com o Claude Opus 4 como agent lead e subagents Claude Sonnet 4 superou um único agent Claude Opus 4 em 90,2% na avaliação interna de pesquisa deles, mais forte em tarefas breadth-first; eles notam que a maioria das tarefas de código tem menos partes paralelizáveis que a pesquisa.
 - **Estado e recuperação:** "agents are stateful and errors compound"; quando ocorrem erros eles não podem simplesmente recomeçar do início, então construíram sistemas que "resume from where the agent was when the errors occurred".
@@ -170,10 +170,10 @@ user/API ─► session API ─► orchestrator ◄─► LLM gateway (see 22)
 - **Estado e memória:** guarde a conversa e os resultados das tools; resuma ou apare quando a janela de contexto enche; guarde a memória de longo prazo separadamente e trate-a como dados, não instruções.
 - **Orçamentos:** limites rígidos de passos, tokens, tempo de relógio e dinheiro por execução, com uma mensagem clara quando atingidos. Detecte ações idênticas repetidas, como a análise de falhas do ReAct sugere.
 - **Aprovações:** classifique as tools por risco (leitura, escrita reversível, irreversível ou cara) e exija aprovação humana para a última classe.
-- **Prompt injection:** o texto devolvido por tools ou páginas web pode conter instruções. Trate-o como dado não confiável, mantenha as permissões estreitas para que uma instrução injetada não faça muito e exija aprovação para ações sensíveis.
+- **Prompt injection:** o texto devolvido por tools ou páginas web pode conter instruções. Trate-o como dado não confiável, mantenha as permissões estreitas para que uma instrução injetada não faça muito e exija aprovação para ações sensíveis. A Rule of Two e os padrões de design publicados contra injeção estão no [P22](../toolkit/P22-llm-products-in-production.md), seção 5.
 - **Tarefas de longa duração:** rode de forma assíncrona com uma fila de jobs, faça streaming do progresso por server-sent events ou polling, permita cancelamento.
 - **Observabilidade:** um trace por execução (toda chamada de modelo, chamada de tool, resultado, custo e latência), reproduzível para depuração.
-- **Avaliação:** uma suíte de tarefas com verificações automáticas de sucesso (para código, os testes), executada antes de mudar modelos, prompts ou tools; acompanhe taxa de sucesso, passos e custo por tarefa.
+- **Avaliação:** uma suíte de tarefas com verificações automáticas de sucesso (para código, os testes), executada antes de mudar modelos, prompts ou tools; acompanhe taxa de sucesso, passos e custo por tarefa. Avaliadores, trials e pass^k estão no [P18](../toolkit/P18-evaluating-llm-and-agent-systems.md).
 
 ### A coding agent on this platform
 
