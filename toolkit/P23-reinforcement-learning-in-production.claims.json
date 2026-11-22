@@ -1,0 +1,331 @@
+[
+  {
+    "quote": "RL in general focuses on building agents that take actions in an environment so as to maximize some notion of long term reward.",
+    "url": "https://arxiv.org/pdf/1812.02353",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "the policy only receives a reward when its generated responses are verifiably correct",
+    "url": "https://arxiv.org/html/2411.15124v5",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "four system abstractions which connect together in a loop: explore (the decision space), log, learn, and deploy",
+    "url": "https://arxiv.org/abs/1606.03966",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "showed a >25% CTR improvement over a two-week period",
+    "url": "https://arxiv.org/pdf/1606.03966",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The reward is observed only for the chosen action; nothing is learned about unexplored actions, leading to partial feedback.",
+    "url": "https://arxiv.org/pdf/1606.03966",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "a system that does not explore will reinforce its own biased decisions.",
+    "url": "https://arxiv.org/pdf/1606.03966",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "a public logged bandit dataset collected on a large-scale fashion e-commerce platform, ZOZOTOWN",
+    "url": "https://arxiv.org/abs/2008.07146",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "many millions of items to recommend",
+    "url": "https://arxiv.org/abs/1812.02353",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "observing reward requires giving a real recommendation to a real user",
+    "url": "https://arxiv.org/pdf/1812.02353",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "every five minutes our cloud based AI pulls a snapshot of the data centre cooling system from thousands of sensors",
+    "url": "https://deepmind.google/discover/blog/safety-first-ai-for-autonomous-data-centre-cooling-and-industrial-control/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "the local control system verifies the instructions against its own set of constraints",
+    "url": "https://deepmind.google/discover/blog/safety-first-ai-for-autonomous-data-centre-cooling-and-industrial-control/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "an internal list of safety constraints defined by our data centre operators",
+    "url": "https://deepmind.google/discover/blog/safety-first-ai-for-autonomous-data-centre-cooling-and-industrial-control/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "our data centre operators are always in control and can choose to exit AI control mode at any time.",
+    "url": "https://deepmind.google/discover/blog/safety-first-ai-for-autonomous-data-centre-cooling-and-industrial-control/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "energy savings of around 30 percent on average",
+    "url": "https://deepmind.google/discover/blog/safety-first-ai-for-autonomous-data-centre-cooling-and-industrial-control/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Our rule-based reward system mainly consists of two types of rewards: accuracy rewards and format rewards.",
+    "url": "https://arxiv.org/html/2501.12948v2",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "neural reward models are susceptible to reward hacking during large-scale reinforcement learning",
+    "url": "https://arxiv.org/html/2501.12948v2",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "from an initial 15.6% to 77.9%",
+    "url": "https://arxiv.org/html/2501.12948v2",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "an AI fooling its training process into assigning a high reward, without actually completing the intended task",
+    "url": "https://www.anthropic.com/research/emergent-misalignment-reward-hacking",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "inoculation prompting",
+    "url": "https://www.anthropic.com/research/emergent-misalignment-reward-hacking",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Then it’s rewarded based on the quality of the final layout.",
+    "url": "https://deepmind.google/discover/blog/how-alphachip-transformed-computer-chip-design/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "has been used to design superhuman chip layouts in the last three generations",
+    "url": "https://deepmind.google/discover/blog/how-alphachip-transformed-computer-chip-design/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Initially, we introduced AlphaGo to thousands of expert games of Go so the system could learn how humans play the game.",
+    "url": "https://deepmind.google/research/breakthroughs/alphago/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "skips this step and learns to play simply by playing games against itself, starting from completely random play.",
+    "url": "https://deepmind.google/discover/blog/alphago-zero-starting-from-scratch/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "create an initial policy which played the game better than 84% of active players",
+    "url": "https://deepmind.google/discover/blog/alphastar-grandmaster-level-in-starcraft-ii-using-multi-agent-reinforcement-learning/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The key insight of the League is that playing to win is insufficient",
+    "url": "https://deepmind.google/discover/blog/alphastar-grandmaster-level-in-starcraft-ii-using-multi-agent-reinforcement-learning/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Agents were capped at a max of 22 agent actions per 5 seconds",
+    "url": "https://deepmind.google/discover/blog/alphastar-grandmaster-level-in-starcraft-ii-using-multi-agent-reinforcement-learning/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "was ranked above 99.8% of active players on Battle.net",
+    "url": "https://deepmind.google/discover/blog/alphastar-grandmaster-level-in-starcraft-ii-using-multi-agent-reinforcement-learning/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "allowed us to train OpenAI Five for 10 months",
+    "url": "https://arxiv.org/abs/1912.06680",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "On April 13th, 2019, OpenAI Five became the first AI system to defeat the world champions at an esports game.",
+    "url": "https://arxiv.org/abs/1912.06680",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "a reward function that balanced track progress, collision avoidance, steering smoothness, and racing etiquette",
+    "url": "https://ai.sony/blog/gran-turismo-sophy-five-years-on-from-nature-cover-to-open-frontier",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "rules for sportsmanship norms are not precisely defined",
+    "url": "https://ai.sony/blog/dont-cross-that-line-how-our-ai-agent-learned-sportsmanship",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "cleverly found loopholes in our reward function",
+    "url": "https://ai.sony/blog/dont-cross-that-line-how-our-ai-agent-learned-sportsmanship",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "unlocked access to more than 1,000 PlayStation 4 consoles",
+    "url": "https://ai.sony/blog/gran-turismo-sophy-five-years-on-from-nature-cover-to-open-frontier",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "a head-to-head competition against four of the world's best Gran Turismo drivers",
+    "url": "https://ai.sony/publications/outracing-champion-gran-turismo-drivers-with-deep-reinforcement-learning",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "By February of 2023, Sony AI and Polyphony Digital released GT Sophy in Gran Turismo 7 for the PS5",
+    "url": "https://ai.sony/blog/gran-turismo-sophy-five-years-on-from-nature-cover-to-open-frontier",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "select GT Sophy for individual Rival Cars",
+    "url": "https://www.gran-turismo.com/us/news/00_4957003.html",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The method utilizes a reinforcement training agent that learns to play the game by itself",
+    "url": "https://www.ea.com/news/fc-26-goalkeepers",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "in hundreds of thousands of in-game situations to find the best positioning",
+    "url": "https://www.ea.com/news/fc-26-goalkeepers",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "add an experimental reinforcement learning system to an existing automated game testing solution based on scripted bots",
+    "url": "https://arxiv.org/abs/2307.11105",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Reinforcement learning techniques for testing aren't always the best or most practical solution for game teams.",
+    "url": "https://www.ea.com/seed/news/seed-ml-research-aaa-game-testing",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Logging at the point of decision",
+    "url": "https://arxiv.org/pdf/1606.03966",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Specification gaming is a behaviour that satisfies the literal specification of an objective without achieving the intended outcome.",
+    "url": "https://deepmind.google/discover/blog/specification-gaming-the-flip-side-of-ai-ingenuity/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "simply flipped over the red block to collect the reward",
+    "url": "https://deepmind.google/discover/blog/specification-gaming-the-flip-side-of-ai-ingenuity/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "present a set of nine unique challenges that must be addressed to productionize RL to real world problems.",
+    "url": "https://arxiv.org/abs/1904.12901",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "The Personalizer service is being retired on the 25th of August, 2026.",
+    "url": "https://learn.microsoft.com/azure/ai-services/personalizer",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "ReAgent is officially archived and no longer maintained.",
+    "url": "https://github.com/facebookresearch/ReAgent",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Active existing customers will no longer be able to create new fine-tuning jobs on this date",
+    "url": "https://developers.openai.com/api/docs/deprecations",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  }
+]
