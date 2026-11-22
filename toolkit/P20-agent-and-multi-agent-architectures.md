@@ -39,7 +39,9 @@ The mechanics (tool definitions, the ReAct loop of reasoning then acting, sandbo
 - **Handoff** and **agent as tool:** the two ways one agent can involve another. As a tool, the other agent runs a subtask and returns a result; the caller keeps control. In a handoff, the other agent takes over the conversation. **Subagent**, **worker** and **agent as tool** name the same idea in different sources.
 - **Thread:** one conversation history. In a group chat, every agent reads and appends to the same thread.
 
-## 2. Topologies `[CONFIRMED]` (framework documentation, read November 2026)
+## 2. Topologies
+
+*`[CONFIRMED]` (framework documentation, read November 2026)*
 
 The frameworks name the same few shapes in different words.
 
@@ -58,7 +60,9 @@ The frameworks name the same few shapes in different words.
 
 **Google ADK 2.0** `[CONFIRMED]` (May 2026): ADK moved "from a hierarchical agent executor to a graph-based execution engine", deprecated its sequential, parallel and loop agent classes in Python and TypeScript, and now says "For new code, express these patterns with a graph-based workflow". The topologies are the same; they are now drawn as graphs.
 
-## 3. Mapping to classic architecture `[INDUSTRY PATTERN]` (our reasoning)
+## 3. Mapping to classic architecture
+
+*`[INDUSTRY PATTERN]` (our reasoning)*
 
 | Agent topology | Microservice analogue | What carries over |
 |---|---|---|
@@ -71,7 +75,9 @@ The frameworks name the same few shapes in different words.
 
 The analogy has one weak point: a service has a typed interface, an agent receives text. A handoff that drops context, or a sub-agent that misreads its brief, fails silently. The last rule of section 4 is there to catch it.
 
-## 4. Deciding `[INDUSTRY PATTERN]` (our reasoning)
+## 4. Deciding
+
+*`[INDUSTRY PATTERN]` (our reasoning)*
 
 Add a second agent only if you can name one of these reasons and measure it:
 
@@ -86,7 +92,9 @@ Then pick the topology: a supervisor if one answer must come out and you need co
 
 In short: several agents in parallel did better when the work split into independent parts, at a much higher token cost. When the parts had to agree on shared decisions, or when the single agent was given the same budget, the advantage mostly went away, except on one long task that overflowed a single context. The rest of this section gives the sources, for readers who want the detail.
 
-### 5a. Anthropic's research system `[CONFIRMED]` (Anthropic, June 2025)
+### 5a. Anthropic's research system
+
+*`[CONFIRMED]` (Anthropic, June 2025)*
 
 Anthropic's Research feature uses a lead agent that plans and starts subagents in parallel, each searching with its own tools and context, and a final step that attributes citations. Published results, on its own internal research eval, with Claude Opus 4 as lead and Claude Sonnet 4 as subagents:
 
@@ -98,7 +106,9 @@ Anthropic's Research feature uses a lead agent that plans and starts subagents i
 
 The coordination failures that appear when agents act as peers (and the MAST failure taxonomy) are summarised in [25 AI agent platform, section 4d](../systems/25-ai-agent-platform.md).
 
-### 5b. The case against `[CONFIRMED]` (Cognition, June 2025)
+### 5b. The case against
+
+*`[CONFIRMED]` (Cognition, June 2025)*
 
 Cognition, which builds a coding agent, argued two principles: "Share context, and share full agent traces, not just individual messages", and "Actions carry implicit decisions, and conflicting decisions carry bad results". Its example: two subagents building parts of a game made incompatible style choices, because "The actions subagent 1 took and the actions subagent 2 took were based on conflicting assumptions not prescribed upfront." Its recommendation: "The simplest way to follow the principles is to just use a single-threaded linear agent", and compress history when the context overflows. The post is an argument from experience, not a measurement.
 
@@ -106,7 +116,9 @@ The two posts agree more than their titles suggest (our reading): parallel agent
 
 **A 2026 measurement of the same split** `[CONFIRMED]` (Anthropic Frontier Red Team, August 2026): on independent work, a coordinating swarm searching open-source projects for vulnerabilities found 266 in a 27-million-token run, against 21 in 6.5 million tokens for independent agents with fixed assignments. Restricted to the code both searched, the two methods "seem comparable in terms of tokens per vulnerability found", so the swarm's gain came mostly from covering more ground; the post adds that "the two methods are largely complementary there were only 12 vulnerabilities in common". On shared code, swarms building one game for 12 hours struggled to merge their work. Two newer models merged most of it "only by hardly working together at all", each agent keeping to its own files, and "it was only our most recent model sonnet 5 that worked on shared resources" while still merging at a high rate. So the failure on shared work is real but shrinking with newer models. All experiments used Claude models in test environments the authors built. More findings (conformity, trust, conflicting goals) are in [25, section 4d](../systems/25-ai-agent-platform.md).
 
-### 5c. 2026 studies at equal cost `[CONFIRMED]` as the papers' own results; preprints, not peer reviewed
+### 5c. 2026 studies at equal cost
+
+*`[CONFIRMED]` as the papers' own results; preprints, not peer reviewed*
 
 Many multi-agent wins compare a team against one agent that got less compute. Three 2026 arXiv preprints control for that, with different methods:
 
