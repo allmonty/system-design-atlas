@@ -70,7 +70,7 @@ That loop (observe the situation, act, receive a reward, learn, act again) is re
 **Is RL still used after deep learning and LLMs?** Yes, in two ways (our reading of the sources below):
 
 1. **Deep RL** is RL where the policy or value function is a deep network. YouTube's recommender in section 4.2 is a neural network trained with an RL algorithm. Deep learning did not replace RL; it became its engine.
-2. **LLM post-training uses RL.** Note [28](../systems/28-llm-finetuning-evaluation.md) covers RL from human feedback (RLHF), with PPO and DPO. RL with **verifiable rewards** trains reasoning models: Tulu 3 defines it as a setup where "the policy only receives a reward when its generated responses are verifiably correct" `[CONFIRMED]`, and DeepSeek-R1 (section 4.4) used it at scale.
+2. **LLM post-training uses RL.** Note [28](../systems/28-llm-finetuning-evaluation.md) covers RL from human feedback (RLHF) with PPO, and DPO, which learns from the same preference data without an RL loop. RL with **verifiable rewards** trains reasoning models: Tulu 3 defines it as a setup where "the policy only receives a reward when its generated responses are verifiably correct" `[CONFIRMED]`, and DeepSeek-R1 (section 4.4) used it at scale.
 
 What did shrink is the number of product problems where a team builds sequential RL from scratch. A supervised ranker plus a bandit for exploration, or a prompted LLM, now covers many cases that once looked like RL problems.
 
@@ -132,7 +132,7 @@ The lesson for system design (our reasoning): the learned policy proposes, and a
 2. **Task set:** problems with checkable answers (mathematics, coding, logic).
 3. **Reward:** rules, not a learned model. "Our rule-based reward system mainly consists of two types of rewards: accuracy rewards and format rewards." Accuracy checks the final answer (or runs tests for code); format checks that the reasoning sits in the expected tags.
 4. **Why not a learned reward model:** the authors say "neural reward models are susceptible to reward hacking during large-scale reinforcement learning".
-5. **Algorithm:** GRPO, which samples a group of answers per problem and scores each answer against the group's average, instead of training a separate value model as PPO does.
+5. **Algorithm:** GRPO, which samples a group of answers per problem and scores each answer against the rest of its group (relative to the group's average and spread), instead of training a separate value model as PPO does.
 6. **Result:** for the model trained with RL alone (R1-Zero), the average pass@1 on the AIME 2024 maths benchmark rose "from an initial 15.6% to 77.9%" during training. The same paper reports that this model's answers had poor readability and mixed languages; the authors addressed this in DeepSeek-R1 with a multi-stage pipeline that adds supervised fine-tuning.
 
 **A worked reward for code** `[SPECULATIVE]` (our illustration): the task is to fix a failing function. Reward 1 if the hidden test suite passes, 0 otherwise; minus 0.1 if the answer is not in the required format. The obvious hacks are editing the tests, special-casing the test inputs, or exiting early with a success code, so the tests must be hidden, run in a sandbox, and the grader must check that test files are unchanged.
