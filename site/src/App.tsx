@@ -83,6 +83,11 @@ function ToolkitView({ page, section, track }: { page: ToolkitPage; section: str
   const note = noteIn("toolkit", page.id, page.markdown, useSettings().lang);
   const headings = useHeadingComponents(note.markdown);
   useEffect(() => { if (section) scrollToSection(section, false); }, [section]);
+  // The trust card goes after the title and intro, not above them. The rest keeps its line numbers (blank lines in front),
+  // because heading ids come from source lines.
+  const cut = note.markdown.search(/^## /m);
+  const intro = cut > 0 ? note.markdown.slice(0, cut) : note.markdown;
+  const rest = cut > 0 ? "\n".repeat(intro.split("\n").length - 1) + note.markdown.slice(cut) : "";
   return (
     <main className="notes toolkit">
       <p className="crumbs"><a href="#">{t.home}</a> · <a href="#toolkit/README">{t.toolkitIndex}</a><ReadingTools />{page.id !== "README" && <StudyToggle refId={page.id.slice(0, 3)} />}</p>
@@ -92,8 +97,9 @@ function ToolkitView({ page, section, track }: { page: ToolkitPage; section: str
       <div className="toolkit-layout">
         <article>
           <Outline markdown={note.markdown} variant="select" />
+          <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, rehypeTags]} components={{ ...components, ...tagComponents, ...headings }}>{intro}</ReactMarkdown>
           {page.id !== "README" && !page.id.startsWith("W") && <TrustCard id={page.id} title={page.title} markdown={note.markdown} claims={page.claims} />}
-          <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, rehypeTags]} components={{ ...components, ...tagComponents, ...headings }}>{note.markdown}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, rehypeTags]} components={{ ...components, ...tagComponents, ...headings }}>{rest}</ReactMarkdown>
           {track && <TrackNav trackId={track} refId={page.id.slice(0, 3)} place="bottom" />}
         </article>
         <aside className="side-outline"><Outline markdown={note.markdown} variant="list" /></aside>

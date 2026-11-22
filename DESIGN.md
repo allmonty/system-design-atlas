@@ -180,7 +180,7 @@ Sticky at the top of every page (the sweep fails a page without it): the brand w
 
 ### 6.7 Trust card
 
-A card with a 4px `--c-confirmed` left border and `--t-sm` text: freshness (green when fresh, red and bold when stale), tallies, then disclosures for tag meanings, what was not checked, change history and quotation evidence.
+A card with a 4px `--c-confirmed` left border and `--t-sm` text: freshness (green when fresh, red and bold when stale), tallies, then disclosures for tag meanings, what was not checked, change history and quotation evidence. On toolkit pages it sits after the page title and intro, before the first section, so the title is the first thing a reader sees; on system pages it is still above the note (see ROADMAP, design item 2).
 
 ### 6.7b Track navigation
 
