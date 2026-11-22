@@ -3,147 +3,196 @@
     "quote": "required less compute for large-scale models and performed better",
     "url": "https://arxiv.org/pdf/2407.21783",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "optimizing single LLM calls with retrieval and in-context examples is usually enough",
     "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "demonstrably improves outcomes",
     "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "retrains all model parameters",
     "url": "https://arxiv.org/pdf/2106.09685",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "deploying independent instances of fine-tuned models, each with 175B parameters, is prohibitively expensive",
     "url": "https://arxiv.org/pdf/2106.09685",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "no additional inference latency",
     "url": "https://arxiv.org/pdf/2106.09685",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "a quick operation with very little memory overhead",
     "url": "https://arxiv.org/pdf/2106.09685",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "to finetune a 65B parameter model on a single 48GB GPU while preserving full 16-bit finetuning task performance",
     "url": "https://arxiv.org/pdf/2305.14314",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "backpropagates gradients through a frozen, 4-bit quantized pretrained language model into Low Rank Adapters",
     "url": "https://arxiv.org/pdf/2305.14314",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "a cheap and reasonable alternative to human evaluation",
     "url": "https://arxiv.org/pdf/2305.14314",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "current chatbot benchmarks are not trustworthy to accurately evaluate the performance levels of chatbots",
     "url": "https://arxiv.org/pdf/2305.14314",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "100x fewer parameters",
     "url": "https://arxiv.org/pdf/2203.02155",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "without compromising labeler preference scores",
     "url": "https://arxiv.org/pdf/2203.02155",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "rather than any broader notion of 'human values'",
     "url": "https://arxiv.org/pdf/2203.02155",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "a complex and often unstable procedure",
     "url": "https://arxiv.org/pdf/2305.18290",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "with only a simple classification loss",
     "url": "https://arxiv.org/pdf/2305.18290",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "several rounds of post-training",
     "url": "https://arxiv.org/pdf/2407.21783",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "the policy only receives a reward when its generated responses are verifiably correct",
+    "url": "https://arxiv.org/html/2411.15124v5",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Our rule-based reward system mainly consists of two types of rewards: accuracy rewards and format rewards.",
+    "url": "https://arxiv.org/html/2501.12948v2",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "a compiler can be utilized to evaluate the model's responses against a suite of predefined test cases",
+    "url": "https://arxiv.org/html/2501.12948v2",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "neural reward models are susceptible to reward hacking during large-scale reinforcement learning",
+    "url": "https://arxiv.org/html/2501.12948v2",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "GRPO foregoes the value model, instead estimating the advantages from group scores",
+    "url": "https://arxiv.org/html/2501.12948v2",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "from an initial 15.6% to 77.9%",
+    "url": "https://arxiv.org/html/2501.12948v2",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "DeepSeek-R1-Zero exhibits a steady increase in thinking time throughout training",
+    "url": "https://arxiv.org/html/2501.12948v2",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "cannot effectively tell the difference",
     "url": "https://arxiv.org/pdf/2306.05685",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "over 80% agreement",
     "url": "https://arxiv.org/pdf/2306.05685",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "the same level of agreement between humans",
     "url": "https://arxiv.org/pdf/2306.05685",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "stores all adapters in the main memory and fetches the adapters used by the currently running queries to the GPU memory",
     "url": "https://arxiv.org/pdf/2311.03285",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   }
 ]
