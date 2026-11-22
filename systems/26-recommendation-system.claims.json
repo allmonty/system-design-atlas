@@ -3,161 +3,217 @@
     "quote": "a strict serving latency of tens of milliseconds",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "represents one of the largest scale and most sophisticated industrial recommendation systems in existence",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "according to the classic two-stage information retrieval dichotomy",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "generally relevant to the user with high precision",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "broad personalization via collaborative filtering",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "more than 100 times speedup over traditional softmax",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "general purpose libraries",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "were not particularly sensitive to the choice of nearest neighbor search algorithm",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "many more features describing the video and the user's relationship to the video",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "with similar architecture",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "generally a simple function of expected watch time per impression",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "often promotes deceptive videos that the user does not complete",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "live A/B results are not always correlated with offline experiments",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "system reliability could be traded-off for real-time learning",
     "url": "https://arxiv.org/pdf/2209.07663",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "AUC improvement",
     "url": "https://arxiv.org/pdf/2209.07663",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "System Architectures for Personalization and Recommendation",
     "url": "https://netflixtechblog.com/system-architectures-for-personalization-and-recommendation-e081aa94b5d8",
     "via": "archive",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "subject to an availability and response time Service Level Agreements (SLA)",
     "url": "https://netflixtechblog.com/system-architectures-for-personalization-and-recommendation-e081aa94b5d8",
     "via": "archive",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "it is always important to think of a fast fallback mechanism such as reverting to a precomputed result",
     "url": "https://netflixtechblog.com/system-architectures-for-personalization-and-recommendation-e081aa94b5d8",
     "via": "archive",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "will not react quickly to changes in context or new data",
     "url": "https://netflixtechblog.com/system-architectures-for-personalization-and-recommendation-e081aa94b5d8",
     "via": "archive",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "a natural setting for applying incremental learning algorithms",
     "url": "https://netflixtechblog.com/system-architectures-for-personalization-and-recommendation-e081aa94b5d8",
     "via": "archive",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "All approaches can and should be combined",
     "url": "https://netflixtechblog.com/system-architectures-for-personalization-and-recommendation-e081aa94b5d8",
     "via": "archive",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "two-tower neural networks where one network called item tower is used to encode a wide variety of item features",
+    "url": "https://research.google/pubs/sampling-bias-corrected-neural-modeling-for-large-corpus-item-recommendations/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "loss functions calculated from in-batch negatives",
+    "url": "https://research.google/pubs/sampling-bias-corrected-neural-modeling-for-large-corpus-item-recommendations/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "batch loss is subject to sampling bias which could severely restrict model performance",
+    "url": "https://research.google/pubs/sampling-bias-corrected-neural-modeling-for-large-corpus-item-recommendations/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "to retrieve personalized suggestions from a corpus of tens of millions videos",
+    "url": "https://research.google/pubs/sampling-bias-corrected-neural-modeling-for-large-corpus-item-recommendations/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "We reformulate recommendation problems as sequential transduction tasks within a generative modeling framework",
+    "url": "https://arxiv.org/abs/2402.17152",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "with 1.5 trillion parameters, improve metrics in online A/B tests by 12.4%",
+    "url": "https://arxiv.org/abs/2402.17152",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "5.3x to 15.2x faster than FlashAttention2-based Transformers on 8192 length sequences",
+    "url": "https://arxiv.org/abs/2402.17152",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "empirically scales as a power-law of training compute across three orders of magnitude",
+    "url": "https://arxiv.org/abs/2402.17152",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "enables blending candidates generated by other sources",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "from an exploration/exploitation perspective",
     "url": "https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   }
 ]

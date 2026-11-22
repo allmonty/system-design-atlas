@@ -110,6 +110,13 @@ Os autores enfatizam que não é uma coisa ou outra: "All approaches can and sho
 
 Isso se mapeia na plataforma da seção 4: o ranker e o retrieval são a parte online, o log de eventos e o joiner alimentam as atualizações nearline, e o retreinamento completo é offline. É uma descrição de 2013 de uma empresa; o post não é sobre o sistema de hoje.
 
+## 3c. Since 2019: two-tower retrieval and generative recommenders `[CONFIRMED]` (Yi et al., RecSys 2019; Zhai et al., ICML 2024; abstracts)
+
+- **Retrieval two-tower.** A geração de candidatos costuma ser feita com "two-tower neural networks where one network called item tower is used to encode a wide variety of item features"; a outra torre codifica o usuário e o contexto, e o retrieval vira uma busca de vizinhos mais próximos entre os dois embeddings (nota [24](24-vector-semantic-search.md)). O treinamento usa "loss functions calculated from in-batch negatives", cuja "batch loss is subject to sampling bias which could severely restrict model performance", então o paper corrige pela frequência com que cada item aparece. O YouTube implantou isso "to retrieve personalized suggestions from a corpus of tens of millions videos".
+- **Recomendadores generativos.** Um paper de 2024 trata a recomendação como modelagem de sequências, como um language model sobre as ações de um usuário: "We reformulate recommendation problems as sequential transduction tasks within a generative modeling framework", com uma arquitetura chamada HSTU. O resumo relata que modelos "with 1.5 trillion parameters, improve metrics in online A/B tests by 12.4%", são "5.3x to 15.2x faster than FlashAttention2-based Transformers on 8192 length sequences" e que a qualidade "empirically scales as a power-law of training compute across three orders of magnitude".
+
+O que isso significa para o design `[INDUSTRY PATTERN]` (nosso raciocínio): o formato em dois estágios da seção 2 continua valendo, mas o estágio de candidatos costuma ser um índice de embeddings, e o estágio de ranking pode ser um grande modelo de sequências cujo custo de serving se parece com o serving de LLM da nota [22](22-llm-inference-serving.md). A exploração com probabilidades registradas, que mantém o feedback loop honesto, está no [P23](../toolkit/P23-reinforcement-learning-in-production.md).
+
 ## 4. The platform around the models `[INDUSTRY PATTERN]`
 
 ```
@@ -156,7 +163,7 @@ user ─► recommendation API ─► candidate generation ─► ranking ─►
 2. **Os números de AUC do Monolith** vêm de uma simulação com dataset público e de um teste A/B ao vivo de anúncios; a Tabela 3 relata uma "AUC improvement" diária cuja unidade o paper não define no texto que lemos, então não citamos os números. Trate o resultado como indicativo.
 3. **A descrição da Netflix é de 2013, e os recomendadores de produção do TikTok e do Spotify não são descritos aqui;** citamos apenas os papers e o post que lemos.
 4. **Cold start, feedback loops, re-ranking e feature store são prática do setor,** não afirmações com fonte.
-5. **Not read:** posts posteriores de engenharia de recomendação da Netflix, papers de retrieval two-tower, papers de ranking multitarefa, literatura de bandits/exploração e documentação de produtos de feature store.
+5. **Not read:** posts posteriores de engenharia de recomendação da Netflix, o corpo dos papers de two-tower e de recomendadores generativos (a seção 3c usa os resumos), papers de ranking multitarefa, literatura de bandits além do P23 e documentação de produtos de feature store.
 
 ---
 
@@ -231,9 +238,9 @@ Confie no teste ao vivo e depois investigue a lacuna: training/serving skew, um 
 ## Sources and provenance
 
 > **Kind:** real system (YouTube 2016, ByteDance Monolith 2022) com um reference design para a plataforma em volta `[INDUSTRY PATTERN]`.
-> **Sources read on 2026-10-27 (texto dos PDFs extraído localmente):** Covington, Adams and Sargin, [*Deep Neural Networks for YouTube Recommendations*](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf) (RecSys 2016) · Liu et al., [*Monolith: Real Time Recommendation System With Collisionless Embedding Table*](https://arxiv.org/pdf/2209.07663) (ByteDance, ORSUM no RecSys 2022) · Amatriain and Basilico, [*System Architectures for Personalization and Recommendation*](https://netflixtechblog.com/system-architectures-for-personalization-and-recommendation-e081aa94b5d8) (Netflix TechBlog, 27 de março de 2013; lido por uma cópia do Internet Archive).
-> **Dated material:** papers de 2016 e 2022.
-> **Not read:** posts posteriores de recomendação da Netflix, papers de ranking two-tower e multitarefa, literatura de bandits, documentação de feature store.
+> **Sources read on 2026-10-27 (texto dos PDFs extraído localmente):** Covington, Adams and Sargin, [*Deep Neural Networks for YouTube Recommendations*](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/45530.pdf) (RecSys 2016) · Liu et al., [*Monolith: Real Time Recommendation System With Collisionless Embedding Table*](https://arxiv.org/pdf/2209.07663) (ByteDance, ORSUM no RecSys 2022) · Amatriain and Basilico, [*System Architectures for Personalization and Recommendation*](https://netflixtechblog.com/system-architectures-for-personalization-and-recommendation-e081aa94b5d8) (Netflix TechBlog, 27 de março de 2013; lido por uma cópia do Internet Archive). · additions read on 2026-11-22: Yi et al., [*Sampling-Bias-Corrected Neural Modeling for Large Corpus Item Recommendations*](https://research.google/pubs/sampling-bias-corrected-neural-modeling-for-large-corpus-item-recommendations/) (RecSys 2019; abstract) · Zhai et al., [*Actions Speak Louder than Words: Trillion-Parameter Sequential Transducers for Generative Recommendations*](https://arxiv.org/abs/2402.17152) (ICML 2024; abstract)
+> **Dated material:** papers de 2016 a 2024.
+> **Not read:** posts posteriores de recomendação da Netflix, o corpo dos papers de two-tower e do HSTU, papers de ranking multitarefa, literatura de bandits além do P23, documentação de feature store.
 > **Tags:** `[CONFIRMED]` afirmado por uma fonte primária · `[INDUSTRY PATTERN]` prática padrão · `[SPECULATIVE]` plausível ou ilustrativo.
 
 ---
@@ -243,5 +250,6 @@ Confie no teste ao vivo e depois investigue a lacuna: training/serving skew, um 
 - Verified in the YouTube paper: two-stage structure, scale figures (one billion parameters, hundreds of billions of examples), millions to hundreds to dozens funnel, extreme multiclass formulation, sampled negatives and the 100 times speedup, nearest-neighbour serving and insensitivity to the algorithm, example-age feature, ranking with logistic regression and expected watch time, click-through critique, impression features for churn, offline versus A/B statement, the exploration/exploitation remark.
 - Verified in the Monolith paper: abstract claims, cuckoo hashmap, ID filtering and expiry, batch and online stages, Kafka and Flink streaming engine and online joiner, log-odds correction, minute-level sparse sync and daily dense sync, the 400 MB per minute example, daily snapshots, Criteo AUC table, Table 3 improvements, the reliability-for-realtime conclusion.
 - Verified in the Netflix post: the online, offline and nearline definitions and their trade-offs, the fallback-to-precomputed advice, hybrid combination and hybrid modelling examples, models/data/signals and events/data distinctions, the Manhattan event flow.
+- Verified in the 2026-11-22 additions (abstracts only): the two-tower description, in-batch negatives and sampling bias, YouTube deployment over tens of millions of videos; generative recommenders as sequential transduction, HSTU, 1.5 trillion parameters with 12.4% in online A/B tests, 5.3x to 15.2x against FlashAttention2-based Transformers at 8,192 tokens, power-law scaling over three orders of magnitude. The papers' bodies were not read.
 - Labelled industry pattern, not sourced: multiple candidate sources beyond the papers, feature store, re-ranking policy, cold-start tactics, feedback-loop mitigations, latency budget, experiment guardrails, capacity arithmetic.
 - Not claimed: how any current production recommender (YouTube, TikTok, Netflix, Spotify) works today.
