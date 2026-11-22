@@ -98,7 +98,7 @@ O RLHF é descrito como "a complex and often unstable procedure". O DPO usa uma 
 
 ### 3.4 A full public recipe: Llama 3 post-training `[CONFIRMED]` (Meta, 2024)
 
-O Llama 3 é alinhado com "several rounds of post-training", cada rodada sendo supervised fine-tuning (SFT) seguido de DPO em exemplos coletados por anotação humana ou gerados sinteticamente; o paper aplica "six rounds". A espinha dorsal é um reward model treinado em dados de preferência humana e o language model. Elementos principais:
+O Llama 3 é alinhado com "several rounds of post-training", cada rodada sendo supervised fine-tuning (SFT) seguido de DPO em exemplos coletados por anotação humana ou gerados sinteticamente; o paper aplica "six rounds". O paper chama um reward model e um language model de espinha dorsal do seu post-training: primeiro treina o reward model com dados de preferência anotados por humanos, depois ajusta o language model. Elementos principais:
 - **Rejection sampling:** para cada prompt, amostre K saídas (tipicamente 10 a 30) do modelo mais recente e use o reward model para escolher a melhor; essas viram dados de treinamento. O PagedAttention (veja [22 LLM inference serving](22-llm-inference-serving.md)) deu mais de 2 vezes de throughput nesta etapa.
 - **Detalhes do DPO:** principalmente os dados de preferência mais novos, para que os dados correspondam à política atual; eles tentaram PPO mas o DPO precisou de menos computação e se saiu melhor, especialmente em benchmarks de seguir instruções; learning rate de 10⁻⁵ e β de 0,1; tokens de formatação mascarados na loss por estabilidade.
 - **Model averaging:** média de modelos de experimentos com dados ou hiperparâmetros diferentes em cada estágio de reward model, SFT ou DPO.

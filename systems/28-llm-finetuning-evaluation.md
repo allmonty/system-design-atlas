@@ -98,7 +98,7 @@ RLHF is described as "a complex and often unstable procedure". DPO uses a parame
 
 ### 3.4 A full public recipe: Llama 3 post-training `[CONFIRMED]` (Meta, 2024)
 
-Llama 3 is aligned with "several rounds of post-training", each round being supervised fine-tuning (SFT) followed by DPO on examples collected by human annotation or generated synthetically; the paper applies "six rounds". The backbone is a reward model trained on human preference data and the language model. Key elements:
+Llama 3 is aligned with "several rounds of post-training", each round being supervised fine-tuning (SFT) followed by DPO on examples collected by human annotation or generated synthetically; the paper applies "six rounds". The paper calls a reward model and a language model the backbone of its post-training: it first trains the reward model on human-annotated preference data, then tunes the language model. Key elements:
 - **Rejection sampling:** for each prompt, sample K outputs (typically 10 to 30) from the latest model and use the reward model to pick the best; those become training data. PagedAttention (see [22 LLM inference serving](22-llm-inference-serving.md)) gave over 2 times higher throughput for this step.
 - **DPO details:** mostly the newest preference data, so data matches the current policy; they tried PPO but DPO needed less compute and performed better, especially on instruction-following benchmarks; learning rate 10⁻⁵ and β 0.1; formatting tokens masked from the loss for stability.
 - **Model averaging:** average models from experiments with different data or hyperparameters at each reward-model, SFT or DPO stage.
