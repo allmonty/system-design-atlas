@@ -62,20 +62,11 @@ Imagine a **very capable intern working in an office with a locked supply room**
 
 ## 2. Workflows versus agents `[CONFIRMED]` (Anthropic, December 2024)
 
-Anthropic's post "Building effective agents" groups both under **agentic systems**, but the authors "draw an important architectural distinction" between workflows and agents. Its advice is to find "the simplest solution possible, and only increasing complexity when needed", which "might mean not building agentic systems at all", and that for many applications "optimizing single LLM calls with retrieval and in-context examples is usually enough". The five workflow patterns are taught one by one, with their classic analogues, in [P19](../toolkit/P19-llm-workflow-patterns.md).
+Anthropic's post "Building effective agents" groups both under **agentic systems**, but the authors "draw an important architectural distinction" between workflows and agents. Its advice is to find "the simplest solution possible, and only increasing complexity when needed", which "might mean not building agentic systems at all", and that for many applications "optimizing single LLM calls with retrieval and in-context examples is usually enough".
 
-**The building block** is the *augmented LLM*: a model with retrieval, tools and memory.
-
-**Five workflow patterns** the post describes:
-1. **Prompt chaining:** a fixed sequence where each call processes the previous output, with programmatic checks (gates) between steps.
-2. **Routing:** classify the input and send it to a specialised follow-up, for example easy questions to a smaller model and hard ones to a more capable one.
-3. **Parallelization:** sectioning (independent subtasks in parallel) or voting (the same task several times).
-4. **Orchestrator-workers:** a central model breaks the task down dynamically and delegates to workers, suited to cases such as multi-file code changes where subtasks cannot be predicted.
-5. **Evaluator-optimizer:** one call generates, another evaluates, in a loop, when there are clear criteria and refinement helps.
+The post's building block is an LLM with retrieval, tools and memory, and it names five workflow patterns (prompt chaining, routing, parallelization, orchestrator-workers, evaluator-optimizer); [P19](../toolkit/P19-llm-workflow-patterns.md) teaches each one with its classic analogue, so this note covers what the platform needs.
 
 **Agents** are for open-ended problems "where it's difficult or impossible to predict the required number of steps". They "are typically just LLMs using tools based on environmental feedback in a loop". At each step the agent should get ground truth from the environment (tool results, code execution), can pause for human feedback at checkpoints, and the run often includes "stopping conditions (such as a maximum number of iterations)". The post recommends "extensive testing in sandboxed environments, along with the appropriate guardrails".
-
-**Frameworks.** The post suggests starting with direct LLM API calls because frameworks "often create extra layers of abstraction that can obscure the underlying prompts and responses".
 
 **Tool design (the "agent-computer interface").** Tool definitions deserve as much prompt engineering as the prompts. The post's example: while building its SWE-bench agent, Anthropic "spent more time optimizing our tools than the overall prompt", and found that requiring absolute file paths made the model use the tool "flawlessly" after relative paths had caused mistakes. It also suggests making tools hard to misuse (poka-yoke), keeping formats close to text the model has seen, and avoiding formats that need exact counting or heavy escaping.
 
@@ -124,8 +115,7 @@ What this gives an interview answer: a concrete reason to put untrusted generate
 ## 4c. Lessons from a production multi-agent system `[CONFIRMED]` (Anthropic, June 2025)
 
 Anthropic's engineering post on its multi-agent research system adds production detail to section 2. It uses an **orchestrator-worker** pattern: a lead agent plans, saves its plan to memory, and spawns subagents that search in parallel with their own context windows and return condensed findings. Reported points that matter for platform design (the multi-agent topologies and the evidence on when several agents help are in [P20](../toolkit/P20-agent-and-multi-agent-architectures.md)):
-- **Cost:** "agents typically use about 4× more tokens than chat interactions, and multi-agent systems use about 15× more tokens than chats", so the task must be valuable enough to pay for it. Token usage alone explained 80% of the variance in a browsing benchmark (BrowseComp).
-- **Quality:** a multi-agent system with Claude Opus 4 as the lead agent and Claude Sonnet 4 subagents outperformed a single Claude Opus 4 agent by 90.2% on their internal research evaluation, strongest on breadth-first tasks; they note most coding tasks have fewer parallelisable parts than research.
+- **Cost and quality:** multi-agent runs used about 15 times the tokens of a chat and scored 90.2% higher than a single agent on Anthropic's internal research evaluation (Claude Opus 4 lead, Claude Sonnet 4 subagents); [P20](../toolkit/P20-agent-and-multi-agent-architectures.md), section 5a, gives the figures with their limits.
 - **State and recovery:** "agents are stateful and errors compound"; when errors occur they cannot just restart from the beginning, so they built systems that "resume from where the agent was when the errors occurred".
 - **Deployments:** because agents may be anywhere in their process during an update, they use **rainbow deployments**, gradually shifting traffic from old to new versions while both run.
 - **Debugging:** agents are non-deterministic between runs, which made production tracing necessary.
