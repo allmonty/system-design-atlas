@@ -29,6 +29,12 @@ const en = {
   smaller: "Smaller text",
   larger: "Larger text",
   diagramFixed: "Diagram labels keep a fixed size.",
+  lineLength: "Line length",
+  widths: { narrow: "Narrow", medium: "Medium", wide: "Wide" },
+  measureAria: "Line length in characters",
+  measureValue: (n: number) => `≈${n} chars`,
+  shorterLines: "Shorter lines",
+  longerLines: "Longer lines",
   reset: "Reset to defaults",
 
   // Reading tools, study toggle
@@ -223,6 +229,12 @@ const ptBR: Dict = {
   smaller: "Texto menor",
   larger: "Texto maior",
   diagramFixed: "Os rótulos do diagrama mantêm um tamanho fixo.",
+  lineLength: "Comprimento da linha",
+  widths: { narrow: "Estreita", medium: "Média", wide: "Larga" },
+  measureAria: "Comprimento da linha em caracteres",
+  measureValue: (n) => `≈${n} caract.`,
+  shorterLines: "Linhas mais curtas",
+  longerLines: "Linhas mais longas",
   reset: "Restaurar padrões",
 
   focus: "Foco",

@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-import { DEFAULTS, parseSettings, serializeSettings, clampSize, type Settings } from "./settings-core.ts";
+import { DEFAULTS, parseSettings, serializeSettings, clampSize, clampMeasure, proseMax, type Settings } from "./settings-core.ts";
 
 // Reading settings live in one cookie. Cookie access is wrapped because it can be blocked (or absent on file://);
 // the choice then lasts for the page session only.
@@ -13,12 +13,13 @@ export function applySettings(s: Settings) {
   const root = document.documentElement;
   if (s.theme === "system") delete root.dataset.theme; else root.dataset.theme = s.theme;
   root.dataset.font = s.font;
+  root.style.setProperty("--prose-max", proseMax(s.measure));
   root.lang = s.lang;
   root.style.setProperty("--fs", `${s.size}px`);
 }
 
 export function updateSettings(patch: Partial<Settings>) {
-  state = { ...state, ...patch, size: clampSize(patch.size ?? state.size) };
+  state = { ...state, ...patch, size: clampSize(patch.size ?? state.size), measure: clampMeasure(patch.measure ?? state.measure) };
   applySettings(state);
   try { document.cookie = serializeSettings(state); } catch { /* keep in memory only */ }
   listeners.forEach((l) => l());

@@ -196,6 +196,9 @@ button.study { margin-left: auto; }
 .size-row { display: flex; align-items: center; gap: var(--s-2); }
 .size-row input[type="range"] { flex: 1; min-width: 0; accent-color: var(--accent); }
 .size-row output { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.presets { display: flex; gap: var(--s-2); margin-top: var(--s-2); }
+.presets button { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; font-size: 13px; padding: var(--s-1) var(--s-2); }
+.preset-n { font-size: 12px; font-variant-numeric: tabular-nums; opacity: .8; }
 .settings-pop .small { font-size: 12px; margin: var(--s-2) 0 0; }
 /* Steps and progress sit at the bottom of every track card, so they line up across cards of different height. */
 .card-foot { align-self: stretch; margin-top: auto; padding-top: var(--s-3); display: flex; flex-direction: column; gap: var(--s-2); }
