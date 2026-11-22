@@ -11,14 +11,17 @@ import { useSettings } from "./settings.ts";
 // Learning stages come from stages.json, the one source of the learning order (README and the atlas track are tested against it).
 const STAGES: { title: string; blurb: string; ids: string[] }[] = stages;
 
-export function ItemRow({ item, why, index, next }: { item: Item; why?: string; index?: number; next?: boolean }) {
+/** A link to an item that remembers the track it was opened from, so the page can show the track's previous and next steps. */
+export const inTrack = (href: string, track?: string) => (track ? `${href}${href.includes("?") ? "&" : "?"}track=${track}` : href);
+
+export function ItemRow({ item, why, index, next, track }: { item: Item; why?: string; index?: number; next?: boolean; track?: string }) {
   const { done } = useProgress();
   const t = useT();
   const isDone = done.includes(item.ref);
   return (
-    <li className={`step${isDone ? " done" : ""}${next ? " next" : ""}`}>
+    <li className={`step${isDone ? " done" : ""}${next ? " next" : ""}`} aria-current={next ? "step" : undefined}>
       <input type="checkbox" checked={isDone} onChange={() => toggleDone(item.ref)} aria-label={t.markItemStudied(item.title)} />
-      <a href={item.href}>
+      <a href={inTrack(item.href, track)}>
         <span className="step-top">
           {index !== undefined && <span className="num">{index}</span>}
           <strong>{item.title}</strong>

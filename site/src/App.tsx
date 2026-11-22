@@ -6,7 +6,7 @@ import rehypeRaw from "rehype-raw";
 import { noteIn, systems, toolkitPages, type ToolkitPage } from "./data.ts";
 import { useSettings } from "./settings.ts";
 import { Home } from "./Home.tsx";
-import { TrackPage } from "./TrackPage.tsx";
+import { TrackNav, TrackPage } from "./TrackPage.tsx";
 import { StudyToggle } from "./StudyToggle.tsx";
 import { SystemPage, components } from "./SystemPage.tsx";
 import { rehypeTags, tagComponents } from "./tags.tsx";
@@ -56,7 +56,7 @@ export function App() {
       ) : trackId ? (
         <TrackPage id={trackId} />
       ) : page ? (
-        <ToolkitView key={page.id} page={page} section={params.get("section")} />
+        <ToolkitView key={page.id} page={page} section={params.get("section")} track={params.get("track")} />
       ) : system ? (
         <SystemPage
           key={`${system.id}?${query}`}
@@ -67,6 +67,7 @@ export function App() {
           initialFlow={params.get("flow")}
           initialStep={Number.isFinite(Number(params.get("step"))) ? Number(params.get("step")) - 1 : 0}
           initialSection={params.get("section")}
+          track={params.get("track")}
         />
       ) : id === "" ? (
         <Home />
@@ -77,7 +78,7 @@ export function App() {
   );
 }
 
-function ToolkitView({ page, section }: { page: ToolkitPage; section: string | null }) {
+function ToolkitView({ page, section, track }: { page: ToolkitPage; section: string | null; track: string | null }) {
   const t = useT();
   const note = noteIn("toolkit", page.id, page.markdown, useSettings().lang);
   const headings = useHeadingComponents(note.markdown);
@@ -85,10 +86,12 @@ function ToolkitView({ page, section }: { page: ToolkitPage; section: string | n
   return (
     <main className="notes toolkit">
       <p className="crumbs"><a href="#">{t.home}</a> · <a href="#toolkit/README">{t.toolkitIndex}</a><ReadingTools />{page.id !== "README" && <StudyToggle refId={page.id.slice(0, 3)} />}</p>
+      {track && <TrackNav trackId={track} refId={page.id.slice(0, 3)} place="top" />}
       {note.fallback && <p className="muted small">{t.notTranslated}</p>}
       <Outline markdown={note.markdown} variant="select" />
       {page.id !== "README" && !page.id.startsWith("W") && <TrustCard id={page.id} title={page.title} markdown={note.markdown} claims={page.claims} />}
       <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, rehypeTags]} components={{ ...components, ...tagComponents, ...headings }}>{note.markdown}</ReactMarkdown>
+      {track && <TrackNav trackId={track} refId={page.id.slice(0, 3)} place="bottom" />}
     </main>
   );
 }

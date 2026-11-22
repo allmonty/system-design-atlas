@@ -182,6 +182,10 @@ Sticky at the top of every page (the sweep fails a page without it): the brand w
 
 A card with a 4px `--c-confirmed` left border and `--t-sm` text: freshness (green when fresh, red and bold when stale), tallies, then disclosures for tag meanings, what was not checked, change history and quotation evidence.
 
+### 6.7b Track navigation
+
+A page opened from a track carries `?track=<id>` in its address (track pages add it to every step link). It then shows a compact card under the crumbs (`.track-nav.at-top`: the track title linking back, and "Step i of n") and, at the end of the note, two cards for the previous and next steps (`.track-nav.at-end`, side by side, stacked at 560px and below). Both are in the surface selector list. Opened without `?track=`, a page shows neither, so the same page works outside a track. The track list marks its next step with `aria-current="step"` as well as the ring and pill.
+
 ### 6.8 Focus
 
 One ring for every focusable element: `outline: 2px solid var(--accent); outline-offset: 2px`, on `:focus-visible` only (keyboard focus, not mouse clicks). It is defined once in `design.css`. Do not set `outline: none` on a focusable element; if a component needs a different focus look, add it and keep the ring.

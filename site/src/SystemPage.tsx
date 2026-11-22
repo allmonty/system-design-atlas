@@ -15,6 +15,7 @@ import { Outline, scrollToSection, useHeadingComponents } from "./sections.tsx";
 import { systems, toolkitPages } from "./data.ts";
 import type { Components } from "react-markdown";
 import { useT } from "./i18n.tsx";
+import { TrackNav } from "./TrackPage.tsx";
 
 // Notes are plain Markdown written for GitHub: map sibling-note links to site routes, mark the rest as non-navigable,
 // show Mermaid source collapsed (the interactive diagram replaces it) and let wide tables scroll.
@@ -52,6 +53,7 @@ export function SystemPage({
   initialFlow,
   initialStep,
   initialSection,
+  track,
 }: {
   system: System;
   initialLevel: "context" | "container" | "component";
@@ -60,6 +62,7 @@ export function SystemPage({
   initialFlow: string | null;
   initialStep: number;
   initialSection: string | null;
+  track?: string | null;
 }) {
   const t = useT();
   const note = noteIn("systems", system.id, system.markdown, useSettings().lang);
@@ -95,6 +98,7 @@ export function SystemPage({
   return (
     <main className="system">
       <p className="crumbs"><a href="#">{t.home}</a><ReadingTools /><StudyToggle refId={system.id.slice(0, 2)} /></p>
+      {track && <TrackNav trackId={track} refId={system.id.slice(0, 2)} place="top" />}
       <div className="bar">
         <h1>
           {system.diagram.title}{" "}
@@ -154,6 +158,7 @@ export function SystemPage({
               span: refSpan,
             }}
           >{note.markdown}</ReactMarkdown>
+          {track && <TrackNav trackId={track} refId={system.id.slice(0, 2)} place="bottom" />}
         </article>
       </div>
     </main>

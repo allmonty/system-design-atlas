@@ -1,6 +1,6 @@
 import { resolveRef, trackIn, tracks, type Item } from "./data.ts";
 import { useProgress } from "./progress.ts";
-import { ItemRow } from "./Home.tsx";
+import { ItemRow, inTrack } from "./Home.tsx";
 import { TrackIcon } from "./icons.tsx";
 import { useT } from "./i18n.tsx";
 import { useSettings } from "./settings.ts";
@@ -29,11 +29,34 @@ export function TrackPage({ id }: { id: string }) {
         <span className="bar-track"><span style={{ width: `${(100 * n) / steps.length}%` }} /></span>
         <span>{t.trackProgress(n, steps.length, hours(left), hours(mins))}</span>
       </div>
-      {nextIndex >= 0 && <p><a className="button primary" href={steps[nextIndex].item.href}>{n === 0 ? t.start : t.continueLabel}: {steps[nextIndex].item.title}</a></p>}
+      {nextIndex >= 0 && <p><a className="button primary" href={inTrack(steps[nextIndex].item.href, track.id)}>{n === 0 ? t.start : t.continueLabel}: {steps[nextIndex].item.title}</a></p>}
       {nextIndex < 0 && <p>{t.trackComplete(<a href="#">{t.homePage}</a>)}</p>}
       <ol className="steps">
-        {steps.map((s, i) => <ItemRow key={s.item.ref} item={s.item} why={s.why} index={i + 1} next={i === nextIndex} />)}
+        {steps.map((s, i) => <ItemRow key={s.item.ref} item={s.item} why={s.why} index={i + 1} next={i === nextIndex} track={track.id} />)}
       </ol>
     </main>
+  );
+}
+
+/** On a page opened from a track: where it sits in the track (top) and the previous and next steps (bottom). */
+export function TrackNav({ trackId, refId, place }: { trackId: string; refId: string; place: "top" | "bottom" }) {
+  const t = useT();
+  const { lang } = useSettings();
+  const base = tracks.find((x) => x.id === trackId);
+  const track = base && trackIn(base, lang);
+  if (!track) return null;
+  const refs = track.steps.map((s) => s.ref);
+  const i = refs.indexOf(refId);
+  if (i < 0) return null;
+  const link = (ref: string | undefined) => { const item = ref ? resolveRef(ref) : undefined; return item && { href: inTrack(item.href, track.id), title: item.title }; };
+  if (place === "top") {
+    return <p className="track-nav at-top"><a href={`#track/${track.id}`}>← {track.title}</a><span className="muted">{t.trackStep(i + 1, refs.length)}</span></p>;
+  }
+  const prev = link(refs[i - 1]), next = link(refs[i + 1]);
+  return (
+    <nav className="track-nav at-end" aria-label={t.trackNav}>
+      {prev ? <a href={prev.href}><span className="muted">← {t.prevStep}</span>{prev.title}</a> : <span />}
+      {next ? <a className="next" href={next.href}><span className="muted">{t.nextStep} →</span>{next.title}</a> : <a className="next" href={`#track/${track.id}`}><span className="muted">{t.trackStep(refs.length, refs.length)}</span>← {track.title}</a>}
+    </nav>
   );
 }

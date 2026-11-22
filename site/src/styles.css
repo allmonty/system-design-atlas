@@ -332,3 +332,12 @@ button.study { margin-left: auto; }
 /* display, not visibility: a hidden box still widens its scroll container, so each tooltip added sideways scroll to the note */
 .conf-tag:hover::after, .conf-tag:focus-visible::after { display: block; }
 .conf-c { color: var(--c-confirmed); } .conf-ip { color: var(--c-pattern); } .conf-s { color: var(--c-spec); } .conf-ep { color: var(--muted); }
+
+/* Track navigation on a page opened from a track: a strip under the crumbs, previous and next at the end. */
+.track-nav.at-top { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: baseline; justify-content: space-between; padding: var(--s-2) var(--s-4); margin: var(--s-2) 0 var(--s-4); max-width: var(--prose-max); }
+.track-nav.at-end { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3); margin: var(--s-6) 0 0; max-width: var(--prose-max); }
+.track-nav.at-end a { display: flex; flex-direction: column; gap: var(--s-1); padding: var(--s-3) var(--s-4); font-weight: 600; }
+.track-nav.at-end a .muted { font-weight: 400; font-size: var(--t-sm); }
+.track-nav.at-end a.next { text-align: right; align-items: flex-end; }
+.track-nav.at-end a:hover { border-color: var(--accent); }
+@media (max-width: 560px) { .track-nav.at-end { grid-template-columns: minmax(0, 1fr); } .track-nav.at-end a.next { text-align: left; align-items: flex-start; } }

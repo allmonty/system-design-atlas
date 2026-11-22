@@ -90,7 +90,7 @@
 .cards li, .track-cards li { display: flex; }
 
 /* ---- Surface: the one card look. Every card-like element on the site is listed here. ---- */
-.cards a, .track-cards a, .method li, .step, .legend-box, .concept-list > li, .text-hits a, .trust {
+.cards a, .track-cards a, .method li, .step, .legend-box, .concept-list > li, .text-hits a, .trust, .track-nav.at-top, .track-nav.at-end a {
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-1);
   padding: var(--s-4); color: var(--fg); text-decoration: none;
   -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
