@@ -254,113 +254,129 @@
     },
     {
       "id": "ai",
-      "title": "AI systems engineer",
-      "audience": "You build or operate LLM-based products and want to design them well.",
-      "summary": "Serving, retrieval, agents, improving models and training, followed by the security and cost questions every AI feature raises.",
+      "title": "AI platform engineer",
+      "audience": "You run the models or the infrastructure around them yourself: serving, retrieval indexes, fine-tuning or training.",
+      "summary": "LLM basics, then serving, vector search and retrieval, agents, evaluation, improving models and learning from feedback, followed by security and cost. If you only call hosted model APIs, take the AI application architect track.",
       "steps": [
         {
+          "ref": "P19",
+          "why": "Start here, section 1 only (about 10 minutes): after it you can explain tokens, the context window, why a model keeps no memory between calls and why its outputs vary. The rest of P19 is optional on this track."
+        },
+        {
           "ref": "22",
-          "why": "How LLMs are served: KV cache, batching and the prefill/decode split."
+          "why": "After this you can size a KV cache, explain why time to first token and time per output token are separate targets, and say what continuous batching and splitting prefill from decode buy."
         },
         {
           "ref": "24",
-          "why": "Vector search: the indexes behind retrieval."
+          "why": "After this you can choose between an in-memory graph index, an SSD-resident index and pgvector for a corpus size and recall target, and say what each costs in memory."
         },
         {
           "ref": "23",
-          "why": "Retrieval-augmented generation as a system: chunking, hybrid search, permissions."
+          "why": "After this you can design a retrieval pipeline end to end (chunking, hybrid search, reranking, permission filtering) and explain why most wrong answers are retrieval failures."
         },
         {
           "ref": "25",
-          "why": "Agents: workflows versus loops, tools, sandboxes and budgets."
+          "why": "After this you can design the platform under an agent: tool calls, MCP, sandboxes, saved state and step, time and cost budgets."
         },
         {
           "ref": "P20",
-          "why": "When one agent becomes several: supervisor, handoff and pipeline topologies, and what the evidence says about multi-agent gains at equal cost."
-        },
-        {
-          "ref": "28",
-          "why": "Improving a model: adapters, preference tuning, evaluation gates and rollout."
-        },
-        {
-          "ref": "P23",
-          "why": "Reinforcement learning across systems: bandits, sequential RL and RL for language models, with worked examples, reward design and when not to use it."
+          "why": "After this you can decide whether a second agent is worth it, pick a topology and say how you would compare it with one agent at equal cost."
         },
         {
           "ref": "P18",
-          "why": "Evaluating LLM features and agents: graders, regression versus capability suites, pass@k versus pass^k, and evals that are themselves broken."
+          "why": "After this you can design an evaluation: graders, regression and capability suites, several trials, and when to report pass@k or pass^k."
+        },
+        {
+          "ref": "28",
+          "why": "After this you can choose between prompting, adapters and full fine-tuning, explain RLHF with PPO and DPO in an interview, and gate a rollout on evals."
         },
         {
           "ref": "26",
-          "why": "Two-stage recommendation and learning from feedback."
+          "why": "After this you can design a two-stage recommender and explain the feedback loops that learning from user behaviour creates."
+        },
+        {
+          "ref": "P23",
+          "why": "After this you can tell a bandit problem from full RL, design a reward and its logging, and explain how RL trains reasoning models. Read sections 1 to 3 and 8 first."
         },
         {
           "ref": "27",
-          "why": "Training at scale: parallelism, checkpoints and failure."
+          "why": "Optional, if you train models: after this you can explain data, tensor and pipeline parallelism, checkpointing, and why failures dominate at thousands of GPUs."
+        },
+        {
+          "ref": "P22",
+          "why": "After this you can defend an LLM system against prompt injection with the Rule of Two, and keep long agent runs alive with checkpoints, limits and tracing."
         },
         {
           "ref": "P06",
-          "why": "Threat modeling, which matters most for tools and retrieved text."
+          "why": "After this you can run a threat model on any design in this track: trust boundaries, STRIDE and a response to each threat."
         },
         {
           "ref": "P08",
-          "why": "Tokens and GPU hours as the cost drivers."
+          "why": "After this you can estimate the dominant cost (GPU hours or tokens) and name each lever with what it gives up."
         },
         {
           "ref": "W04",
-          "why": "Scenario 6 asks for an AI feature design with safety and evaluation."
+          "why": "Practise: exercises 6, 7 and 8 ask for an AI design decision. Write the decision record, then compare with the answer key."
+        },
+        {
+          "ref": "W01",
+          "why": "Finish with a 45-minute mock interview on note 23 or 25 using this script and rubric. It brings serving, retrieval, agents, evaluation, security and cost together."
         }
       ]
     },
     {
       "id": "ai-apps",
       "title": "AI application architect",
-      "audience": "You design products on top of LLM APIs and want to know which pattern fits, and how it fails in production.",
-      "summary": "From one model call to workflows, agents and multi-agent systems, then the frameworks, production engineering, evaluation, security and cost around them.",
+      "audience": "You build products by calling hosted model APIs and want to know which pattern fits, and how it fails in production.",
+      "summary": "From one model call to workflows, agents and multi-agent systems, then production engineering, evaluation, security and cost. If you run the models yourself, take the AI platform engineer track.",
       "steps": [
         {
           "ref": "P19",
-          "why": "The complexity ladder and the five workflow patterns (chaining, routing, parallelisation, orchestrator-workers, evaluator-optimizer), each mapped to a classic design."
+          "why": "Start here: after it you can explain tokens, context and sampling, and choose between one model call, a workflow and an agent for a feature."
         },
         {
           "ref": "23",
-          "why": "Retrieval as a system: the most common way to give a model your data, with chunking, hybrid search and permissions."
-        },
-        {
-          "ref": "P20",
-          "why": "Agents and multi-agent topologies (supervisor, handoff, pipeline, group chat), mapped to orchestration and choreography, and when several agents beat one."
+          "why": "After this you can design retrieval for a product (chunking, hybrid search, reranking, permission filtering), the most common way to give a model your data. Note 24 explains the indexes if you want depth."
         },
         {
           "ref": "25",
-          "why": "The platform under an agent: tools, MCP, sandboxes, state and budgets, with a coding agent as the worked example."
+          "why": "After this you can design what sits under a single agent: tool calls, MCP, sandboxes, saved state and budgets."
         },
         {
-          "ref": "P22",
-          "why": "What breaks in production: context limits, long runs, tool design, prompt injection and the Rule of Two, budgets and tracing."
-        },
-        {
-          "ref": "P18",
-          "why": "How to tell whether a change made it better: graders, regression versus capability suites, pass@k versus pass^k."
-        },
-        {
-          "ref": "P23",
-          "why": "When a product should learn from outcomes instead of labels: bandits, RL-trained models and game agents, with how to build one and how rewards get gamed."
-        },
-        {
-          "ref": "P06",
-          "why": "Threat modelling for the trust boundaries an agent adds: tool results, credentials and external actions."
-        },
-        {
-          "ref": "P08",
-          "why": "Cost as a design input: tokens per task, model tiering and budgets."
-        },
-        {
-          "ref": "W04",
-          "why": "Practise writing the decision down as an ADR, for example workflow versus agent or one agent versus several."
+          "ref": "P20",
+          "why": "After this you can decide whether a second agent is worth it, pick a topology and say how you would compare it with one agent at equal cost."
         },
         {
           "ref": "P21",
-          "why": "Reference, for when you pick a stack: a dated snapshot of the frameworks and protocols (MCP, A2A, LangGraph, the vendor SDKs), what changed in 2026 and how to choose."
+          "why": "Reference, skim: what MCP, A2A and the main frameworks are and what changed in 2026. Come back to it when you pick a stack."
+        },
+        {
+          "ref": "P22",
+          "why": "After this you can defend an LLM product against prompt injection with the Rule of Two, and keep long agent runs alive with checkpoints, limits, caching and tracing."
+        },
+        {
+          "ref": "P18",
+          "why": "After this you can design an evaluation: graders, regression and capability suites, several trials, and when to report pass@k or pass^k."
+        },
+        {
+          "ref": "P23",
+          "why": "Optional: after it you can tell when a product should learn from outcomes (bandits, RL-trained models, game agents) and design a reward that is hard to game. Read sections 1 to 3 and 8 first."
+        },
+        {
+          "ref": "P06",
+          "why": "After this you can threat-model the trust boundaries an agent adds: tool results, credentials and external actions."
+        },
+        {
+          "ref": "P08",
+          "why": "After this you can put a number on cost per task in tokens and choose model tiers and budgets."
+        },
+        {
+          "ref": "W04",
+          "why": "Practise: exercises 6, 7 and 8 (an account assistant, workflow or agent, one agent or several). Write the decision record, then compare with the answer key."
+        },
+        {
+          "ref": "W01",
+          "why": "Finish with a 45-minute mock interview on note 23 or 25 using this script and rubric."
         }
       ]
     },
