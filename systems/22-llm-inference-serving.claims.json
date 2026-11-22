@@ -3,140 +3,245 @@
     "quote": "severely underutilizes GPU computation and becomes memory-bound",
     "url": "https://arxiv.org/pdf/2309.06180",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "only 20.4% - 38.2% of the KV cache memory is used to store the actual token states",
     "url": "https://arxiv.org/pdf/2309.06180",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "the block size 16 is large enough to efficiently utilize the GPU",
     "url": "https://arxiv.org/pdf/2309.06180",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "ensuring fairness and preventing starvation",
     "url": "https://arxiv.org/pdf/2309.06180",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "either evict all or none of the blocks of a sequence",
     "url": "https://arxiv.org/pdf/2309.06180",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "vLLM improves the throughput of popular LLMs by 2-4× with the same level of latency compared to the state-of-the-art systems, such as FasterTransformer and Orca",
     "url": "https://arxiv.org/pdf/2309.06180",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "cannot return to the client",
     "url": "https://www.usenix.org/system/files/osdi22-yu.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "newly arrived requests have to wait until the current batch completely finishes",
     "url": "https://www.usenix.org/system/files/osdi22-yu.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "schedules execution at the granularity of iteration (instead of request)",
     "url": "https://www.usenix.org/system/files/osdi22-yu.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "only to a selected set of operations",
     "url": "https://www.usenix.org/system/files/osdi22-yu.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "36.9× throughput improvement at the same level of latency",
     "url": "https://www.usenix.org/system/files/osdi22-yu.pdf",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "leads to strong prefill-decoding interferences",
     "url": "https://arxiv.org/pdf/2401.09670",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "the duration of the prefill phase",
     "url": "https://arxiv.org/pdf/2401.09670",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "the average time taken to generate a token for each request (except for the first token)",
     "url": "https://arxiv.org/pdf/2401.09670",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "the maximum request rate that can be served adhering to the SLO attainment goal (say, 90%) for each GPU provisioned",
     "url": "https://arxiv.org/pdf/2401.09670",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "7.4 × more requests or 12.6× tighter SLO",
     "url": "https://arxiv.org/pdf/2401.09670",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "equivalently 90Gbps bandwidth",
     "url": "https://arxiv.org/pdf/2401.09670",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "generation stalls",
     "url": "https://arxiv.org/pdf/2403.02310",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "identical outputs",
     "url": "https://arxiv.org/pdf/2211.17192",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Protecting only 1% salient weights can greatly reduce quantization error",
+    "url": "https://arxiv.org/abs/2306.00978",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "more than 3x speedup over the Huggingface FP16 implementation on both desktop and mobile GPUs",
+    "url": "https://arxiv.org/abs/2306.00978",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Quantizing the KV (Key-Value) cache to FP8 format can significantly reduce its memory footprint",
+    "url": "https://docs.vllm.ai/en/latest/features/quantization/quantized_kvcache.html",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "This optimization enables you to store more tokens in memory",
+    "url": "https://docs.vllm.ai/en/latest/features/quantization/quantized_kvcache.html",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "in a radix tree",
+    "url": "https://arxiv.org/html/2312.07104v2",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "up to 6.4x higher throughput compared to state-of-the-art inference systems",
+    "url": "https://arxiv.org/abs/2312.07104",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "we hash each kv-cache block by the tokens in the block and the tokens in the prefix before the block",
+    "url": "https://docs.vllm.ai/en/latest/design/prefix_caching.html",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "an open-source, Kubernetes-native stack for distributed LLM inference",
+    "url": "https://llm-d.ai/",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Routes requests based on worker load and KV cache overlap",
+    "url": "https://github.com/ai-dynamo/dynamo",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "Separates prefill and decode into independently scalable GPU pools",
+    "url": "https://github.com/ai-dynamo/dynamo",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "4 nodes with 32 GPUs",
+    "url": "https://arxiv.org/pdf/2412.19437",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "40 nodes with 320 GPUs",
+    "url": "https://arxiv.org/pdf/2412.19437",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "redundant experts, which duplicates high-load experts",
+    "url": "https://arxiv.org/pdf/2412.19437",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "reduces the KV cache by 93.3%, and boosts the maximum generation throughput to 5.76 times",
+    "url": "https://arxiv.org/abs/2405.04434",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "DeepSeek-R1-Zero exhibits a steady increase in thinking time throughout training",
+    "url": "https://arxiv.org/html/2501.12948v2",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "continues to grow infinitely",
     "url": "https://arxiv.org/pdf/2309.06180",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   }
 ]
