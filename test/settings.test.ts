@@ -1,12 +1,12 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { DEFAULTS, SIZE, clampSize, parseSettings, serializeSettings } from "../site/src/settings-core.ts";
+import { DEFAULTS, MEASURE, SIZE, clampMeasure, clampSize, parseSettings, proseMax, serializeSettings } from "../site/src/settings-core.ts";
 
 // The cookie string a browser would send back for what serializeSettings produced.
 const sent = (s: Parameters<typeof serializeSettings>[0]) => serializeSettings(s).split(";")[0];
 
 test("settings survive a cookie round trip", () => {
-  const s = { theme: "warm", font: "literata", size: 19, lang: "pt-BR" } as const;
+  const s = { theme: "warm", font: "literata", size: 19, lang: "pt-BR", measure: 90 } as const;
   assert.deepEqual(parseSettings(`a=1; ${sent(s)}; b=2`), s);
 });
 
@@ -17,7 +17,7 @@ test("no cookie gives the defaults", () => {
 
 test("a broken or hostile cookie value falls back field by field", () => {
   assert.deepEqual(parseSettings("atlas-settings=%7Bnot json"), DEFAULTS);
-  const partly = `atlas-settings=${encodeURIComponent(JSON.stringify({ theme: "neon", font: "lexend", size: "big", lang: "fr" }))}`;
+  const partly = `atlas-settings=${encodeURIComponent(JSON.stringify({ theme: "neon", font: "lexend", size: "big", lang: "fr", measure: "wide" }))}`;
   assert.deepEqual(parseSettings(partly), { ...DEFAULTS, font: "lexend" });
 });
 
@@ -26,6 +26,14 @@ test("size is rounded and clamped", () => {
   assert.equal(clampSize(99), SIZE.max);
   assert.equal(clampSize(16.4), 16);
   assert.equal(clampSize(NaN), SIZE.default);
+});
+
+test("line length is clamped, and the default maps to the 38rem in design.css", () => {
+  assert.equal(clampMeasure(10), MEASURE.min);
+  assert.equal(clampMeasure(500), MEASURE.max);
+  assert.equal(clampMeasure(undefined), MEASURE.default);
+  assert.equal(proseMax(MEASURE.default), "38.05rem");
+  for (const p of Object.values(MEASURE.presets)) assert.equal(clampMeasure(p), p);
 });
 
 test("the cookie lasts a year and is not sent cross-site", () => {

@@ -21,7 +21,7 @@ How the System Design Atlas site looks, and the rules that keep every page consi
 
 ### 2.1 Theme tokens
 
-Themes are set on `<html data-theme="light|warm|dark">`. With no attribute (the System setting), the light values apply and the OS dark preference switches to the dark values. Print forces black on white.
+Themes are set on `<html data-theme="light|warm|dark">`. With no attribute (the System setting), the light values apply and the OS dark preference switches to the dark values. Print forces black on white at 11pt (set on `html`, so prose keeps the `--prose-max` measure on paper).
 
 | Token | Use | Light | Warm | Dark |
 |---|---|---|---|---|
@@ -79,7 +79,7 @@ Never set a font family in a component except through these tokens. A component 
 
 ### 3.2 Size and the type scale
 
-The root size is the reader's setting: `html { font-size: var(--fs, 15px) }`, from 13 to 24 px. Every size below is in rem, so it follows the setting.
+The root size is the reader's setting: `html { font-size: var(--fs, 16px) }`, from 13 to 24 px (default 16, the browser default and the low end of the usual 15 to 25 px for screen reading). Every size below is in rem, so it follows the setting.
 
 | Token | Size | Use |
 |---|---|---|
@@ -97,11 +97,11 @@ Inside notes, `code` is `.875em` (relative to its context), and confidence tags 
 | Element | Size | Line height | Other |
 |---|---|---|---|
 | Home headline (`.hero h1`) | `--t-2xl` (`--t-xl` under 560px) | 1.2 | letter-spacing -.02em; second line uses the accent-to-green gradient |
-| Note `h2` | `--t-xl` | 1.25 | letter-spacing -.01em; 1.8em top margin |
-| Note `h3` | `--t-lg` | 1.3 | 1.4em top margin |
+| Note `h2` | `--t-xl` | 1.25 | letter-spacing -.01em; 1.8em top margin, .5em bottom; balanced wrap |
+| Note `h3` | `--t-lg` | 1.3 | 1.4em top margin, .4em bottom; balanced wrap |
 | Note `h4` | `--t-md` | inherits | |
 | Body (`body`) | `--t-md` | 1.5 | |
-| Note prose (`.notes`) | `--t-md` | 1.65 | paragraphs, list items and quotes capped at `--prose-max` (76ch) |
+| Note prose (`.notes`) | `--t-md` | 1.6 | paragraphs, list items and quotes capped at `--prose-max` (38rem, about 78 characters a line); left-aligned, `text-wrap: pretty`, hyphenated under 560px (not code); lists indented `--s-5` |
 | Code blocks | `.875em` | 1.55 | horizontal scroll, never wrap |
 
 Rules: the page has exactly one `h1` (the sweep checks it); a system note's own Markdown title renders as `h2.note-title`. Do not skip heading levels for size; change the size with the scale instead.
@@ -120,7 +120,7 @@ All spacing sits on a 4px grid.
 | `--s-6` | 32 | between sections, around a horizontal rule |
 | `--s-7` | 48 | page bottom padding, large layout gaps |
 
-`--page-pad` is the page gutter, `clamp(--s-3, 3vw, --s-5)`: 12 px on phones, up to 24 px on desktop. Negative offsets and `calc()` are allowed for layout tricks (the test skips them).
+`--page-pad` is the page gutter, `clamp(--s-4, 3vw, --s-5)`: 16 px on phones, up to 24 px on desktop. Negative offsets and `calc()` are allowed for layout tricks (the test skips them).
 
 ## 5. Shape and depth
 
@@ -193,11 +193,10 @@ One ring for every focusable element: `outline: 2px solid var(--accent); outline
 | Token or rule | Value | What |
 |---|---|---|
 | `--page-max` | 1100px | home, track and concept pages |
-| `--read-max` | 860px | toolkit reading pages (`main.toolkit`) |
+| `--read-max` | `--prose-max` + 2 × `--page-pad` | toolkit reading pages (`main.toolkit`): one centred column at the measure; wider tables and code scroll inside their own box |
 | `.system` | 1800px | system pages (diagram and note side by side) |
-| `.split.mode-text .notes` | 960px | the note column in text view |
-| `--prose-max` | 76ch | paragraphs, list items, quotes and disclosures in notes |
-| `.lede` | 60ch | the home introduction |
+| `.split.mode-text .notes` | `--prose-max` | the note column in text view (centred, with the contents list beside it at 1250px and wider) |
+| `--prose-max` | 38rem default; the Line length setting (50 to 110 characters, presets 65, 78, 90) overrides it on `<html>` as characters ÷ 2.05 rem | paragraphs, list items, quotes and disclosures in notes, and the home introduction: about 78 characters a line with the system font (74 to 82 across the four), just past the classic 45 to 75 range and at WCAG's 80, chosen over a book-like 66 because readers scan tables and code (`ch`, the width of "0", varies too much by font) |
 | `.side-outline` | 240px | the contents list beside a note (1250px and wider) |
 
 Every page uses the same frame: `--s-5` top, `--page-pad` sides, `--s-7` bottom.

@@ -1,6 +1,6 @@
 * { box-sizing: border-box; }
 /* --fs is the reading size chosen in the settings menu; text sized in rem or em follows it. */
-html { font-size: var(--fs, 15px); }
+html { font-size: var(--fs, 16px); }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 1rem/1.5 var(--font-body); }
 /* Diagram nodes have fixed sizes, so they keep the system font. */
 .react-flow { font-family: system-ui, sans-serif; }
@@ -117,7 +117,7 @@ html, body { overflow-x: hidden; overflow-x: clip; } /* clip, not hidden: hidden
 .split.mode-graph .canvas { height: 62vh; }
 .split.mode-text { grid-template-columns: minmax(0, 1fr); height: auto; } /* text mode reads with the page scroll, not an inner box */
 .split.mode-text > .left, .split.mode-text > .right { overflow: visible; }
-.split.mode-text .notes { width: 100%; max-width: 960px; margin: 0 auto; } /* width: auto margins on a grid item would size it to its widest child */
+.split.mode-text .notes { width: 100%; max-width: var(--prose-max); margin: 0 auto; } /* width: auto margins on a grid item would size it to its widest child */
 .notes.hidden { display: none; }
 .legend[hidden] { display: none; }
 
@@ -140,7 +140,7 @@ main.toolkit { max-width: var(--read-max); margin: 0 auto; overflow-wrap: break-
 .home { max-width: var(--page-max); }
 .hero { padding: var(--s-2) 0 var(--s-1); }
 .hero h1 { font-size: var(--t-2xl); line-height: 1.2; margin: var(--s-2) 0 var(--s-3); }
-.lede { font-size: var(--t-md); max-width: 60ch; }
+.lede { font-size: var(--t-md); max-width: var(--prose-max); }
 .small { font-size: var(--t-sm); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin: var(--s-4) 0 var(--s-3); }
 .button { display: inline-block; padding: var(--s-2) var(--s-4); border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); color: var(--fg); text-decoration: none; font-weight: 500; }
@@ -196,6 +196,9 @@ button.study { margin-left: auto; }
 .size-row { display: flex; align-items: center; gap: var(--s-2); }
 .size-row input[type="range"] { flex: 1; min-width: 0; accent-color: var(--accent); }
 .size-row output { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.presets { display: flex; gap: var(--s-2); margin-top: var(--s-2); }
+.presets button { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; font-size: 13px; padding: var(--s-1) var(--s-2); }
+.preset-n { font-size: 12px; font-variant-numeric: tabular-nums; opacity: .8; }
 .settings-pop .small { font-size: 12px; margin: var(--s-2) 0 0; }
 /* Steps and progress sit at the bottom of every track card, so they line up across cards of different height. */
 .card-foot { align-self: stretch; margin-top: auto; padding-top: var(--s-3); display: flex; flex-direction: column; gap: var(--s-2); }
@@ -238,7 +241,7 @@ button.study { margin-left: auto; }
 .outline-select select { flex: 1; min-width: 0; font: inherit; color: var(--fg); background: var(--card); border: 1px solid var(--line); border-radius: var(--r-sm); padding: var(--s-1) var(--s-2); }
 .side-outline { display: none; }
 @media (min-width: 1250px) {
-  .split.mode-text { grid-template-columns: minmax(0, 960px) 240px; justify-content: center; }
+  .split.mode-text { grid-template-columns: minmax(0, var(--prose-max)) 240px; justify-content: center; }
   .split.mode-text > .right { order: 1; } .split.mode-text > .side-outline { order: 2; }
   .split.mode-text .outline-select { display: none; }
   .side-outline { display: block; position: sticky; top: 12px; align-self: start; max-height: calc(100vh - 40px); overflow: auto; font-size: var(--t-sm); }
@@ -267,11 +270,15 @@ button.study { margin-left: auto; }
 .step-list button.linkish:hover { text-decoration: underline; }
 
 /* ---- Reading comfort ---- */
-.notes { line-height: 1.65; }
-.notes p, .notes li, .notes blockquote { max-width: 76ch; }
+.notes { line-height: 1.6; }
+.notes p, .notes li, .notes blockquote { max-width: var(--prose-max); text-wrap: pretty; }
+.notes ul, .notes ol { padding-left: var(--s-5); }
 .notes table, .notes pre, .tablewrap { max-width: 100%; }
-.notes h2 { margin-top: 1.8em; font-size: var(--t-xl); line-height: 1.25; letter-spacing: -.01em; }
-.notes h3 { margin-top: 1.4em; font-size: var(--t-lg); line-height: 1.3; }
+/* A heading sits closer to the text it introduces than to the text above it. */
+.notes h2 { margin: 1.8em 0 .5em; font-size: var(--t-xl); line-height: 1.25; letter-spacing: -.01em; text-wrap: balance; }
+.notes h3 { margin: 1.4em 0 .4em; font-size: var(--t-lg); line-height: 1.3; text-wrap: balance; }
+/* Narrow columns are very ragged without hyphenation (html lang is set to en or pt-BR); code keeps its own breaks. */
+@media (max-width: 560px) { .notes p, .notes li { hyphens: auto; } .notes code { hyphens: manual; } }
 .notes h4 { font-size: var(--t-md); }
 .notes hr { border: 0; border-top: 1px solid var(--line); margin: var(--s-6) 0; }
 .notes blockquote { margin-left: 0; padding-left: var(--s-4); border-left: 3px solid var(--line); color: var(--muted); }
@@ -283,12 +290,12 @@ button.study { margin-left: auto; }
 @media print {
   :root, :root[data-theme] { --bg: #fff; --fg: #000; --muted: #444; --card: #fff; --line: #bbb; --accent: #1d4ed8; }
   .top, .crumbs, .bar, .legend, .diagram-col, .outline-select, .side-outline, .settings, .anchor, .backdrop, .tools, .levels, .reset { display: none !important; }
-  body { background: #fff; color: #000; font-size: 11pt; }
+  html { font-size: 11pt; } /* on html, so rem (and the prose measure) follow the print size */
+  body { background: #fff; color: #000; }
   .system, .toolkit { padding: 0; max-width: none; }
   .split { display: block !important; height: auto !important; }
   .split > .left, .split > .right { overflow: visible !important; }
   .notes.hidden { display: block !important; }
-  .notes p, .notes li { max-width: none; }
   .notes details > summary { list-style: none; }
   .notes pre, .notes table, .trust, .notes details { break-inside: avoid; }
   .notes h2, .notes h3 { break-after: avoid; }

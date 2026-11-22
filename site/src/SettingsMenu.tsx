@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Settings } from "lucide-react";
-import { FONTS, LANGS, SIZE, THEMES } from "./settings-core.ts";
+import { FONTS, LANGS, MEASURE, SIZE, THEMES } from "./settings-core.ts";
 import { resetSettings, updateSettings, useSettings } from "./settings.ts";
 import { useT } from "./i18n.tsx";
 
@@ -70,6 +70,22 @@ export function SettingsMenu() {
               <output>{s.size} px</output>
             </div>
             <p className="muted small">{t.diagramFixed}</p>
+          </fieldset>
+          <fieldset>
+            <legend>{t.lineLength}</legend>
+            <div className="size-row">
+              <button onClick={() => updateSettings({ measure: s.measure - 1 })} disabled={s.measure <= MEASURE.min} aria-label={t.shorterLines}>−</button>
+              <input type="range" min={MEASURE.min} max={MEASURE.max} step={1} value={s.measure} onChange={(e) => updateSettings({ measure: Number(e.target.value) })} aria-label={t.measureAria} />
+              <button onClick={() => updateSettings({ measure: s.measure + 1 })} disabled={s.measure >= MEASURE.max} aria-label={t.longerLines}>+</button>
+              <output>{t.measureValue(s.measure)}</output>
+            </div>
+            <div className="presets">
+              {(Object.keys(MEASURE.presets) as (keyof typeof MEASURE.presets)[]).map((p) => (
+                <button key={p} aria-pressed={s.measure === MEASURE.presets[p]} onClick={() => updateSettings({ measure: MEASURE.presets[p] })}>
+                  <span>{t.widths[p]}</span><span className="preset-n">{MEASURE.presets[p]}</span>
+                </button>
+              ))}
+            </div>
           </fieldset>
           <button className="linkish" onClick={resetSettings}>{t.reset}</button>
         </div>
