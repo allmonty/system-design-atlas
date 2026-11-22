@@ -267,11 +267,15 @@ button.study { margin-left: auto; }
 .step-list button.linkish:hover { text-decoration: underline; }
 
 /* ---- Reading comfort ---- */
-.notes { line-height: 1.65; }
-.notes p, .notes li, .notes blockquote { max-width: var(--prose-max); }
+.notes { line-height: 1.6; }
+.notes p, .notes li, .notes blockquote { max-width: var(--prose-max); text-wrap: pretty; }
+.notes ul, .notes ol { padding-left: var(--s-5); }
 .notes table, .notes pre, .tablewrap { max-width: 100%; }
-.notes h2 { margin-top: 1.8em; font-size: var(--t-xl); line-height: 1.25; letter-spacing: -.01em; }
-.notes h3 { margin-top: 1.4em; font-size: var(--t-lg); line-height: 1.3; }
+/* A heading sits closer to the text it introduces than to the text above it. */
+.notes h2 { margin: 1.8em 0 .5em; font-size: var(--t-xl); line-height: 1.25; letter-spacing: -.01em; text-wrap: balance; }
+.notes h3 { margin: 1.4em 0 .4em; font-size: var(--t-lg); line-height: 1.3; text-wrap: balance; }
+/* Narrow columns are very ragged without hyphenation (html lang is set to en or pt-BR); code keeps its own breaks. */
+@media (max-width: 560px) { .notes p, .notes li { hyphens: auto; } .notes code { hyphens: manual; } }
 .notes h4 { font-size: var(--t-md); }
 .notes hr { border: 0; border-top: 1px solid var(--line); margin: var(--s-6) 0; }
 .notes blockquote { margin-left: 0; padding-left: var(--s-4); border-left: 3px solid var(--line); color: var(--muted); }

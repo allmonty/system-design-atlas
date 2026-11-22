@@ -97,11 +97,11 @@ Inside notes, `code` is `.875em` (relative to its context), and confidence tags 
 | Element | Size | Line height | Other |
 |---|---|---|---|
 | Home headline (`.hero h1`) | `--t-2xl` (`--t-xl` under 560px) | 1.2 | letter-spacing -.02em; second line uses the accent-to-green gradient |
-| Note `h2` | `--t-xl` | 1.25 | letter-spacing -.01em; 1.8em top margin |
-| Note `h3` | `--t-lg` | 1.3 | 1.4em top margin |
+| Note `h2` | `--t-xl` | 1.25 | letter-spacing -.01em; 1.8em top margin, .5em bottom; balanced wrap |
+| Note `h3` | `--t-lg` | 1.3 | 1.4em top margin, .4em bottom; balanced wrap |
 | Note `h4` | `--t-md` | inherits | |
 | Body (`body`) | `--t-md` | 1.5 | |
-| Note prose (`.notes`) | `--t-md` | 1.65 | paragraphs, list items and quotes capped at `--prose-max` (33rem, about 66 characters a line) |
+| Note prose (`.notes`) | `--t-md` | 1.6 | paragraphs, list items and quotes capped at `--prose-max` (33rem, about 66 characters a line); left-aligned, `text-wrap: pretty`, hyphenated under 560px (not code); lists indented `--s-5` |
 | Code blocks | `.875em` | 1.55 | horizontal scroll, never wrap |
 
 Rules: the page has exactly one `h1` (the sweep checks it); a system note's own Markdown title renders as `h2.note-title`. Do not skip heading levels for size; change the size with the scale instead.
