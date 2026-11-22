@@ -283,6 +283,10 @@
           "why": "Improving a model: adapters, preference tuning, evaluation gates and rollout."
         },
         {
+          "ref": "P23",
+          "why": "Reinforcement learning across systems: bandits, sequential RL and RL for language models, with worked examples, reward design and when not to use it."
+        },
+        {
           "ref": "P18",
           "why": "Evaluating LLM features and agents: graders, regression versus capability suites, pass@k versus pass^k, and evals that are themselves broken."
         },
@@ -337,6 +341,10 @@
         {
           "ref": "P18",
           "why": "How to tell whether a change made it better: graders, regression versus capability suites, pass@k versus pass^k."
+        },
+        {
+          "ref": "P23",
+          "why": "When a product should learn from outcomes instead of labels: bandits, RL-trained models and game agents, with how to build one and how rewards get gamed."
         },
         {
           "ref": "P06",

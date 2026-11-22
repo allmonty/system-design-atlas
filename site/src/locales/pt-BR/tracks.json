@@ -93,7 +93,8 @@
       "P06": "Threat modeling, que importa mais para tools e texto recuperado.",
       "P08": "Tokens e horas de GPU como os fatores de custo.",
       "W04": "O cenário 6 pede o design de uma funcionalidade de IA com segurança e avaliação.",
-      "P20": "Quando um agent vira vários: topologias supervisor, handoff e pipeline, e o que a evidência diz sobre os ganhos de multi-agent a custo igual."
+      "P20": "Quando um agent vira vários: topologias supervisor, handoff e pipeline, e o que a evidência diz sobre os ganhos de multi-agent a custo igual.",
+      "P23": "Reinforcement learning nos sistemas: bandits, RL sequencial e RL para modelos de linguagem, com exemplos resolvidos, desenho de recompensas e quando não usar."
     }
   },
   "ai-apps": {
@@ -110,7 +111,8 @@
       "P18": "Como saber se uma mudança melhorou: avaliadores, suítes de regressão versus de capacidade, pass@k versus pass^k.",
       "P06": "Threat modeling para as fronteiras de confiança que um agent acrescenta: resultados de tools, credenciais e ações externas.",
       "P08": "Custo como entrada do design: tokens por tarefa, escolha de modelo por nível e orçamentos.",
-      "W04": "Pratique registrar a decisão como ADR, por exemplo workflow versus agent, ou um agent versus vários."
+      "W04": "Pratique registrar a decisão como ADR, por exemplo workflow versus agent, ou um agent versus vários.",
+      "P23": "Quando um produto deve aprender com resultados em vez de rótulos: bandits, modelos treinados com RL e agents de jogos, como construir um e como as recompensas são burladas."
     }
   },
   "atlas": {
