@@ -26,8 +26,8 @@ export function ItemRow({ item, why, index, next, track }: { item: Item; why?: s
           {index !== undefined && <span className="num">{index}</span>}
           <strong>{item.title}</strong>
           <span className={`pill type-${item.type.toLowerCase()}`}>{t.itemType[item.type]}</span>
-          {/* exercises have no reading time; their type pill already says what they are */}
-          {item.minutes > 0 && <span className="muted">{t.minutes(item.minutes)}</span>}
+          {/* exercises have no reading time: say "practice" so every row has the same columns */}
+          <span className="muted">{item.minutes > 0 ? t.minutes(item.minutes) : t.practice}</span>
           {next && <span className="pill up-next">{t.upNext}</span>}
         </span>
         {why && <span className="why">{why}</span>}
