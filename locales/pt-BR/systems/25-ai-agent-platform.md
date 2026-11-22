@@ -2,6 +2,8 @@
 
 *Um reference design construído sobre orientações publicadas (o "Building effective agents" da Anthropic), um protocolo publicado (o Model Context Protocol) e um método publicado (ReAct). Como foi pesquisado e o que não foi conferido está em **Sources and provenance**, perto do fim.*
 
+**Pouco tempo?** O núcleo é o resumo inicial e as seções 1 a 6 sem a 4b a 4d (cerca de 13 minutos). As seções 4b a 4d (sandboxing, o sistema de pesquisa da Anthropic, agents como pares) são aprofundamento, cerca de 10 minutos a mais.
+
 ## At a glance
 
 **Em 60 segundos.** Um agent é um language model que decide repetidamente o que fazer em seguida, chama uma tool (buscar, executar código, editar um arquivo, chamar uma API), lê o resultado e decide de novo, até terminar ou bater num limite. Uma plataforma para agents precisa de cinco coisas em volta desse loop: um jeito de **definir e chamar tools** com segurança, **estado** para que uma execução longa sobreviva a falhas, **sandboxes** onde o código escrito pelo modelo roda, **limites** de passos, tempo e dinheiro, e **supervisão** (aprovações, logs, avaliação). O conselho mais útil das fontes é usar o design mais simples que funcione: um workflow fixo se os passos são conhecidos, um agent só se não são.

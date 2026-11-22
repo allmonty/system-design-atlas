@@ -2,6 +2,8 @@
 
 *A primer on reinforcement learning (RL) for engineers who know services and data pipelines but have not trained a model that learns from its own actions. It explains the idea with one running example, separates the three kinds of RL you meet in practice (bandits, sequential RL, RL for language models), compares RL with supervised deep learning and with prompting an LLM, walks through real systems step by step with their states, actions and rewards (including game-playing agents and opponents that ship in games), and ends with how to build one, how rewards go wrong, and a list of dos and don'ts. Sources are papers and posts by the teams that built the systems, plus Google and DeepMind's study of what blocks RL in the real world; older sources are labelled foundational. Definitions and the build guide are our reasoning unless tagged.*
 
+**Short on time?** Read At a glance and sections 1, 2, 3 and 8 first (about 10 minutes). Section 4 is case studies (about 15 minutes): read the ones closest to your work.
+
 ## At a glance
 
 - **Reinforcement learning** is learning which action to take from the **reward** that follows it, instead of from a labelled right answer. The learner (the **agent**) only finds out how good the action it chose was, never what the other actions would have earned, so it has to **explore**: sometimes try actions it is unsure about.

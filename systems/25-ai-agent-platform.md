@@ -2,6 +2,8 @@
 
 *A reference design built on published guidance (Anthropic's "Building effective agents"), a published protocol (the Model Context Protocol) and a published method (ReAct). How it was sourced and what was not checked is under **Sources and provenance** near the end.*
 
+**Short on time?** The core is At a glance and sections 1 to 6 without 4b to 4d (about 13 minutes). Sections 4b to 4d (sandboxing, Anthropic's research system, agents as peers) are depth, about 10 minutes more.
+
 ## At a glance
 
 **In 60 seconds.** An agent is a language model that repeatedly decides what to do next, calls a tool (search, run code, edit a file, call an API), reads the result and decides again, until it finishes or hits a limit. A platform for agents needs five things around that loop: a way to **define and call tools** safely, **state** so a long run survives crashes, **sandboxes** where model-written code runs, **limits** on steps, time and money, and **oversight** (approvals, logs, evaluation). The most useful advice from the sources is to use the simplest design that works: a fixed workflow if the steps are known, an agent only if they are not.
