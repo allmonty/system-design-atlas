@@ -219,7 +219,7 @@ Every page uses the same frame: `--s-5` top, `--page-pad` sides, `--s-7` bottom.
 | ≤ 560px | the home headline drops to `--t-xl`, the hero art is hidden, home cards get a smaller minimum width, track cards go to one column |
 | ≤ 760px | the home hero becomes one column, track cards go from three columns to two |
 | ≤ 860px | system pages stack (diagram above the note), everything scrolls with the page, the flow panel becomes one column |
-| ≥ 1250px | text view shows the contents list in the margin |
+| ≥ 1250px | text view and toolkit pages show the contents list in the margin, with the current section highlighted; on toolkit pages the column and the top bar widen by the list's 240px plus `--s-6`, and the "Jump to" select is hidden |
 
 Test new layouts at 1280px and 500px at least, which is what the sweep does.
 

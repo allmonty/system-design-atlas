@@ -88,10 +88,16 @@ function ToolkitView({ page, section, track }: { page: ToolkitPage; section: str
       <p className="crumbs"><a href="#">{t.home}</a> · <a href="#toolkit/README">{t.toolkitIndex}</a><ReadingTools />{page.id !== "README" && <StudyToggle refId={page.id.slice(0, 3)} />}</p>
       {track && <TrackNav trackId={track} refId={page.id.slice(0, 3)} place="top" />}
       {note.fallback && <p className="muted small">{t.notTranslated}</p>}
-      <Outline markdown={note.markdown} variant="select" />
-      {page.id !== "README" && !page.id.startsWith("W") && <TrustCard id={page.id} title={page.title} markdown={note.markdown} claims={page.claims} />}
-      <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, rehypeTags]} components={{ ...components, ...tagComponents, ...headings }}>{note.markdown}</ReactMarkdown>
-      {track && <TrackNav trackId={track} refId={page.id.slice(0, 3)} place="bottom" />}
+      {/* From 1250px the contents list sits in the margin beside the reading column, as in a system page's Text view. */}
+      <div className="toolkit-layout">
+        <article>
+          <Outline markdown={note.markdown} variant="select" />
+          {page.id !== "README" && !page.id.startsWith("W") && <TrustCard id={page.id} title={page.title} markdown={note.markdown} claims={page.claims} />}
+          <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, rehypeTags]} components={{ ...components, ...tagComponents, ...headings }}>{note.markdown}</ReactMarkdown>
+          {track && <TrackNav trackId={track} refId={page.id.slice(0, 3)} place="bottom" />}
+        </article>
+        <aside className="side-outline"><Outline markdown={note.markdown} variant="list" /></aside>
+      </div>
     </main>
   );
 }

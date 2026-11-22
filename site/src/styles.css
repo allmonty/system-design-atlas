@@ -341,3 +341,11 @@ button.study { margin-left: auto; }
 .track-nav.at-end a.next { text-align: right; align-items: flex-end; }
 .track-nav.at-end a:hover { border-color: var(--accent); }
 @media (max-width: 560px) { .track-nav.at-end { grid-template-columns: minmax(0, 1fr); } .track-nav.at-end a.next { text-align: left; align-items: flex-start; } }
+
+/* Toolkit pages from 1250px: the reading column plus the contents list in the margin; the top bar widens to match. */
+@media (min-width: 1250px) {
+  main.toolkit, .top.reading .top-inner { max-width: calc(var(--read-max) + 240px + var(--s-6)); }
+  .top.reading .top-inner { max-width: calc(var(--read-max) - 2 * var(--page-pad) + 240px + var(--s-6)); }
+  .toolkit-layout { display: grid; grid-template-columns: minmax(0, var(--prose-max)) 240px; gap: var(--s-6); }
+  main.toolkit .outline-select { display: none; }
+}
