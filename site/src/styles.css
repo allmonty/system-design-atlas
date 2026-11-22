@@ -1,6 +1,6 @@
 * { box-sizing: border-box; }
 /* --fs is the reading size chosen in the settings menu; text sized in rem or em follows it. */
-html { font-size: var(--fs, 15px); }
+html { font-size: var(--fs, 16px); }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 1rem/1.5 var(--font-body); }
 /* Diagram nodes have fixed sizes, so they keep the system font. */
 .react-flow { font-family: system-ui, sans-serif; }

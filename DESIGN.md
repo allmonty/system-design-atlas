@@ -79,7 +79,7 @@ Never set a font family in a component except through these tokens. A component 
 
 ### 3.2 Size and the type scale
 
-The root size is the reader's setting: `html { font-size: var(--fs, 15px) }`, from 13 to 24 px. Every size below is in rem, so it follows the setting.
+The root size is the reader's setting: `html { font-size: var(--fs, 16px) }`, from 13 to 24 px (default 16, the browser default and the low end of the usual 15 to 25 px for screen reading). Every size below is in rem, so it follows the setting.
 
 | Token | Size | Use |
 |---|---|---|
