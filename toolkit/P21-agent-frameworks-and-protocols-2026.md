@@ -13,7 +13,9 @@
 
 ---
 
-## 1. What a framework or protocol does for you `[INDUSTRY PATTERN]` (our reasoning)
+## 1. What a framework or protocol does for you
+
+*`[INDUSTRY PATTERN]` (our reasoning)*
 
 | Layer | Problem | Classic analogue |
 |---|---|---|
@@ -24,7 +26,9 @@
 
 In our view the core of Anthropic's 2024 advice still holds: start with the model API directly and understand the code under any framework ([P19](P19-llm-workflow-patterns.md), section 8). The post itself now opens with a note that "Much of the tooling landscape described in this post has changed since December 2024", and points to Anthropic's managed agents (section 3). What frameworks add in 2026 is mostly operational: checkpointing, resuming, approvals and traces ([P22](P22-llm-products-in-production.md)).
 
-## 2. Protocols `[CONFIRMED]` (checked 2026-11-21)
+## 2. Protocols
+
+*`[CONFIRMED]` (checked 2026-11-21)*
 
 ### MCP, Model Context Protocol
 
@@ -44,14 +48,18 @@ In our view the core of Anthropic's 2024 advice still holds: start with the mode
 - **Status:** v1.0.0 released 12 March 2026 (1.0 is the first version that promises stable interfaces); the latest release is v1.0.1 (release notes dated 26 May 2026, the release itself shows 28 May). The site shows A2A as part of the Agentic AI Foundation.
 - **When to use it** (our reasoning): when agents are owned and deployed by different teams or organisations. Inside one codebase, an agent as a tool or a handoff in your framework is simpler.
 
-### Instructions and skills: AGENTS.md and Agent Skills `[CONFIRMED]`
+### Instructions and skills: AGENTS.md and Agent Skills
+
+*`[CONFIRMED]`*
 
 Two plain-file formats tell an agent how to work, without code:
 
 - **AGENTS.md** is "A simple, open format for guiding coding agents": a Markdown file in a repository with build commands, conventions and rules, which the site describes as a README for agents. The site says it is "used by over 60k open-source projects", lists coding agents from many vendors that read it, and says it "is now stewarded by the Agentic AI Foundation under the Linux Foundation."
 - **Agent Skills**: "At its core, a skill is a folder containing a `SKILL.md` file" with instructions and optional scripts and resources. The specification calls it "a lightweight, open format for extending AI agent capabilities", originally developed by Anthropic. Anthropic's docs describe **progressive disclosure**: only each skill's name and description are loaded at start-up, and the full instructions enter the context when a task needs them. Our reasoning: this is lazy loading for instructions, the same answer to the context budget as just-in-time retrieval ([P22](P22-llm-products-in-production.md), section 1).
 
-## 3. Frameworks `[CONFIRMED]` (versions from the package index or release page, 2026-11-21)
+## 3. Frameworks
+
+*`[CONFIRMED]` (versions from the package index or release page, 2026-11-21)*
 
 | Framework | Latest checked | Status and 2026 changes | Model coupling |
 |---|---|---|---|
@@ -74,7 +82,9 @@ Our reasoning: a hosted runtime trades control and portability for not operating
 - Several projects release more than once a week. Treat a framework as a fast-moving dependency: lock files, an upgrade test suite and the eval gate from [P18](P18-evaluating-llm-and-agent-systems.md).
 - The convergence on graphs with checkpointed state is the useful signal: it is the workflow-engine model ([P22](P22-llm-products-in-production.md), section 3), applied to agents.
 
-## 4. Retired or replaced `[CONFIRMED]`
+## 4. Retired or replaced
+
+*`[CONFIRMED]`*
 
 | What | Date | Replacement | Source |
 |---|---|---|---|
@@ -84,11 +94,15 @@ Our reasoning: a hosted runtime trades control and portability for not operating
 | ADK `SequentialAgent`, `ParallelAgent`, `LoopAgent` (Python, TypeScript) | deprecated in 2.0 (May 2026) | graph-based workflows | ADK 2.0 page |
 | MCP sessions and initialise handshake | removed in 2026-07-28 | stateless requests, `server/discover` | MCP changelog |
 
-## 5. Tracing: OpenTelemetry GenAI conventions `[CONFIRMED]`
+## 5. Tracing: OpenTelemetry GenAI conventions
+
+*`[CONFIRMED]`*
 
 The GenAI semantic conventions moved out of the main OpenTelemetry semantic conventions into their own repository, `semantic-conventions-genai`; the old page says they "have moved to the OpenTelemetry GenAI semantic conventions repository". Agent spans are defined there (`create_agent`, `invoke_agent`, `invoke_workflow`, `plan`), each marked **Status: Development**. Our reasoning: use the attribute names now so your traces line up with other tools, and expect renames before they become stable.
 
-## 6. Choosing `[INDUSTRY PATTERN]` (our reasoning)
+## 6. Choosing
+
+*`[INDUSTRY PATTERN]` (our reasoning)*
 
 1. **Do you need a framework at all?** A workflow from [P19](P19-llm-workflow-patterns.md) is often a few functions around the model API.
 2. **What must survive a crash?** If runs last minutes to hours or wait for a human, choose a runtime with checkpoints and resume (LangGraph, ADK 2.0, Agent Framework workflows, CrewAI Flows), or put the agent inside a workflow engine you already run.

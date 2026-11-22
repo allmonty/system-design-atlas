@@ -32,6 +32,7 @@ button:disabled { opacity: .4; cursor: default; }
 .panel h2 { font-size: var(--t-md); margin: 0 0 var(--s-2); }
 .panel section + section { border-left: 1px solid var(--line); padding-left: var(--s-4); }
 .flows { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.flows button { text-align: left; } /* a label that wraps reads as a sentence, not a centred block */
 .stepper { margin-top: var(--s-3); display: flex; flex-wrap: wrap; gap: var(--s-2); }
 .caption { flex-basis: 100%; margin: 0 0 var(--s-1); }
 .muted { color: var(--muted); }
@@ -45,7 +46,15 @@ button:disabled { opacity: .4; cursor: default; }
 .notes th { background: color-mix(in srgb, var(--fg) 4%, transparent); border-bottom-color: color-mix(in srgb, var(--fg) 25%, var(--line)); }
 .notes code { font-family: var(--font-mono); font-size: .875em; }
 .notes :not(pre) > code { padding: .1em .35em; border-radius: var(--r-sm); background: color-mix(in srgb, var(--fg) 4%, transparent); } /* 4% at most: muted and link text keep 4.5:1 on it */
-.notes pre { overflow: auto; background: color-mix(in srgb, var(--fg) 4%, var(--bg)); border: 1px solid var(--line); padding: var(--s-3) var(--s-4); border-radius: var(--r-md); line-height: 1.55; }
+.notes pre { --pre-bg: color-mix(in srgb, var(--fg) 4%, var(--bg)); --pre-shade: color-mix(in srgb, var(--fg) 22%, transparent);
+  overflow: auto; border: 1px solid var(--line); padding: var(--s-3) var(--s-4); border-radius: var(--r-md); line-height: 1.55;
+  /* Scroll cue: a shade appears at an edge only while there is more to scroll that way (covers scroll with the content, shades stay put). */
+  background:
+    linear-gradient(to right, var(--pre-bg) 40%, transparent) left / 32px 100% no-repeat local,
+    linear-gradient(to left, var(--pre-bg) 40%, transparent) right / 32px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, var(--pre-shade), transparent) left / 12px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, var(--pre-shade), transparent) right / 12px 100% no-repeat scroll,
+    var(--pre-bg); }
 /* React Flow nodes: colour by kind, border by confidence */
 .react-flow__node { border: 2px solid var(--line); border-radius: var(--r-md); color: var(--fg); font-size: 13px; display: flex; align-items: center; justify-content: center; text-align: center; padding: var(--s-1); }
 .kind-client { background: var(--k-client); } .kind-edge { background: var(--k-edge); } .kind-service { background: var(--k-service); }
@@ -168,7 +177,7 @@ button.linkish { border: 0; background: none; padding: 0; color: var(--accent); 
 .step input { margin-top: var(--s-2); width: 16px; height: 16px; flex: none; }
 .step a { display: flex; flex-direction: column; gap: var(--s-1); text-decoration: none; color: var(--fg); min-width: 0; flex: 1; }
 .step-top { display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: baseline; }
-.step .num { color: var(--muted); } .step .why { font-size: var(--t-sm); color: var(--muted); }
+.step .num { color: var(--muted); } .step .why { font-size: var(--t-md); color: var(--muted); } /* the reason is the point of a track step, so it is body size */
 .pill { font-size: var(--t-xs); padding: 0 var(--s-2); border-radius: var(--r-pill); border: 1px solid var(--line); color: var(--muted); }
 .pill.up-next { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
 .pill.type-system { color: var(--c-confirmed); } .pill.type-primer { color: var(--accent); } .pill.type-incident { color: var(--c-spec); } .pill.type-exercise { color: var(--c-pattern); }
@@ -332,3 +341,20 @@ button.study { margin-left: auto; }
 /* display, not visibility: a hidden box still widens its scroll container, so each tooltip added sideways scroll to the note */
 .conf-tag:hover::after, .conf-tag:focus-visible::after { display: block; }
 .conf-c { color: var(--c-confirmed); } .conf-ip { color: var(--c-pattern); } .conf-s { color: var(--c-spec); } .conf-ep { color: var(--muted); }
+
+/* Track navigation on a page opened from a track: a strip under the crumbs, previous and next at the end. */
+.track-nav.at-top { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: baseline; justify-content: space-between; padding: var(--s-2) var(--s-4); margin: var(--s-2) 0 var(--s-4); max-width: var(--prose-max); }
+.track-nav.at-end { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3); margin: var(--s-6) 0 0; max-width: var(--prose-max); }
+.track-nav.at-end a { display: flex; flex-direction: column; gap: var(--s-1); padding: var(--s-3) var(--s-4); font-weight: 600; }
+.track-nav.at-end a .muted { font-weight: 400; font-size: var(--t-sm); }
+.track-nav.at-end a.next { text-align: right; align-items: flex-end; }
+.track-nav.at-end a:hover { border-color: var(--accent); }
+@media (max-width: 560px) { .track-nav.at-end { grid-template-columns: minmax(0, 1fr); } .track-nav.at-end a.next { text-align: left; align-items: flex-start; } }
+
+/* Toolkit pages from 1250px: the reading column plus the contents list in the margin; the top bar widens to match. */
+@media (min-width: 1250px) {
+  main.toolkit, .top.reading .top-inner { max-width: calc(var(--read-max) + 240px + var(--s-6)); }
+  .top.reading .top-inner { max-width: calc(var(--read-max) - 2 * var(--page-pad) + 240px + var(--s-6)); }
+  .toolkit-layout { display: grid; grid-template-columns: minmax(0, var(--prose-max)) 240px; gap: var(--s-6); }
+  main.toolkit .outline-select { display: none; }
+}

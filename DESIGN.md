@@ -171,7 +171,7 @@ Every `<details>` on the site (answer outlines, the trust card, the home page's 
 
 - **Tables:** `--t-sm`, left-aligned; headers on a 4% `--fg` tint with a stronger bottom rule; hairlines between rows only, no vertical lines. Wide tables scroll inside `.tablewrap`.
 - **Inline code:** `--font-mono`, `.875em`, a faint pill (`--r-sm`, 4% `--fg` tint).
-- **Code blocks:** `--font-mono`, a 4% `--fg` tint over `--bg`, 1px `--line` border, `--r-md`, `--s-3 --s-4` padding, line height 1.55, horizontal scroll.
+- **Code blocks:** `--font-mono`, a 4% `--fg` tint over `--bg`, 1px `--line` border, `--r-md`, `--s-3 --s-4` padding, line height 1.55, horizontal scroll. A block wider than the column shows a soft shade (22% `--fg`) at the edge it can still scroll towards, made with `local` and `scroll` background layers, so no script is needed. Text diagrams should fit about 66 characters, the width of the reading column, and be described in a sentence before them for readers who cannot see them.
 - **Horizontal rule:** one `--line` hairline with `--s-6` above and below.
 
 ### 6.6 Top bar
@@ -180,7 +180,11 @@ Sticky at the top of every page (the sweep fails a page without it): the brand w
 
 ### 6.7 Trust card
 
-A card with a 4px `--c-confirmed` left border and `--t-sm` text: freshness (green when fresh, red and bold when stale), tallies, then disclosures for tag meanings, what was not checked, change history and quotation evidence.
+A card with a 4px `--c-confirmed` left border and `--t-sm` text: freshness (green when fresh, red and bold when stale), tallies, then disclosures for tag meanings, what was not checked, change history and quotation evidence. On toolkit pages it sits after the page title and intro, before the first section, so the title is the first thing a reader sees; on system pages it is still above the note (see ROADMAP, design item 2).
+
+### 6.7b Track navigation
+
+A page opened from a track carries `?track=<id>` in its address (track pages add it to every step link). It then shows a compact card under the crumbs (`.track-nav.at-top`: the track title linking back, and "Step i of n") and, at the end of the note, two cards for the previous and next steps (`.track-nav.at-end`, side by side, stacked at 560px and below). Both are in the surface selector list. Opened without `?track=`, a page shows neither, so the same page works outside a track. The track list marks its next step with `aria-current="step"` as well as the ring and pill.
 
 ### 6.8 Focus
 
@@ -215,7 +219,7 @@ Every page uses the same frame: `--s-5` top, `--page-pad` sides, `--s-7` bottom.
 | ≤ 560px | the home headline drops to `--t-xl`, the hero art is hidden, home cards get a smaller minimum width, track cards go to one column |
 | ≤ 760px | the home hero becomes one column, track cards go from three columns to two |
 | ≤ 860px | system pages stack (diagram above the note), everything scrolls with the page, the flow panel becomes one column |
-| ≥ 1250px | text view shows the contents list in the margin |
+| ≥ 1250px | text view and toolkit pages show the contents list in the margin, with the current section highlighted; on toolkit pages the column and the top bar widen by the list's 240px plus `--s-6`, and the "Jump to" select is hidden |
 
 Test new layouts at 1280px and 500px at least, which is what the sweep does.
 

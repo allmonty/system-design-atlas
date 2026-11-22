@@ -27,7 +27,9 @@ The definitions below are our plain-language explanations unless tagged. Two fac
 - **Retrieval**, or RAG (retrieval-augmented generation): your code finds relevant documents and puts them in the prompt. See [23 RAG knowledge assistant](../systems/23-rag-knowledge-assistant.md).
 - **Workflow** and **agent** `[CONFIRMED]` (Anthropic, December 2024): workflows are systems where LLMs and tools are "orchestrated through predefined code paths"; agents are systems where LLMs "dynamically direct their own processes and tool usage". Anthropic describes agents as "typically just LLMs using tools based on environmental feedback in a loop." The same distinction is the core of [25 AI agent platform](../systems/25-ai-agent-platform.md).
 
-## 2. The complexity ladder `[CONFIRMED]` (Azure Architecture Center, February 2026)
+## 2. The complexity ladder
+
+*`[CONFIRMED]` (Azure Architecture Center, February 2026)*
 
 | Level | When it is enough | What it costs you |
 |---|---|---|
@@ -93,7 +95,9 @@ Anthropic's advice matches: find "the simplest solution possible, and only incre
 
 **Classic analogue** (our reasoning): a retry loop with validation, or code review before merge. A code check (tests pass, schema valid) is the cheapest and strictest evaluator; use a model as evaluator only where the criteria are not checkable by code.
 
-## 8. Choosing a pattern `[INDUSTRY PATTERN]` (our reasoning)
+## 8. Choosing a pattern
+
+*`[INDUSTRY PATTERN]` (our reasoning)*
 
 | If the task... | Use | Watch for |
 |---|---|---|

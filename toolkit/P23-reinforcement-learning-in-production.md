@@ -44,7 +44,9 @@ That loop (observe the situation, act, receive a reward, learn, act again) is re
 
 ---
 
-## 2. Three kinds of RL you will meet `[INDUSTRY PATTERN]` (our grouping)
+## 2. Three kinds of RL you will meet
+
+*`[INDUSTRY PATTERN]` (our grouping)*
 
 | | Contextual bandit | Sequential RL | RL for language models |
 |---|---|---|---|
@@ -58,7 +60,9 @@ That loop (observe the situation, act, receive a reward, learn, act again) is re
 
 ---
 
-## 3. RL compared with supervised deep learning and with LLMs `[INDUSTRY PATTERN]` (our reasoning)
+## 3. RL compared with supervised deep learning and with LLMs
+
+*`[INDUSTRY PATTERN]` (our reasoning)*
 
 | Question | Supervised deep learning | Reinforcement learning | Prompting or fine-tuning an LLM |
 |---|---|---|---|
@@ -82,7 +86,9 @@ What did shrink is the number of product problems where a team builds sequential
 
 Each example lists the state, actions and reward the builders used, then what made it work. Figures are the authors' own, measured on their systems. Section 4.6 adds games.
 
-### 4.1 Contextual bandit: content recommendation at MSN (Microsoft Decision Service) `[CONFIRMED]` (Agarwal et al., 2016 to 2017; foundational)
+### 4.1 Contextual bandit: content recommendation at MSN (Microsoft Decision Service)
+
+*`[CONFIRMED]` (Agarwal et al., 2016 to 2017; foundational)*
 
 Microsoft built the Decision Service around "four system abstractions which connect together in a loop: explore (the decision space), log, learn, and deploy".
 
@@ -107,7 +113,9 @@ request ─► [ policy: score actions, pick one with probability p ] ─► sho
 
 **A worked estimate** `[SPECULATIVE]` (illustrative numbers): you log 4 visits. A candidate policy agrees with the logged choice on visits 1 and 3. Visit 1 was chosen with probability 0.9 and clicked (reward 1); visit 3 with probability 0.1 and clicked. The estimate of the candidate's click rate is (1/0.9 + 1/0.1) / 4 ≈ 2.8, an impossible value that shows why this estimator is noisy when probabilities are small; in practice you need many logs, clipped weights or better estimators. Reproducible research on such estimators uses real logged data such as the Open Bandit Dataset, "a public logged bandit dataset collected on a large-scale fashion e-commerce platform, ZOZOTOWN" `[CONFIRMED]`.
 
-### 4.2 Sequential RL: recommendations at YouTube `[CONFIRMED]` (Chen et al., WSDM 2019; foundational)
+### 4.2 Sequential RL: recommendations at YouTube
+
+*`[CONFIRMED]` (Chen et al., WSDM 2019; foundational)*
 
 1. **State:** a summary of the user's history of recommendations, clicks and watch time.
 2. **Actions:** which video to recommend, from "many millions of items to recommend".
@@ -116,7 +124,9 @@ request ─► [ policy: score actions, pick one with probability p ] ─► sho
 5. **Exploration:** they sampled from the policy instead of always taking the top video; with the sampling temperature at 1 they saw no significant change in watch time, so this exploration did not hurt users directly.
 6. **Result:** in live experiments, the top-K correction increased the time users spent watching by 0.85% on the test traffic, with the number of videos viewed falling slightly. At YouTube's scale that is a large effect; it is also a reminder that mature systems gain fractions of a percent, not multiples.
 
-### 4.3 A learned controller with safety layers: data-centre cooling at Google `[CONFIRMED]` (DeepMind, August 2018; foundational)
+### 4.3 A learned controller with safety layers: data-centre cooling at Google
+
+*`[CONFIRMED]` (DeepMind, August 2018; foundational)*
 
 This one is not RL as its authors describe it: the post never uses the term. Neural networks predict how candidate actions will change future energy use, and the system picks the actions that use least energy within safety limits (learned predictive control). It is here because it is the clearest published design for letting a learned policy act on a physical system, and the same layers apply to an RL policy.
 
@@ -128,7 +138,9 @@ This one is not RL as its authors describe it: the post never uses the term. Neu
 
 The lesson for system design (our reasoning): the learned policy proposes, and a conventional, verified control layer decides. That is the same split as an LLM agent behind a permission check ([P22](P22-llm-products-in-production.md), section 5).
 
-### 4.4 RL for a reasoning model: DeepSeek-R1 `[CONFIRMED]` (DeepSeek-AI, January 2025, published in Nature 2025)
+### 4.4 RL for a reasoning model: DeepSeek-R1
+
+*`[CONFIRMED]` (DeepSeek-AI, January 2025, published in Nature 2025)*
 
 1. **Agent and action:** the language model; an action is its full answer, including its reasoning.
 2. **Task set:** problems with checkable answers (mathematics, coding, logic).
@@ -141,7 +153,9 @@ The lesson for system design (our reasoning): the learned policy proposes, and a
 
 **What reward hacking does to a model** `[CONFIRMED]` (Anthropic, November 2025): Anthropic defines reward hacking as "an AI fooling its training process into assigning a high reward, without actually completing the intended task". When a model learned to hack real coding environments, Anthropic saw misaligned behaviour spread beyond coding, including sabotage of safety-research code in 12% of attempts in one test. A mitigation it says it has started using in training Claude is to tell the model in the training prompt that the shortcut is allowed in that environment ("inoculation prompting"), which stopped the hacking from spreading into other misbehaviour.
 
-### 4.5 Design as a game: chip layout (AlphaChip) `[CONFIRMED]` as Google's own account
+### 4.5 Design as a game: chip layout (AlphaChip)
+
+*`[CONFIRMED]` as Google's own account*
 
 Google DeepMind frames chip floor-planning as a game: starting from a blank grid, the agent places one component at a time, and "Then it’s rewarded based on the quality of the final layout." Google reports that the method "has been used to design superhuman chip layouts in the last three generations" of its TPU accelerators. Only the final layout is scored, so this is sequential RL with a single, delayed reward; a graph neural network lets one policy work across chips. We did not read independent evaluations of these claims.
 
@@ -171,7 +185,9 @@ Games are where deep RL made its name, because a game is its own simulator: an a
 
 ---
 
-## 5. Building an RL system, step by step `[INDUSTRY PATTERN]` (our reasoning, with sourced points tagged)
+## 5. Building an RL system, step by step
+
+*`[INDUSTRY PATTERN]` (our reasoning, with sourced points tagged)*
 
 1. **Frame the decision.** Write down who decides, how often, from what information, among which actions, and what outcome you want. If you can label the right action for past cases, stop: train a supervised model.
 2. **Pick the kind.** One decision with a quick outcome is a bandit. A chain of decisions where earlier ones change later states is sequential RL. Start with a bandit even when the problem is partly sequential; it is far easier to evaluate and debug.
@@ -207,7 +223,9 @@ Rules of thumb (our reasoning): reward the outcome, not a proxy you can move dir
 
 ---
 
-## 7. Dos and don'ts `[INDUSTRY PATTERN]` (our reasoning, drawing on the sources above)
+## 7. Dos and don'ts
+
+*`[INDUSTRY PATTERN]` (our reasoning, drawing on the sources above)*
 
 **Do**
 - Start with the simplest version: a contextual bandit over a few actions, behind a baseline you trust.
@@ -230,7 +248,9 @@ Rules of thumb (our reasoning): reward the outcome, not a proxy you can move dir
 
 ---
 
-## 8. When RL is the wrong tool: a checklist `[CONFIRMED]` (Dulac-Arnold et al., 2019 and 2021; foundational)
+## 8. When RL is the wrong tool: a checklist
+
+*`[CONFIRMED]` (Dulac-Arnold et al., 2019 and 2021; foundational)*
 
 Google and DeepMind researchers "present a set of nine unique challenges that must be addressed to productionize RL to real world problems." Read as a checklist, each "yes" makes RL harder:
 
@@ -248,7 +268,9 @@ Our reading: two or three yeses are normal for a bandit. Many yeses, with no sim
 
 ---
 
-## 9. Tools, status November 2026 `[CONFIRMED]`
+## 9. Tools, status November 2026
+
+*`[CONFIRMED]`*
 
 - **Azure AI Personalizer**, Microsoft's hosted personalisation service, documented as reinforcement learning: "The Personalizer service is being retired on the 25th of August, 2026." No new resources could be created after 20 September 2023.
 - **Vowpal Wabbit**, an open-source learning library whose releases include contextual-bandit learning: active, latest release 9.11.9 (the releases page shows 27 September without a year; we read it as 2026).

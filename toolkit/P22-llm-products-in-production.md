@@ -13,7 +13,9 @@
 
 ---
 
-## 1. Context engineering `[CONFIRMED]` (Anthropic, September 2025)
+## 1. Context engineering
+
+*`[CONFIRMED]` (Anthropic, September 2025)*
 
 **Context engineering** "refers to the set of strategies for curating and maintaining the optimal set of tokens (information) during LLM inference" (inference: running the model to produce output). It is the successor to prompt engineering: it covers the system prompt, tool definitions, retrieved data and the history of the run, not only the instructions.
 
@@ -32,7 +34,9 @@ Our reasoning for the edge cases: a summary loses detail, so keep what later ste
 
 **Memory across sessions** `[CONFIRMED]` (Anthropic and LangChain documentation, read November 2026): because the model keeps nothing between calls, memory that outlives one conversation is data your system stores and feeds back. Anthropic's memory tool is a directory of files the model reads and writes through tool calls; "The memory tool operates client-side: Claude requests file operations, and your application runs them." and "Memory lives entirely in your application." LangGraph separates short-term memory (the thread, kept by checkpoints) from long-term memory: "Long-term memory in LangGraph allows systems to retain information across different conversations or sessions", stored as JSON documents in a namespaced store, and its docs group memories into semantic (facts), episodic (experiences) and procedural (instructions). Our reasoning: treat memory as a user-data store with the usual rules: per-user isolation, a way to inspect and delete it, retention limits ([P17](P17-privacy-by-design.md)), and the knowledge that anything written from untrusted input can carry an injection into later sessions (section 5).
 
-## 2. Long runs: harnesses, progress files and handoff artifacts `[CONFIRMED]` (Anthropic, November 2025 and March 2026)
+## 2. Long runs: harnesses, progress files and handoff artifacts
+
+*`[CONFIRMED]` (Anthropic, November 2025 and March 2026)*
 
 A **harness** is the code around the model that runs the loop, manages context and tools, and decides when a session ends. Anthropic published two accounts of harnesses for coding tasks that take hours.
 
@@ -41,7 +45,9 @@ A **harness** is the code around the model that runs the loop, manages context a
 
 Lessons we draw (our reasoning): store progress in files or a database, not in the context; make "done" something a check decides (tests, a feature list), not the model's claim; and simplify the harness when a new model removes the failure it was built for.
 
-## 3. Durable execution: crash, resume, deploy `[CONFIRMED]` (Anthropic, June 2025; LangChain docs)
+## 3. Durable execution: crash, resume, deploy
+
+*`[CONFIRMED]` (Anthropic, June 2025; LangChain docs)*
 
 Anthropic's research system post: "Agents are stateful and errors compound." Restarting a long run from the beginning is slow and costly, so "Instead, we built systems that can resume from where the agent was when the errors occurred." Deploys use rainbow deployments "to avoid disrupting running agents, by gradually shifting traffic from old to new versions", keeping old and new versions running side by side.
 
@@ -53,7 +59,9 @@ Framework runtimes now build this in. LangGraph's overview lists persistence ("C
 - Version prompts, tools and models with the run, so a resumed run does not continue with a different prompt.
 - A run waiting for human approval is a paused workflow, not an open connection. Store it and resume it from an event.
 
-## 4. Tool design `[CONFIRMED]` (Anthropic, December 2024 and September 2025)
+## 4. Tool design
+
+*`[CONFIRMED]` (Anthropic, December 2024 and September 2025)*
 
 A **tool** is the interface the model uses to act, so its design decides how often the model gets it wrong. Anthropic's 2024 post asks you to "plan to invest just as much effort in creating good agent-computer interfaces" as in human interfaces, and to "Poka-yoke your tools. Change the arguments so that it is harder to make mistakes." (its example: requiring absolute file paths fixed a class of errors). The September 2025 post on writing tools adds:
 
@@ -64,7 +72,9 @@ A **tool** is the interface the model uses to act, so its design decides how oft
 
 Our reasoning: tool errors should be messages the model can act on (`date must be YYYY-MM-DD`), not stack traces. Treat a tool's schema like a public API: version it and test it ([W06](W06-review-an-api.md)).
 
-## 5. Security: prompt injection and the Rule of Two `[CONFIRMED]`
+## 5. Security: prompt injection and the Rule of Two
+
+*`[CONFIRMED]`*
 
 **Prompt injection** (OWASP LLM01:2025): "A Prompt Injection Vulnerability occurs when user prompts alter the LLM's behavior or output in unintended ways." With agents, the dangerous kind is **indirect**: instructions hidden in a web page, email, document or tool result that the agent reads.
 
@@ -96,7 +106,9 @@ Design moves (our reasoning, building on [P06](P06-security-threat-modeling.md))
 
 The dual LLM idea comes from Willison's 2023 post, where untrusted output is stored as variables and "The Privileged LLM only ever sees those variable names." CaMeL (Debenedetti and others, 2025) builds on it by separating control flow from data flow and attaching capabilities to data; its abstract reports solving 77% of AgentDojo tasks with provable security, against 84% for an undefended system (abstract only, not checked in the paper). The price of each pattern is capability: the agent can do less with what it reads.
 
-## 6. Limits, budgets and failure behaviour `[INDUSTRY PATTERN]` (our reasoning, with `[CONFIRMED]` guidance quoted)
+## 6. Limits, budgets and failure behaviour
+
+*`[INDUSTRY PATTERN]` (our reasoning, with `[CONFIRMED]` guidance quoted)*
 
 Microsoft's guide: "To guard against infinite tool-call loops, set iteration limits", and for generate-and-check loops, set a cap and define what happens when it is reached ([P19](P19-llm-workflow-patterns.md), section 7) `[CONFIRMED]`.
 
@@ -112,13 +124,17 @@ Cost reasoning: Anthropic's numbers give the scale. Its multi-agent research sys
 
 **Prompt caching** `[CONFIRMED]` (Anthropic and OpenAI API documentation, read November 2026): an agent resends a growing history on every call, and both providers can reuse the processed start of a prompt. Anthropic's "Prompt caching covers the full prefix" (tools, then system prompt, then messages), "By default, the cache has a 5-minute lifetime." with a 1-hour option, and "Modifying tool definitions (names, descriptions, parameters) invalidates the entire cache"; cache writes cost more than normal input and reads much less (multipliers vary by model, see the page). At OpenAI, "Prompt caching is enabled by default for supported OpenAI models." Our reasoning for agents: keep the prefix stable (tools and system prompt first, never a timestamp at the top), append to the history rather than editing it, and expect compaction or a changed tool list to cost a cache miss. Each MCP tool you connect adds its definition to that prefix, so many tools cost context and cache space even when unused.
 
-## 7. Observability and release `[CONFIRMED]` for the conventions; the rest our reasoning
+## 7. Observability and release
+
+*`[CONFIRMED]` for the conventions; the rest our reasoning*
 
 Trace every run as a tree: the run, each model call (model, tokens, latency), each tool call (arguments, result size, errors), each handoff or sub-agent. OpenTelemetry's GenAI conventions define agent spans such as `invoke_agent` and `invoke_workflow`, still at Development status ([P21](P21-agent-frameworks-and-protocols-2026.md), section 5). Traces carry user content, so apply the retention and access rules of [P17](P17-privacy-by-design.md).
 
 Release changes to prompts, tools, models and harness code like code: an offline eval gate, then a canary, then sampled production grading ([P18](P18-evaluating-llm-and-agent-systems.md), section 7). Keep old versions running for in-flight runs (section 3).
 
-## 8. Failure catalogue `[INDUSTRY PATTERN]` (our reasoning; sources in the sections above)
+## 8. Failure catalogue
+
+*`[INDUSTRY PATTERN]` (our reasoning; sources in the sections above)*
 
 | Symptom | Likely cause | First fix |
 |---|---|---|
