@@ -54,7 +54,7 @@ Our own exercises, with answer keys that cite the sourced notes. Work them in th
 | W01 | [Mock interview protocol and rubric](W01-mock-interview-protocol.md) | A 45-minute script and an 8-row scoring rubric |
 | W02 | [Find the flaw](W02-find-the-flaw.md) | Nine flawed designs with answer keys |
 | W03 | [Estimation drills](W03-estimation-drills.md) | Eight capacity problems with worked solutions |
-| W04 | [Decision exercises](W04-decision-exercises.md) | Six scenarios that ask for an ADR |
+| W04 | [Decision exercises](W04-decision-exercises.md) | Eight scenarios that ask for an ADR |
 | W05 | [Flashcards](W05-flashcards.md) | 58 cards for spaced repetition |
 | W06 | [Review an API](W06-review-an-api.md) | A flawed API spec with eleven planted problems, five planned changes to classify, and an answer key |
 

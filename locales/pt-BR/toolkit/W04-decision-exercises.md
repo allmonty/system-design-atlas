@@ -1,6 +1,6 @@
 # W04 — Decision exercises
 
-*Seis cenários de arquitetura que pedem uma decisão e sua justificativa — a parte do trabalho de um arquiteto que casos de design de sistemas raramente praticam.*
+*Oito cenários de arquitetura que pedem uma decisão e sua justificativa — a parte do trabalho de um arquiteto que casos de design de sistemas raramente praticam.*
 
 ## How to use this page
 
@@ -109,6 +109,41 @@ Estes são cenários abertos sem uma única resposta correta. Para cada um, escr
 
 </details>
 
+## 7. Workflow or agent for refunds
+
+**Contexto.** O suporte recebe cerca de 2.000 pedidos de reembolso por dia. A maioria segue a política escrita (pedido encontrado, dentro de 30 dias, item não usado); alguns exigem julgamento. O time quer automatizá-los com um LLM.
+
+**Tarefa.** Decida entre um workflow fixo e um agent, e diga onde o modelo pode decidir, o que ele não pode fazer e como você vai saber que funciona.
+
+<details><summary>What a strong answer covers</summary>
+
+- Starts with a fixed workflow, because the steps are known: look up the order with a tool, check the policy rules in code, and use the model only to read the customer's message and fill a structured form ([P19](P19-llm-workflow-patterns.md), sections 2, 3 and 4).
+- Routes the cases the rules cannot decide to a person or to a narrow agent with read-only tools; keeps the refund itself a single, idempotent API call behind a limit and an approval threshold ([25 AI agent platform](../systems/25-ai-agent-platform.md), [P22](P22-llm-products-in-production.md), section 3).
+- Treats the customer's message as untrusted input that cannot change the policy or the amount ([P22](P22-llm-products-in-production.md), section 5).
+- Defines success as the refund outcome in the order system, measured on a labelled set of past requests, with a regression suite before each change ([P18](P18-evaluating-llm-and-agent-systems.md)).
+- Moves to an agent only if the eval shows the workflow fails on a measurable share of cases, and says what it would cost per request ([P08](P08-cost-as-a-design-input.md)).
+
+**A typical weak answer:** An agent with a refund tool and the whole policy in the prompt, no amount limit, and success judged by the model's own reply.
+
+</details>
+
+## 8. One agent or several for a research assistant
+
+**Contexto.** Um time de analistas quer um assistente que responda perguntas como a forma com que três concorrentes precificaram uma linha de produtos ao longo de dois anos, lendo dezenas de relatórios e páginas web por pergunta. Um protótipo com um agent é preciso em perguntas curtas, mas lento, e muitas vezes fica sem contexto nas perguntas amplas.
+
+**Tarefa.** Decida se vai dividir o trabalho entre vários agents, qual topologia usaria e o que mediria antes e depois.
+
+<details><summary>What a strong answer covers</summary>
+
+- Names a measurable reason to split: the work does not fit one context and its parts (one competitor, one period) are independent, which is the case where several agents helped in published results ([P20](P20-agent-and-multi-agent-architectures.md), sections 4 and 5).
+- Picks a supervisor: a lead agent plans, sends each sub-agent a precise brief and output format, and writes the answer with citations; sub-agents return short summaries, not their whole context.
+- States the costs: several times the tokens of one agent, latency set by the slowest sub-agent, and new failure modes such as duplicated or conflicting work ([P20](P20-agent-and-multi-agent-architectures.md), section 5).
+- Compares against the single agent at equal cost (for example the single agent with compaction or more samples), on a set of real questions with checkable facts, scoring each sub-agent and the final answer ([P18](P18-evaluating-llm-and-agent-systems.md)).
+- Caps sub-agents, steps and tokens per question, and keeps sub-agents' web reading away from any credentials ([P22](P22-llm-products-in-production.md), sections 5 and 6).
+
+**A typical weak answer:** Adds five specialist agents with role names because it looks more capable, with no baseline, no cost estimate and no plan for what crosses between agents.
+
+</details>
 
 
 **Related:** [P09 Decisions and design docs](P09-decisions-and-design-docs.md), [P10 Changing systems safely](P10-changing-systems-safely.md), the book summaries on [architecture decisions](https://github.com/allmonty/study/blob/main/architecture/fundamentals-of-software-architecture/summaries/19-architecture-decisions.md) and [choosing an architecture style](https://github.com/allmonty/study/blob/main/architecture/fundamentals-of-software-architecture/summaries/18-choosing-architecture-style.md).
@@ -122,7 +157,7 @@ Estes são cenários abertos sem uma única resposta correta. Para cada um, escr
 ---
 ## ✅ Verification log
 
-*Fact-check, 2026-10-27; answer key for exercise 6 revised 2026-11-21 after review.*
+*Fact-check, 2026-10-27; answer key for exercise 6 revised and exercises 7 and 8 added 2026-11-21 after review.*
 - The lists of points are our judgement of what a review would look for; they cite the notes and primers where the supporting facts are sourced.
 - Links checked by `npm run validate`.
 - Not read: published interview-rubric research and company-specific hiring rubrics.
