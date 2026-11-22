@@ -32,6 +32,7 @@ button:disabled { opacity: .4; cursor: default; }
 .panel h2 { font-size: var(--t-md); margin: 0 0 var(--s-2); }
 .panel section + section { border-left: 1px solid var(--line); padding-left: var(--s-4); }
 .flows { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.flows button { text-align: left; } /* a label that wraps reads as a sentence, not a centred block */
 .stepper { margin-top: var(--s-3); display: flex; flex-wrap: wrap; gap: var(--s-2); }
 .caption { flex-basis: 100%; margin: 0 0 var(--s-1); }
 .muted { color: var(--muted); }
