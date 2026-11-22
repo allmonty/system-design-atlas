@@ -171,7 +171,7 @@ Every `<details>` on the site (answer outlines, the trust card, the home page's 
 
 - **Tables:** `--t-sm`, left-aligned; headers on a 4% `--fg` tint with a stronger bottom rule; hairlines between rows only, no vertical lines. Wide tables scroll inside `.tablewrap`.
 - **Inline code:** `--font-mono`, `.875em`, a faint pill (`--r-sm`, 4% `--fg` tint).
-- **Code blocks:** `--font-mono`, a 4% `--fg` tint over `--bg`, 1px `--line` border, `--r-md`, `--s-3 --s-4` padding, line height 1.55, horizontal scroll.
+- **Code blocks:** `--font-mono`, a 4% `--fg` tint over `--bg`, 1px `--line` border, `--r-md`, `--s-3 --s-4` padding, line height 1.55, horizontal scroll. A block wider than the column shows a soft shade (22% `--fg`) at the edge it can still scroll towards, made with `local` and `scroll` background layers, so no script is needed. Text diagrams should fit about 66 characters, the width of the reading column, and be described in a sentence before them for readers who cannot see them.
 - **Horizontal rule:** one `--line` hairline with `--s-6` above and below.
 
 ### 6.6 Top bar

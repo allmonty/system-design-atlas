@@ -45,7 +45,15 @@ button:disabled { opacity: .4; cursor: default; }
 .notes th { background: color-mix(in srgb, var(--fg) 4%, transparent); border-bottom-color: color-mix(in srgb, var(--fg) 25%, var(--line)); }
 .notes code { font-family: var(--font-mono); font-size: .875em; }
 .notes :not(pre) > code { padding: .1em .35em; border-radius: var(--r-sm); background: color-mix(in srgb, var(--fg) 4%, transparent); } /* 4% at most: muted and link text keep 4.5:1 on it */
-.notes pre { overflow: auto; background: color-mix(in srgb, var(--fg) 4%, var(--bg)); border: 1px solid var(--line); padding: var(--s-3) var(--s-4); border-radius: var(--r-md); line-height: 1.55; }
+.notes pre { --pre-bg: color-mix(in srgb, var(--fg) 4%, var(--bg)); --pre-shade: color-mix(in srgb, var(--fg) 22%, transparent);
+  overflow: auto; border: 1px solid var(--line); padding: var(--s-3) var(--s-4); border-radius: var(--r-md); line-height: 1.55;
+  /* Scroll cue: a shade appears at an edge only while there is more to scroll that way (covers scroll with the content, shades stay put). */
+  background:
+    linear-gradient(to right, var(--pre-bg) 40%, transparent) left / 32px 100% no-repeat local,
+    linear-gradient(to left, var(--pre-bg) 40%, transparent) right / 32px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, var(--pre-shade), transparent) left / 12px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, var(--pre-shade), transparent) right / 12px 100% no-repeat scroll,
+    var(--pre-bg); }
 /* React Flow nodes: colour by kind, border by confidence */
 .react-flow__node { border: 2px solid var(--line); border-radius: var(--r-md); color: var(--fg); font-size: 13px; display: flex; align-items: center; justify-content: center; text-align: center; padding: var(--s-1); }
 .kind-client { background: var(--k-client); } .kind-edge { background: var(--k-edge); } .kind-service { background: var(--k-service); }
