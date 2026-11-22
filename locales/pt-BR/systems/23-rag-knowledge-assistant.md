@@ -4,7 +4,7 @@
 
 ## At a glance
 
-**Em 60 segundos.** Um language model não conhece os documentos da sua empresa. A retrieval-augmented generation (RAG) resolve isso na hora da pergunta: encontre os trechos mais relevantes para a pergunta, ponha-os no prompt e peça ao modelo que responda a partir deles, com citações. O sistema tem duas metades. A **ingestão** corta os documentos em chunks, opcionalmente acrescenta contexto a cada chunk e constrói um índice vetorial e um índice por palavras-chave. A **consulta** filtra pelo que o usuário pode ver, recupera com os dois índices, reranqueia e gera. A maioria dos problemas de qualidade são problemas de retrieval, então a avaliação do retrieval é tão importante quanto a avaliação das respostas.
+**Em 60 segundos.** Um language model não conhece os documentos da sua empresa. A retrieval-augmented generation (RAG) resolve isso na hora da pergunta: encontre os trechos mais relevantes para a pergunta, ponha-os no prompt e peça ao modelo que responda a partir deles, com citações. O sistema tem duas metades. A **ingestão** corta os documentos em chunks, opcionalmente acrescenta contexto a cada chunk e constrói um índice vetorial e um índice por palavras-chave. (Um **embedding** é uma lista de números que um modelo calcula para um trecho de texto, de modo que textos de sentido parecido recebam números próximos; um **índice vetorial** encontra os mais próximos rapidamente. A nota 24 explica como.) A **consulta** filtra pelo que o usuário pode ver, recupera com os dois índices, reranqueia e gera. A maioria dos problemas de qualidade são problemas de retrieval, então a avaliação do retrieval é tão importante quanto a avaliação das respostas.
 
 **Números principais** (como publicados, nos testes dos autores)
 - Uma base de conhecimento com menos de 200.000 tokens (cerca de 500 páginas) pode ir direto no prompt, sem precisar de RAG `[CONFIRMED]` (Anthropic, 2024).
@@ -44,7 +44,7 @@ Imagine um **funcionário novo com uma ótima memória de conhecimentos gerais, 
 - **Os chunks perdem contexto.** Anteceder uma curta explicação gerada antes de fazer o embedding e a indexação por palavras-chave reduziu as falhas de retrieval `[CONFIRMED]` (Anthropic).
 - **Busca híbrida mais reranking** venceu só embeddings nos testes da Anthropic `[CONFIRMED]`.
 - **Faithfulness, answer relevance e context relevance** podem ser pontuadas por um LLM sem respostas de referência (Ragas) `[CONFIRMED]` (Es et al., 2023).
-- **Permissões, frescor, citações, avaliação e controle de custo** são as preocupações de produção `[INDUSTRY PATTERN]`.
+- **Permissões, frescor, citações, avaliação e controle de custo** são as preocupações de produção `[INDUSTRY PATTERN]`. A avaliação em profundidade está no [P18](../toolkit/P18-evaluating-llm-and-agent-systems.md).
 
 ---
 
