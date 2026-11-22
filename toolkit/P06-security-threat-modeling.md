@@ -36,7 +36,7 @@ Use it as questions to ask of any atlas design:
 | Identity | How is every caller (user, service, job) authenticated? Are service credentials short-lived and narrowly scoped? |
 | Authorization | Is it enforced at the data layer or only in the UI? Can one tenant ever see another's data (see [23 RAG assistant](../systems/23-rag-knowledge-assistant.md) for permission filtering)? |
 | Data | What is stored, for how long, encrypted how, with whose keys? What is the blast radius of a database leak (see [08 Chat](../systems/08-chat-whatsapp.md) on end-to-end encryption)? |
-| Untrusted execution | Does the system run code or content from users or models? Isolate it (see [25 AI agent platform](../systems/25-ai-agent-platform.md): sandboxes and prompt injection). |
+| Untrusted execution | Does the system run code or content from users or models? Isolate it (see [25 AI agent platform](../systems/25-ai-agent-platform.md): sandboxes and prompt injection; [P22](P22-llm-products-in-production.md), section 5: the Rule of Two for LLM agents). |
 | Abuse | Rate limits, quotas, bot defence (see [02 Rate limiter](../systems/02-rate-limiter.md)). |
 | Operations | Who can change production, and how is that audited? Can responders still get in when something breaks (see [C02 Cloudflare 2019](C02-cloudflare-2019.md), where credentials had timed out)? |
 | Failure of controls | What happens when the auth service or key store is down: fail open or closed, and who decided? |
@@ -53,6 +53,38 @@ Use it as questions to ask of any atlas design:
 3. Name the four ways to respond to a threat. When is accepting a risk legitimate?
 4. Where would you place trust boundaries in the AI agent platform from note 25?
 5. Your auth service is down. Should the API fail open or closed? Why?
+
+**Answer outlines** (our reasoning, not sourced claims; try the questions first):
+
+<details><summary>Q1, threat model for file sharing</summary>
+
+What are we working on: draw upload, storage, sharing links, download and the admin tools, with trust boundaries (internet to edge, user to user via shared links, service to storage). What can go wrong: walk each boundary with STRIDE, for example guessable share links, a stolen session, malware in uploads, one tenant reading another's files. What will we do: choose a response per threat. Did we do a good job: review and revisit when the design changes (sections 1 and 3).
+
+</details>
+
+<details><summary>Q2, zero trust inside a datacenter</summary>
+
+A call is not trusted because it comes from inside the network: every service authenticates, each call is authorised per resource with least privilege, traffic is encrypted, and policy can use the caller's identity and state (section 2).
+
+</details>
+
+<details><summary>Q3, responses to a threat</summary>
+
+Mitigate, eliminate, transfer, accept. Accepting is legitimate when the risk is understood, small or costly to fix, and someone with authority signs it off and records it, with a date to revisit (section 1).
+
+</details>
+
+<details><summary>Q4, trust boundaries in the agent platform</summary>
+
+Between the user and the agent, between the model's output and every tool call (model output is untrusted input to tools), between tool results or web content and the model (possible injected instructions), between the sandbox and the platform, and around credentials. Apply the Rule of Two (P22, section 5).
+
+</details>
+
+<details><summary>Q5, auth service down</summary>
+
+It depends on what is behind the API: for anything that exposes data or money, fail closed, because failing open turns an outage into a breach; for low-risk reads you might serve cached, already-authorised responses. Whoever owns the risk decides in advance, not during the incident (section 3, failure of controls).
+
+</details>
 
 ## Practice
 

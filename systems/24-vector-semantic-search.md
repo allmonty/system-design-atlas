@@ -9,7 +9,7 @@
 **Key numbers** (as published, in the authors' tests)
 - DiskANN indexes and serves a billion-point database on one machine with 64 GB of RAM and an SSD, at over 5,000 queries a second with under 3 ms mean latency and 95%+ 1-recall@1 on SIFT1B `[CONFIRMED]` (NeurIPS 2019).
 - The same paper says compressed-vector indexes with a small memory footprint reach only around 0.5 1-recall@1, because compression is lossy `[CONFIRMED]`.
-- A reported production example sharded 2 billion 128-dimension points across 32 machines, querying every shard and aggregating, for 100-recall@100 of 0.98 at about 5 ms `[CONFIRMED]` (quoted in the DiskANN paper, citing another source).
+- A reported production example sharded 2 billion 128-dimension points across 32 machines, querying every shard and aggregating, for 100-recall@100 of 0.98 at about 5 ms `[CONFIRMED]` as the DiskANN paper's citation of a reported Taobao deployment; we did not read the original source.
 - HNSW's search complexity scales logarithmically, and a reasonable range of its connection parameter M is 5 to 48, with memory proportional to M `[CONFIRMED]`.
 
 **Decisions and trade-offs**

@@ -118,6 +118,44 @@ mudança (prompt, modelo, tool, retrieval) ─► suíte offline no CI
 5. Seu LLM juiz e seus avaliadores humanos começam a discordar com mais frequência. O que pode ter mudado, e o que você faz?
 6. Como evitar que uma suíte de evals sature?
 
+**Esboços de resposta** (nosso raciocínio, não afirmações com fonte; tente as perguntas primeiro):
+
+<details><summary>Q1, respostas consistentes</summary>
+
+Reporte pass^k, não pass@1: consistência significa que toda trial tem sucesso. Com 90% por trial, pass^3 é 0,9 × 0,9 × 0,9 ≈ 73%, então cerca de um cliente em quatro que faz a task três vezes vê pelo menos uma falha (seção 3).
+
+</details>
+
+<details><summary>Q2, um assistente de RAG sem rótulos</summary>
+
+No primeiro dia: pontuações sem referência (fidelidade ao contexto recuperado, relevância da resposta, relevância do contexto) de avaliadores por modelo no estilo do Ragas, conferidas contra uma pequena amostra avaliada por pessoas. Depois: um conjunto rotulado feito de perguntas e falhas reais, o recall do retrieval nele e uma suíte de regressão (seções 4 e 7).
+
+</details>
+
+<details><summary>Q3, 0% onde o modelo antigo tirava 60%</summary>
+
+Suspeite da eval antes do modelo: leia os transcripts, cheque o avaliador e a montagem da task (um formato que o modelo novo responde de outro jeito, um ambiente quebrado, um string match estrito demais). Uma pontuação de 0% em muitas trials costuma indicar uma task quebrada, não um modelo quebrado (seção 6).
+
+</details>
+
+<details><summary>Q4, qual parte de um sistema multi-agent falhou</summary>
+
+Pontue as partes e o todo: o roteamento e o plano do supervisor, a saída de cada sub-agent contra o próprio briefing, cada chamada de tool e então o objetivo final. Guarde o trace completo para achar o primeiro passo errado (seções 5 e 7).
+
+</details>
+
+<details><summary>Q5, juiz e humanos se afastam</summary>
+
+Algo mudou nas entradas (novos tipos de pergunta, respostas mais longas que o juiz favorece), no modelo ou prompt do juiz, ou nas diretrizes humanas. Meça de novo a concordância numa amostra rotulada nova, corrija a rubrica ou o juiz e recalibre antes de confiar nas novas pontuações (seções 2 e 7).
+
+</details>
+
+<details><summary>Q6, uma suíte saturando</summary>
+
+Mova as tasks que sempre passam para a suíte de regressão, continue acrescentando tasks de capacidade mais difíceis a partir de falhas reais e confira se as tasks restantes têm solução e são avaliadas corretamente, para que uma pontuação alta signifique progresso, não uma suíte fácil (seções 3 e 6).
+
+</details>
+
 **Relacionados:** [23 RAG knowledge assistant](../systems/23-rag-knowledge-assistant.md), [25 AI agent platform](../systems/25-ai-agent-platform.md), [28 LLM fine-tuning, evaluation and deployment](../systems/28-llm-finetuning-evaluation.md), [41 Moderation and fraud ML](../systems/41-moderation-fraud-ml.md), [P07 SLOs and incidents](P07-slos-and-incidents.md), [P10 Changing systems safely](P10-changing-systems-safely.md).
 
 **Leitura complementar:** Fahim Ul Haq, [*Generative AI System Design Interview*](https://www.systemdesignhandbook.com/guides/generative-ai-system-design-interview/) (System Design Handbook, sem data, acessado em 2026-11-03; secundária). Um passo a passo de entrevista para um sistema baseado em LLM (esclarecimento, orçamento de tokens, arquitetura, RAG, custo, segurança). Não cita fontes primárias, e seus números de preço e throughput não têm fonte, então use-o pela estrutura, não pelos fatos.

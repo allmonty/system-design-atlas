@@ -118,6 +118,44 @@ change (prompt, model, tool, retrieval) ─► offline suite in CI
 5. Your LLM judge and your human graders start to disagree more often. What could have changed, and what do you do?
 6. How do you stop an eval suite from saturating?
 
+**Answer outlines** (our reasoning, not sourced claims; try the questions first):
+
+<details><summary>Q1, consistent answers</summary>
+
+Report pass^k, not pass@1: consistency means every trial succeeds. At 90% per trial, pass^3 is 0.9 × 0.9 × 0.9 ≈ 73%, so about one customer in four meeting the task three times sees at least one failure (section 3).
+
+</details>
+
+<details><summary>Q2, a RAG assistant with no labels</summary>
+
+Day one: reference-free scores (faithfulness to the retrieved context, answer relevance, context relevance) from Ragas-style model graders, checked against a small sample graded by people. Later: a labelled set built from real questions and failures, retrieval recall on it, and a regression suite (sections 4 and 7).
+
+</details>
+
+<details><summary>Q3, 0% where the old model scored 60%</summary>
+
+Suspect the eval before the model: read transcripts, check the grader and task setup (a format the new model answers differently, a broken environment, a too-strict string match). A score of 0% across many trials usually means a broken task, not a broken model (section 6).
+
+</details>
+
+<details><summary>Q4, which part of a multi-agent system failed</summary>
+
+Score the parts and the whole: the supervisor's routing and plan, each sub-agent's output against its own brief, each tool call, then the final goal. Store the full trace so the first wrong step can be found (sections 5 and 7).
+
+</details>
+
+<details><summary>Q5, judge and humans drift apart</summary>
+
+Something changed in the inputs (new kinds of questions, longer answers the judge favours), in the judge model or prompt, or in the human guidelines. Re-measure agreement on a fresh labelled sample, fix the rubric or judge, and recalibrate before trusting new scores (sections 2 and 7).
+
+</details>
+
+<details><summary>Q6, a saturating suite</summary>
+
+Move tasks that always pass into the regression suite, keep adding harder capability tasks from real failures, and check that the remaining tasks are solvable and correctly graded, so a high score means progress, not an easy suite (sections 3 and 6).
+
+</details>
+
 **Related:** [23 RAG knowledge assistant](../systems/23-rag-knowledge-assistant.md), [25 AI agent platform](../systems/25-ai-agent-platform.md), [28 LLM fine-tuning, evaluation and deployment](../systems/28-llm-finetuning-evaluation.md), [41 Moderation and fraud ML](../systems/41-moderation-fraud-ml.md), [P07 SLOs and incidents](P07-slos-and-incidents.md), [P10 Changing systems safely](P10-changing-systems-safely.md).
 
 **Further reading:** Fahim Ul Haq, [*Generative AI System Design Interview*](https://www.systemdesignhandbook.com/guides/generative-ai-system-design-interview/) (System Design Handbook, undated, accessed 2026-11-03; secondary). A step-by-step interview walkthrough for an LLM-backed system (clarifying, token budget, architecture, RAG, cost, security). It cites no primary sources, and its prices and throughput numbers are unsourced, so use it for structure, not facts.

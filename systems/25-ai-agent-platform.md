@@ -2,6 +2,8 @@
 
 *A reference design built on published guidance (Anthropic's "Building effective agents"), a published protocol (the Model Context Protocol) and a published method (ReAct). How it was sourced and what was not checked is under **Sources and provenance** near the end.*
 
+**Short on time?** The core is At a glance and sections 1 to 6 without 4b to 4d (about 13 minutes). Sections 4b to 4d (sandboxing, Anthropic's research system, agents as peers) are depth, about 10 minutes more.
+
 ## At a glance
 
 **In 60 seconds.** An agent is a language model that repeatedly decides what to do next, calls a tool (search, run code, edit a file, call an API), reads the result and decides again, until it finishes or hits a limit. A platform for agents needs five things around that loop: a way to **define and call tools** safely, **state** so a long run survives crashes, **sandboxes** where model-written code runs, **limits** on steps, time and money, and **oversight** (approvals, logs, evaluation). The most useful advice from the sources is to use the simplest design that works: a fixed workflow if the steps are known, an agent only if they are not.
@@ -60,7 +62,7 @@ Imagine a **very capable intern working in an office with a locked supply room**
 
 ## 2. Workflows versus agents `[CONFIRMED]` (Anthropic, December 2024)
 
-Anthropic's post "Building effective agents" groups both under **agentic systems**, but the authors "draw an important architectural distinction" between workflows and agents. Its advice is to find "the simplest solution possible, and only increasing complexity when needed", which "might mean not building agentic systems at all", and that for many applications "optimizing single LLM calls with retrieval and in-context examples is usually enough".
+Anthropic's post "Building effective agents" groups both under **agentic systems**, but the authors "draw an important architectural distinction" between workflows and agents. Its advice is to find "the simplest solution possible, and only increasing complexity when needed", which "might mean not building agentic systems at all", and that for many applications "optimizing single LLM calls with retrieval and in-context examples is usually enough". The five workflow patterns are taught one by one, with their classic analogues, in [P19](../toolkit/P19-llm-workflow-patterns.md).
 
 **The building block** is the *augmented LLM*: a model with retrieval, tools and memory.
 
@@ -121,9 +123,9 @@ What this gives an interview answer: a concrete reason to put untrusted generate
 
 ## 4c. Lessons from a production multi-agent system `[CONFIRMED]` (Anthropic, June 2025)
 
-Anthropic's engineering post on its multi-agent research system adds production detail to section 2. It uses an **orchestrator-worker** pattern: a lead agent plans, saves its plan to memory, and spawns subagents that search in parallel with their own context windows and return condensed findings. Reported points that matter for platform design:
+Anthropic's engineering post on its multi-agent research system adds production detail to section 2. It uses an **orchestrator-worker** pattern: a lead agent plans, saves its plan to memory, and spawns subagents that search in parallel with their own context windows and return condensed findings. Reported points that matter for platform design (the multi-agent topologies and the evidence on when several agents help are in [P20](../toolkit/P20-agent-and-multi-agent-architectures.md)):
 - **Cost:** "agents typically use about 4× more tokens than chat interactions, and multi-agent systems use about 15× more tokens than chats", so the task must be valuable enough to pay for it. Token usage alone explained 80% of the variance in a browsing benchmark (BrowseComp).
-- **Quality:** a multi-agent system with a larger lead model and smaller subagents outperformed a single larger agent by 90.2% on their internal research evaluation, strongest on breadth-first tasks; they note most coding tasks have fewer parallelisable parts than research.
+- **Quality:** a multi-agent system with Claude Opus 4 as the lead agent and Claude Sonnet 4 subagents outperformed a single Claude Opus 4 agent by 90.2% on their internal research evaluation, strongest on breadth-first tasks; they note most coding tasks have fewer parallelisable parts than research.
 - **State and recovery:** "agents are stateful and errors compound"; when errors occur they cannot just restart from the beginning, so they built systems that "resume from where the agent was when the errors occurred".
 - **Deployments:** because agents may be anywhere in their process during an update, they use **rainbow deployments**, gradually shifting traffic from old to new versions while both run.
 - **Debugging:** agents are non-deterministic between runs, which made production tracing necessary.
@@ -170,10 +172,10 @@ user/API ─► session API ─► orchestrator ◄─► LLM gateway (see 22)
 - **State and memory:** keep the conversation and tool results; summarise or trim when the context window fills; store long-term memory separately and treat it as data, not instructions.
 - **Budgets:** hard caps on steps, tokens, wall-clock time and money per run, with a clear message when hit. Detect repeated identical actions, as ReAct's failure analysis suggests.
 - **Approvals:** classify tools by risk (read, reversible write, irreversible or costly) and require human approval for the last class.
-- **Prompt injection:** text returned by tools or web pages may contain instructions. Treat it as untrusted data, keep permissions narrow so an injected instruction cannot do much, and require approval for sensitive actions.
+- **Prompt injection:** text returned by tools or web pages may contain instructions. Treat it as untrusted data, keep permissions narrow so an injected instruction cannot do much, and require approval for sensitive actions. The Rule of Two and the published injection-resistant design patterns are in [P22](../toolkit/P22-llm-products-in-production.md), section 5.
 - **Long-running tasks:** run asynchronously with a job queue, stream progress by server-sent events or polling, allow cancellation.
 - **Observability:** a trace per run (every model call, tool call, result, cost and latency), replayable for debugging.
-- **Evaluation:** a task suite with automatic success checks (for coding, the tests), run before changing models, prompts or tools; track success rate, steps and cost per task.
+- **Evaluation:** a task suite with automatic success checks (for coding, the tests), run before changing models, prompts or tools; track success rate, steps and cost per task. Graders, trials and pass^k are in [P18](../toolkit/P18-evaluating-llm-and-agent-systems.md).
 
 ### A coding agent on this platform
 

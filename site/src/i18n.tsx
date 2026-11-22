@@ -70,7 +70,7 @@ const en = {
   confirmReset: "Clear all progress in this browser?",
   pickGoal: "1. Pick a goal",
   pickGoalNote: "Each track is an ordered reading list with a reason for every step. You can switch at any time.",
-  trackMeta: (steps: number, hours: number) => `${steps} steps · about ${hours} h of reading`,
+  trackMeta: (steps: number, hours: number) => `${steps} steps · about ${hours} h of reading, plus practice`,
   doneOf: (n: number, total: number) => `${n} of ${total} done`,
   howToStudy: "2. How to study one system",
   method: [
@@ -267,7 +267,7 @@ const ptBR: Dict = {
   confirmReset: "Apagar todo o progresso neste navegador?",
   pickGoal: "1. Escolha um objetivo",
   pickGoalNote: "Cada trilha é uma lista de leitura em ordem, com o motivo de cada passo. Você pode trocar a qualquer momento.",
-  trackMeta: (steps, hours) => `${steps} passos · cerca de ${hours} h de leitura`,
+  trackMeta: (steps, hours) => `${steps} passos · cerca de ${hours} h de leitura, mais prática`,
   doneOf: (n, total) => `${n} de ${total} concluídos`,
   howToStudy: "2. Como estudar um sistema",
   method: [

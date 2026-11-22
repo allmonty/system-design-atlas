@@ -57,6 +57,38 @@ The paper says adopting its practices helps an organization achieve these goals:
 4. When is a managed service cheaper than running it yourself, and when not?
 5. A 10× traffic spike is expected. Which parts of your design get 10× more expensive, and which do not?
 
+**Answer outlines** (our reasoning, not sourced claims; try the questions first):
+
+<details><summary>Q1, dominant cost by system</summary>
+
+Video platform: storage plus egress (and transcoding for live). Vector search: RAM for the index. LLM chatbot: GPU hours, or tokens if you buy an API. Each follows from what grows with every user request (section 2).
+
+</details>
+
+<details><summary>Q2, cheaper storage without losing durability</summary>
+
+Tier or cool rarely read data, use erasure coding instead of full replicas, deduplicate and compress, and set retention and deletion; each trades access latency, CPU or repair traffic, not durability (section 2).
+
+</details>
+
+<details><summary>Q3, unit economics for an API</summary>
+
+Cost and revenue per unit of value, such as per request or per active customer per month, with the assumptions stated, so you can see whether growth makes money and which lever moves the margin (section 1, FinOps).
+
+</details>
+
+<details><summary>Q4, managed or self-run</summary>
+
+Managed is cheaper when the work is undifferentiated and your team's time and on-call cost more than the premium; self-run can win at large steady scale or when you need control. Compare the full cost, not just the bill (section 3, build versus buy).
+
+</details>
+
+<details><summary>Q5, a 10× spike</summary>
+
+Per-request costs (compute, egress, tokens) grow about 10×; fixed costs (licences, base capacity, committed spend) do not. Watch parts that grow worse than linearly, such as fan-out, cross-zone traffic or retries (section 3).
+
+</details>
+
 ## Practice
 
 Take one system from the atlas, estimate its monthly cost at 10 million users with explicit unit prices, identify the dominant line item, and propose two savings with their trade-offs.

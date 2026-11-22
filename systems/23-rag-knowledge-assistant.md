@@ -4,7 +4,7 @@
 
 ## At a glance
 
-**In 60 seconds.** A language model does not know your company's documents. Retrieval-augmented generation (RAG) fixes that at question time: find the passages most relevant to the question, put them in the prompt, and ask the model to answer from them with citations. The system has two halves. **Ingestion** cuts documents into chunks, optionally adds context to each chunk, and builds a vector index and a keyword index. **Query** filters by what the user may see, retrieves with both indexes, reranks, and generates. Most quality problems are retrieval problems, so evaluation of retrieval is as important as evaluation of answers.
+**In 60 seconds.** A language model does not know your company's documents. Retrieval-augmented generation (RAG) fixes that at question time: find the passages most relevant to the question, put them in the prompt, and ask the model to answer from them with citations. The system has two halves. **Ingestion** cuts documents into chunks, optionally adds context to each chunk, and builds a vector index and a keyword index. (An **embedding** is a list of numbers a model computes for a piece of text, so that texts with similar meaning get nearby numbers; a **vector index** finds the nearest ones quickly. Note 24 covers how.) **Query** filters by what the user may see, retrieves with both indexes, reranks, and generates. Most quality problems are retrieval problems, so evaluation of retrieval is as important as evaluation of answers.
 
 **Key numbers** (as published, in the authors' tests)
 - A knowledge base under 200,000 tokens (about 500 pages) can go straight into the prompt, with no RAG needed `[CONFIRMED]` (Anthropic, 2024).
@@ -44,7 +44,7 @@ Imagine a **new employee with a great memory for general knowledge but who has n
 - **Chunks lose context.** Prepending a short generated explanation before embedding and keyword indexing reduced failed retrievals `[CONFIRMED]` (Anthropic).
 - **Hybrid search plus reranking** beat embeddings alone in Anthropic's tests `[CONFIRMED]`.
 - **Faithfulness, answer relevance and context relevance** can be scored by an LLM without reference answers (Ragas) `[CONFIRMED]` (Es et al., 2023).
-- **Permissions, freshness, citations, evaluation and cost control** are the production concerns `[INDUSTRY PATTERN]`.
+- **Permissions, freshness, citations, evaluation and cost control** are the production concerns `[INDUSTRY PATTERN]`. Evaluation in depth is in [P18](../toolkit/P18-evaluating-llm-and-agent-systems.md).
 
 ---
 
@@ -147,7 +147,7 @@ Labelled reference answers are expensive and usually missing when a RAG system i
 ## 6. Capacity reasoning (illustrative)
 
 - Chunks ≈ corpus tokens ÷ chunk size. With 50 million tokens and 500-token chunks that is 100,000 chunks. Both numbers are our assumptions.
-- Contextualisation cost scales with document tokens. Anthropic's estimate of $1.02 per million document tokens assumed their model, prices and chunk sizes at the time; recompute for yours.
+- Contextualisation cost scales with document tokens. Anthropic's estimate of $1.02 per million document tokens assumed Claude 3 Haiku with prompt caching for the context step, the prices of the time and its chunk sizes; its reranking tests used Cohere's reranker. Recompute for yours.
 - Prompt size ≈ retrieved chunks × chunk size. Twenty 500-token chunks is about 10,000 tokens per question before the answer.
 - Index size for vectors ≈ chunks × dimensions × bytes per number, before index overhead. 100,000 chunks × 1,024 dimensions × 4 bytes is about 400 MB. Dimensions are model-dependent; this is illustrative.
 

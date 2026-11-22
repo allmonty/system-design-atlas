@@ -9,7 +9,7 @@
 **Números principais** (como publicados, nos testes dos autores)
 - O DiskANN indexa e serve uma base de um bilhão de pontos numa única máquina com 64 GB de RAM e um SSD, a mais de 5.000 consultas por segundo com latência média abaixo de 3 ms e 1-recall@1 de 95%+ no SIFT1B `[CONFIRMED]` (NeurIPS 2019).
 - O mesmo paper diz que índices de vetores comprimidos com pequena pegada de memória chegam a apenas cerca de 0,5 de 1-recall@1, porque a compressão tem perdas `[CONFIRMED]`.
-- Um exemplo de produção relatado fez sharding de 2 bilhões de pontos de 128 dimensões em 32 máquinas, consultando todos os shards e agregando, para um 100-recall@100 de 0,98 em cerca de 5 ms `[CONFIRMED]` (citado no paper do DiskANN, referenciando outra fonte).
+- Um exemplo de produção relatado fez sharding de 2 bilhões de pontos de 128 dimensões em 32 máquinas, consultando todos os shards e agregando, para um 100-recall@100 de 0,98 em cerca de 5 ms `[CONFIRMED]` como citação, no paper do DiskANN, de uma implantação relatada do Taobao; não lemos a fonte original.
 - A complexidade de busca do HNSW escala logaritmicamente, e uma faixa razoável do seu parâmetro de conexão M é de 5 a 48, com a memória proporcional a M `[CONFIRMED]`.
 
 **Decisões e trade-offs**

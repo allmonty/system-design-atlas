@@ -2,6 +2,8 @@
 
 *A primer on reinforcement learning (RL) for engineers who know services and data pipelines but have not trained a model that learns from its own actions. It explains the idea with one running example, separates the three kinds of RL you meet in practice (bandits, sequential RL, RL for language models), compares RL with supervised deep learning and with prompting an LLM, walks through real systems step by step with their states, actions and rewards (including game-playing agents and opponents that ship in games), and ends with how to build one, how rewards go wrong, and a list of dos and don'ts. Sources are papers and posts by the teams that built the systems, plus Google and DeepMind's study of what blocks RL in the real world; older sources are labelled foundational. Definitions and the build guide are our reasoning unless tagged.*
 
+**Short on time?** Read At a glance and sections 1, 2, 3 and 8 first (about 10 minutes). Section 4 is case studies (about 15 minutes): read the ones closest to your work.
+
 ## At a glance
 
 - **Reinforcement learning** is learning which action to take from the **reward** that follows it, instead of from a labelled right answer. The learner (the **agent**) only finds out how good the action it chose was, never what the other actions would have earned, so it has to **explore**: sometimes try actions it is unsure about.
@@ -26,7 +28,7 @@ That loop (observe the situation, act, receive a reward, learn, act again) is re
 
 | Term | Meaning | In the news example |
 |---|---|---|
-| **Agent** | The part that chooses actions | The ranking service |
+| **Agent** | The part that chooses actions. Not the same as an LLM agent (a model calling tools in a loop, [P20](P20-agent-and-multi-agent-architectures.md)), although an LLM agent can be trained with RL (section 4.4) | The ranking service |
 | **Environment** | Everything the agent acts on and observes | Visitors and the page |
 | **State** or **context** | What the agent knows when it decides | Visitor's country, device, time, recent reads |
 | **Action** | One choice | Which article goes in the slot |
@@ -70,7 +72,7 @@ That loop (observe the situation, act, receive a reward, learn, act again) is re
 **Is RL still used after deep learning and LLMs?** Yes, in two ways (our reading of the sources below):
 
 1. **Deep RL** is RL where the policy or value function is a deep network. YouTube's recommender in section 4.2 is a neural network trained with an RL algorithm. Deep learning did not replace RL; it became its engine.
-2. **LLM post-training uses RL.** Note [28](../systems/28-llm-finetuning-evaluation.md) covers RL from human feedback (RLHF), with PPO and DPO. RL with **verifiable rewards** trains reasoning models: Tulu 3 defines it as a setup where "the policy only receives a reward when its generated responses are verifiably correct" `[CONFIRMED]`, and DeepSeek-R1 (section 4.4) used it at scale.
+2. **LLM post-training uses RL.** Note [28](../systems/28-llm-finetuning-evaluation.md) covers RL from human feedback (RLHF) with PPO, and DPO, which learns from the same preference data without an RL loop. RL with **verifiable rewards** trains reasoning models: Tulu 3 defines it as a setup where "the policy only receives a reward when its generated responses are verifiably correct" `[CONFIRMED]`, and DeepSeek-R1 (section 4.4) used it at scale.
 
 What did shrink is the number of product problems where a team builds sequential RL from scratch. A supervised ranker plus a bandit for exploration, or a prompted LLM, now covers many cases that once looked like RL problems.
 
@@ -132,7 +134,7 @@ The lesson for system design (our reasoning): the learned policy proposes, and a
 2. **Task set:** problems with checkable answers (mathematics, coding, logic).
 3. **Reward:** rules, not a learned model. "Our rule-based reward system mainly consists of two types of rewards: accuracy rewards and format rewards." Accuracy checks the final answer (or runs tests for code); format checks that the reasoning sits in the expected tags.
 4. **Why not a learned reward model:** the authors say "neural reward models are susceptible to reward hacking during large-scale reinforcement learning".
-5. **Algorithm:** GRPO, which samples a group of answers per problem and scores each answer against the group's average, instead of training a separate value model as PPO does.
+5. **Algorithm:** GRPO, which samples a group of answers per problem and scores each answer against the rest of its group (relative to the group's average and spread), instead of training a separate value model as PPO does.
 6. **Result:** for the model trained with RL alone (R1-Zero), the average pass@1 on the AIME 2024 maths benchmark rose "from an initial 15.6% to 77.9%" during training. The same paper reports that this model's answers had poor readability and mixed languages; the authors addressed this in DeepSeek-R1 with a multi-stage pipeline that adds supervised fine-tuning.
 
 **A worked reward for code** `[SPECULATIVE]` (our illustration): the task is to fix a failing function. Reward 1 if the hidden test suite passes, 0 otherwise; minus 0.1 if the answer is not in the required format. The obvious hacks are editing the tests, special-casing the test inputs, or exiting early with a success code, so the tests must be hidden, run in a sandbox, and the grader must check that test files are unchanged.
