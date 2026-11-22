@@ -28,7 +28,7 @@
   --shadow-pop: 0 10px 30px rgb(0 0 0 / .18);
   --z-sticky: 4; --z-tools: 5; --z-top: 10; --z-pop: 20; --top-h: calc(max(2.3rem, var(--hit)) + var(--s-5) + 1px); /* height of the top bar (tallest control + padding + border), for things that stick below it */
   --hit: 36px; /* smallest click or tap target */
-  --page-max: 1100px; --read-max: calc(var(--prose-max) + 2 * var(--page-pad)); /* the reading column is the measure plus its gutters, so prose fills it and sits centred */ --prose-max: 33rem; /* about 66 characters a line in all four reading fonts; rem, not ch: ch (the width of "0") varies by font */ --page-pad: clamp(var(--s-3), 3vw, var(--s-5));
+  --page-max: 1100px; --read-max: calc(var(--prose-max) + 2 * var(--page-pad)); /* the reading column is the measure plus its gutters, so prose fills it and sits centred */ --prose-max: 33rem; /* about 66 characters a line in all four reading fonts; rem, not ch: ch (the width of "0") varies by font */ --page-pad: clamp(var(--s-4), 3vw, var(--s-5));
   --ease: .15s ease;
   --surface: color-mix(in srgb, var(--card) 80%, transparent);
 }

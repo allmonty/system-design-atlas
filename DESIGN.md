@@ -120,7 +120,7 @@ All spacing sits on a 4px grid.
 | `--s-6` | 32 | between sections, around a horizontal rule |
 | `--s-7` | 48 | page bottom padding, large layout gaps |
 
-`--page-pad` is the page gutter, `clamp(--s-3, 3vw, --s-5)`: 12 px on phones, up to 24 px on desktop. Negative offsets and `calc()` are allowed for layout tricks (the test skips them).
+`--page-pad` is the page gutter, `clamp(--s-4, 3vw, --s-5)`: 16 px on phones, up to 24 px on desktop. Negative offsets and `calc()` are allowed for layout tricks (the test skips them).
 
 ## 5. Shape and depth
 
