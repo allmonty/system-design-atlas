@@ -99,12 +99,13 @@ These are open scenarios with no single correct answer. For each, write a one-pa
 
 <details><summary>What a strong answer covers</summary>
 
-- Uses the simplest approach that works for each need: retrieval for account facts ([23 RAG](../systems/23-rag-knowledge-assistant.md)), a constrained workflow or agent for actions ([25 AI agent platform](../systems/25-ai-agent-platform.md)), fine-tuning only for behaviour or format ([28 Fine-tuning](../systems/28-llm-finetuning-evaluation.md)).
-- Puts permissions outside the model, approvals on irreversible actions, and treats retrieved text as untrusted ([P06](P06-security-threat-modeling.md)).
-- Defines evaluation before launch: retrieval recall, answer groundedness, action success, safety, and a regression suite.
+- Uses the simplest approach that works for each need: tool calls to the account APIs, made with the customer's own narrow credentials, for account facts such as orders and status; retrieval only for help articles and policies ([23 RAG](../systems/23-rag-knowledge-assistant.md)); a fixed workflow before an agent for actions ([P19](P19-llm-workflow-patterns.md), [25 AI agent platform](../systems/25-ai-agent-platform.md)); fine-tuning only for behaviour or format ([28 Fine-tuning](../systems/28-llm-finetuning-evaluation.md)).
+- Does not embed per-customer records in a search index: the copy goes stale and one customer's data can surface in another's answer.
+- Puts permissions outside the model, approvals on irreversible actions, and treats retrieved text and tool results as untrusted, checking the design against the Rule of Two ([P06](P06-security-threat-modeling.md), [P22](P22-llm-products-in-production.md), section 5).
+- Defines evaluation before launch: retrieval recall, answer groundedness, action success, safety, and a regression suite ([P18](P18-evaluating-llm-and-agent-systems.md)).
 - Estimates cost per conversation and sets budgets and limits ([P08](P08-cost-as-a-design-input.md)).
 
-**A typical weak answer:** Gives the model direct access to the account database, or skips evaluation.
+**A typical weak answer:** Gives the model direct access to the account database, puts account data into the retrieval index, or skips evaluation.
 
 </details>
 
@@ -121,6 +122,7 @@ These are open scenarios with no single correct answer. For each, write a one-pa
 ---
 ## ✅ Verification log
 
-*Checked 2026-10-27.*
+*Fact-check, 2026-10-27; answer key for exercise 6 revised 2026-11-21 after review.*
 - The lists of points are our judgement of what a review would look for; they cite the notes and primers where the supporting facts are sourced.
 - Links checked by `npm run validate`.
+- Not read: published interview-rubric research and company-specific hiring rubrics.
