@@ -147,7 +147,7 @@ Respostas de referência rotuladas são caras e normalmente não existem quando 
 ## 6. Capacity reasoning (illustrative)
 
 - Chunks ≈ tokens do corpus ÷ tamanho do chunk. Com 50 milhões de tokens e chunks de 500 tokens são 100.000 chunks. Ambos os números são premissas nossas.
-- O custo de contextualização escala com os tokens dos documentos. A estimativa da Anthropic de $1,02 por milhão de tokens de documento assumiu o modelo, os preços e os tamanhos de chunk dela na época; recalcule para os seus.
+- O custo de contextualização escala com os tokens dos documentos. A estimativa da Anthropic de $1,02 por milhão de tokens de documento assumiu o Claude 3 Haiku com prompt caching na etapa de contexto, os preços da época e os tamanhos de chunk dela; os testes de reranking usaram o reranker da Cohere. Recalcule para os seus.
 - Tamanho do prompt ≈ chunks recuperados × tamanho do chunk. Vinte chunks de 500 tokens dão cerca de 10.000 tokens por pergunta antes da resposta.
 - Tamanho do índice de vetores ≈ chunks × dimensões × bytes por número, antes do overhead do índice. 100.000 chunks × 1.024 dimensões × 4 bytes dão cerca de 400 MB. As dimensões dependem do modelo; isto é ilustrativo.
 

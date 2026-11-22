@@ -147,7 +147,7 @@ Labelled reference answers are expensive and usually missing when a RAG system i
 ## 6. Capacity reasoning (illustrative)
 
 - Chunks ≈ corpus tokens ÷ chunk size. With 50 million tokens and 500-token chunks that is 100,000 chunks. Both numbers are our assumptions.
-- Contextualisation cost scales with document tokens. Anthropic's estimate of $1.02 per million document tokens assumed their model, prices and chunk sizes at the time; recompute for yours.
+- Contextualisation cost scales with document tokens. Anthropic's estimate of $1.02 per million document tokens assumed Claude 3 Haiku with prompt caching for the context step, the prices of the time and its chunk sizes; its reranking tests used Cohere's reranker. Recompute for yours.
 - Prompt size ≈ retrieved chunks × chunk size. Twenty 500-token chunks is about 10,000 tokens per question before the answer.
 - Index size for vectors ≈ chunks × dimensions × bytes per number, before index overhead. 100,000 chunks × 1,024 dimensions × 4 bytes is about 400 MB. Dimensions are model-dependent; this is illustrative.
 
