@@ -140,7 +140,7 @@ main.toolkit { max-width: var(--read-max); margin: 0 auto; overflow-wrap: break-
 .home { max-width: var(--page-max); }
 .hero { padding: var(--s-2) 0 var(--s-1); }
 .hero h1 { font-size: var(--t-2xl); line-height: 1.2; margin: var(--s-2) 0 var(--s-3); }
-.lede { font-size: var(--t-md); max-width: 60ch; }
+.lede { font-size: var(--t-md); max-width: var(--prose-max); }
 .small { font-size: var(--t-sm); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin: var(--s-4) 0 var(--s-3); }
 .button { display: inline-block; padding: var(--s-2) var(--s-4); border: 1px solid var(--line); border-radius: var(--r-md); background: var(--card); color: var(--fg); text-decoration: none; font-weight: 500; }
@@ -268,7 +268,7 @@ button.study { margin-left: auto; }
 
 /* ---- Reading comfort ---- */
 .notes { line-height: 1.65; }
-.notes p, .notes li, .notes blockquote { max-width: 76ch; }
+.notes p, .notes li, .notes blockquote { max-width: var(--prose-max); }
 .notes table, .notes pre, .tablewrap { max-width: 100%; }
 .notes h2 { margin-top: 1.8em; font-size: var(--t-xl); line-height: 1.25; letter-spacing: -.01em; }
 .notes h3 { margin-top: 1.4em; font-size: var(--t-lg); line-height: 1.3; }

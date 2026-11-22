@@ -101,7 +101,7 @@ Inside notes, `code` is `.875em` (relative to its context), and confidence tags 
 | Note `h3` | `--t-lg` | 1.3 | 1.4em top margin |
 | Note `h4` | `--t-md` | inherits | |
 | Body (`body`) | `--t-md` | 1.5 | |
-| Note prose (`.notes`) | `--t-md` | 1.65 | paragraphs, list items and quotes capped at `--prose-max` (76ch) |
+| Note prose (`.notes`) | `--t-md` | 1.65 | paragraphs, list items and quotes capped at `--prose-max` (33rem, about 66 characters a line) |
 | Code blocks | `.875em` | 1.55 | horizontal scroll, never wrap |
 
 Rules: the page has exactly one `h1` (the sweep checks it); a system note's own Markdown title renders as `h2.note-title`. Do not skip heading levels for size; change the size with the scale instead.
@@ -196,8 +196,7 @@ One ring for every focusable element: `outline: 2px solid var(--accent); outline
 | `--read-max` | 860px | toolkit reading pages (`main.toolkit`) |
 | `.system` | 1800px | system pages (diagram and note side by side) |
 | `.split.mode-text .notes` | 960px | the note column in text view |
-| `--prose-max` | 76ch | paragraphs, list items, quotes and disclosures in notes |
-| `.lede` | 60ch | the home introduction |
+| `--prose-max` | 33rem | paragraphs, list items, quotes and disclosures in notes, and the home introduction: about 66 characters a line in every reading font (45 to 75 is the usual range; `ch`, the width of "0", varies too much by font) |
 | `.side-outline` | 240px | the contents list beside a note (1250px and wider) |
 
 Every page uses the same frame: `--s-5` top, `--page-pad` sides, `--s-7` bottom.
