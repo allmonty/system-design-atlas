@@ -88,6 +88,16 @@ The Llama 3 configuration builds on an earlier NVIDIA paper that explains why ea
 
 This is the origin of the placement rule in section 3, and the 52% figure is a useful reference point next to Llama 3's 38 to 43% and MegaScale's 55.2% (different models, hardware and definitions, so not directly comparable).
 
+## 3c. Mixture-of-experts and FP8 training: DeepSeek-V3 `[CONFIRMED]` (DeepSeek-AI, December 2024)
+
+Many large models since 2024 are **mixture-of-experts** (MoE): each layer holds many expert sub-networks and a router sends each token to a few of them, so a model can have far more parameters than any one token uses. DeepSeek-V3's technical report is the most detailed public account of training one at scale.
+- **Size:** "671B total parameters with 37B activated for each token".
+- **A fifth kind of parallelism.** The experts are spread across GPUs (**expert parallelism**), so each token travels to the GPUs that hold its experts and back: an all-to-all exchange between nodes, not the all-reduce of data parallelism. The report trains with "16-way Pipeline Parallelism (PP)", "64-way Expert Parallelism (EP)" spanning 8 nodes and ZeRO-1 data parallelism, on "our cluster with 2048 H800 GPUs". Its DualPipe schedule overlaps computation with that communication, "achieving a near-zero all-to-all communication overhead", and it trains "without using costly tensor parallelism".
+- **FP8 training.** Most matrix multiplications run in 8-bit floating point, while the embedding module, output head, MoE gating, normalisation and attention keep BF16 or FP32. On two smaller validation models, the error against a BF16 baseline "remains consistently below 0.25%".
+- **Cost:** the full training "requires only 2.788M H800 GPU hours", "excluding the costs associated with prior research and ablation experiments on architectures, algorithms, or data".
+
+What changes for the design `[INDUSTRY PATTERN]` (our reasoning): the network must carry all-to-all traffic as well as all-reduce; placing experts and balancing their load become scheduling problems; and the four dimensions of section 3 gain a fifth.
+
 ## 4. The cluster: compute, storage, network `[CONFIRMED]` (Llama 3)
 
 - **Compute:** up to 16K H100 GPUs at 700 W each with 80 GB HBM3, in Grand Teton servers with eight GPUs and two CPUs, linked by NVLink within a server. Jobs are scheduled by **MAST**, Meta's global training scheduler.
@@ -219,9 +229,9 @@ Tensor parallelism exchanges data every layer and needs the fastest links, so it
 ## Sources and provenance
 
 > **Kind:** real system. The Llama 3 report and the MegaScale paper describe real production clusters; ZeRO describes a published method. The reference view in section 6 is our summary shape.
-> **Sources read on 2026-10-27 (PDF text extracted locally):** Llama Team, Meta, [*The Llama 3 Herd of Models*](https://arxiv.org/pdf/2407.21783) (2024; Section 3.3 Infrastructure, Scaling and Efficiency) · Jiang et al., [*MegaScale: Scaling Large Language Model Training to More Than 10,000 GPUs*](https://arxiv.org/pdf/2402.15627) (ByteDance, 2024) · Rajbhandari et al., [*ZeRO: Memory Optimizations Toward Training Trillion Parameter Models*](https://arxiv.org/pdf/1910.02054) (2020) · Narayanan et al., [*Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM*](https://arxiv.org/pdf/2104.04473) (2021; abstract and introduction only).
+> **Sources read on 2026-10-27 (PDF text extracted locally):** Llama Team, Meta, [*The Llama 3 Herd of Models*](https://arxiv.org/pdf/2407.21783) (2024; Section 3.3 Infrastructure, Scaling and Efficiency) · Jiang et al., [*MegaScale: Scaling Large Language Model Training to More Than 10,000 GPUs*](https://arxiv.org/pdf/2402.15627) (ByteDance, 2024) · Rajbhandari et al., [*ZeRO: Memory Optimizations Toward Training Trillion Parameter Models*](https://arxiv.org/pdf/1910.02054) (2020) · Narayanan et al., [*Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM*](https://arxiv.org/pdf/2104.04473) (2021; abstract and introduction only). · additions read on 2026-11-22: DeepSeek-AI, [*DeepSeek-V3 Technical Report*](https://arxiv.org/abs/2412.19437) (December 2024, revised 2025; [PDF](https://arxiv.org/pdf/2412.19437) text extracted locally)
 > **Dated material:** 2020–2024. Hardware and practice move quickly.
-> **Not read:** Llama 3 data and training recipe sections, the body of the Megatron-LM scaling paper and other pipeline papers, TPU-based training, mixture-of-experts.
+> **Not read:** Llama 3 data and training recipe sections, the body of the Megatron-LM scaling paper and other pipeline papers, TPU-based training, the rest of the DeepSeek-V3 report (architecture details beyond those cited, post-training, evaluations).
 > **Tags:** `[CONFIRMED]` stated by a primary source · `[INDUSTRY PATTERN]` standard practice · `[SPECULATIVE]` plausible or illustrative.
 
 ---
@@ -232,5 +242,6 @@ Tensor parallelism exchanges data every layer and needs the fastest links, so it
 - Verified in MegaScale: 55.2% MFU on 12,288 GPUs and 1.34 times Megatron-LM, heartbeat and diagnostics workflow, two-stage checkpointing, shared read of data-parallel partitions, more than 100 restarts and over 90% automatic fixes in a multi-week run.
 - Verified in the Megatron-LM scaling paper (abstract and introduction): the 288-year single-GPU example, the tensor-parallelism limit beyond one server, the up-to-50% pipeline flush, the interleaved schedule's 10+% gain, and 502 petaFLOP/s on 3072 GPUs at 52% of peak. Its experiments and recommendations in the body were not read.
 - Verified in ZeRO: 16Ψ bytes with K = 12, the 24 GB and 60 GB / 8 GB examples, three stages with 4 times, 8 times and Nd times reductions, 50% extra communication, the trillion-parameter example on 1,024 GPUs.
+- Verified in the DeepSeek-V3 report (2026-11-22, PDF text extracted locally): 671B total and 37B activated parameters, 16-way pipeline, 64-way expert parallelism across 8 nodes and ZeRO-1 data parallelism on 2048 H800 GPUs, DualPipe and near-zero all-to-all overhead, no tensor parallelism, FP8 GEMMs with the listed components kept in BF16 or FP32, the below-0.25% loss error on two validation scales, 2.788M H800 GPU hours and what they exclude.
 - Labelled industry pattern, not sourced: the reference diagram, data-loader and evaluation practices, cost framing, and the arithmetic in section 7.
 - Not claimed: the training systems of any company other than those in the sources.

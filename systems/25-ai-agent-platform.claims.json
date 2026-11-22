@@ -91,13 +91,6 @@
     "status": "confirmed"
   },
   {
-    "quote": "often create extra layers of abstraction that can obscure the underlying prompts and responses",
-    "url": "https://www.anthropic.com/research/building-effective-agents",
-    "via": "direct",
-    "sourceClass": "primary",
-    "status": "confirmed"
-  },
-  {
     "quote": "agent-computer interface",
     "url": "https://www.anthropic.com/research/building-effective-agents",
     "via": "direct",
@@ -198,13 +191,6 @@
   {
     "quote": "memory overhead of less than 5MB per container",
     "url": "https://www.usenix.org/system/files/nsdi20-paper-agache.pdf",
-    "via": "direct",
-    "sourceClass": "primary",
-    "status": "confirmed"
-  },
-  {
-    "quote": "agents typically use about 4× more tokens than chat interactions, and multi-agent systems use about 15× more tokens than chats",
-    "url": "https://www.anthropic.com/research/multi-agent-research-system",
     "via": "direct",
     "sourceClass": "primary",
     "status": "confirmed"

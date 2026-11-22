@@ -3,56 +3,119 @@
     "quote": "does not reduce memory per device",
     "url": "https://arxiv.org/pdf/1910.02054",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "would require approximately 288 years with a single V100 NVIDIA GPU",
     "url": "https://arxiv.org/pdf/2104.04473",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "needs to go through inter-server links",
     "url": "https://arxiv.org/pdf/2104.04473",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "as much as 50% of time can be spent flushing the pipeline",
     "url": "https://arxiv.org/pdf/2104.04473",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "671B total parameters with 37B activated for each token",
+    "url": "https://arxiv.org/abs/2412.19437",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "16-way Pipeline Parallelism (PP)",
+    "url": "https://arxiv.org/pdf/2412.19437",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "64-way Expert Parallelism (EP)",
+    "url": "https://arxiv.org/pdf/2412.19437",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "our cluster with 2048 H800 GPUs",
+    "url": "https://arxiv.org/pdf/2412.19437",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "achieving a near-zero all-to-all communication overhead",
+    "url": "https://arxiv.org/pdf/2412.19437",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "without using costly tensor parallelism",
+    "url": "https://arxiv.org/pdf/2412.19437",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "remains consistently below 0.25%",
+    "url": "https://arxiv.org/pdf/2412.19437",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "requires only 2.788M H800 GPU hours",
+    "url": "https://arxiv.org/abs/2412.19437",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
+  },
+  {
+    "quote": "excluding the costs associated with prior research and ablation experiments on architectures, algorithms, or data",
+    "url": "https://arxiv.org/pdf/2412.19437",
+    "via": "direct",
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "The complexity and potential failure scenarios of 16K GPU training surpass those of much larger CPU clusters",
     "url": "https://arxiv.org/pdf/2407.21783",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "a single GPU failure may require a restart of the entire job",
     "url": "https://arxiv.org/pdf/2407.21783",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "higher than 90% effective training time",
     "url": "https://arxiv.org/pdf/2407.21783",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   },
   {
     "quote": "even a single straggler can slow down thousands of other GPUs",
     "url": "https://arxiv.org/pdf/2407.21783",
     "via": "direct",
-    "status": "confirmed",
-    "sourceClass": "primary"
+    "sourceClass": "primary",
+    "status": "confirmed"
   }
 ]
