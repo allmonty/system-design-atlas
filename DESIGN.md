@@ -21,7 +21,7 @@ How the System Design Atlas site looks, and the rules that keep every page consi
 
 ### 2.1 Theme tokens
 
-Themes are set on `<html data-theme="light|warm|dark">`. With no attribute (the System setting), the light values apply and the OS dark preference switches to the dark values. Print forces black on white.
+Themes are set on `<html data-theme="light|warm|dark">`. With no attribute (the System setting), the light values apply and the OS dark preference switches to the dark values. Print forces black on white at 11pt (set on `html`, so prose keeps the `--prose-max` measure on paper).
 
 | Token | Use | Light | Warm | Dark |
 |---|---|---|---|---|

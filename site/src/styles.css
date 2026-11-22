@@ -287,12 +287,12 @@ button.study { margin-left: auto; }
 @media print {
   :root, :root[data-theme] { --bg: #fff; --fg: #000; --muted: #444; --card: #fff; --line: #bbb; --accent: #1d4ed8; }
   .top, .crumbs, .bar, .legend, .diagram-col, .outline-select, .side-outline, .settings, .anchor, .backdrop, .tools, .levels, .reset { display: none !important; }
-  body { background: #fff; color: #000; font-size: 11pt; }
+  html { font-size: 11pt; } /* on html, so rem (and the prose measure) follow the print size */
+  body { background: #fff; color: #000; }
   .system, .toolkit { padding: 0; max-width: none; }
   .split { display: block !important; height: auto !important; }
   .split > .left, .split > .right { overflow: visible !important; }
   .notes.hidden { display: block !important; }
-  .notes p, .notes li { max-width: none; }
   .notes details > summary { list-style: none; }
   .notes pre, .notes table, .trust, .notes details { break-inside: avoid; }
   .notes h2, .notes h3 { break-after: avoid; }
